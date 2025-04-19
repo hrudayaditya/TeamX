@@ -1,43 +1,93 @@
-# Miscellaneous
-*.class
-*.log
-*.pyc
-*.swp
-.DS_Store
-.atom/
-.buildlog/
-.history
-.svn/
-migrate_working_dir/
-
-# IntelliJ related
-*.iml
-*.ipr
-*.iws
-.idea/
-
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
-
-# Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
-.dart_tool/
+# Flutter/Dart specific
+**/build/
+**/.dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.pub-cache/
-.pub/
-/build/
 
-# Symbolication related
-app.*.symbols
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/flutter_version.json
+**/ios/Runner.xcworkspace/
+**/ios/.symlinks/
+**/ios/.flutter-plugins
+**/ios/.flutter-plugins-dependencies
+**/macos/Flutter/Flutter.framework/
+**/macos/Flutter/Flutter.podspec
+**/macos/Flutter/Generated.xcconfig
+**/macos/Flutter/ephemeral
+**/macos/Flutter/flutter_export_environment.sh
+**/macos/Flutter/flutter_version.json
+**/macos/Runner.xcworkspace/
+**/macos/Flutter/.last_build_id
+**/macos/.generated/
 
-# Obfuscation related
-app.*.map.json
+# Android specific
+**/android/gradle.properties
+**/android/local.properties
+# **/android/app/google-services.json
+**/android/.gradle/
+**/android/.idea/
+**/android/build/
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/outputs/
+**/android/.metadata
+**/android/**/generated/
+**/android/**/generated_*.json
 
-# Android Studio will place build artifacts here
-/android/app/debug
-/android/app/profile
-/android/app/release
+# IntelliJ IDEA and Android Studio specific
+**/*.iml
+**/.idea/
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/gradle.xml
+**/.idea/assetWizardSettings.xml
+**/.idea/libraries/
+**/.idea/caches/
+
+# Visual Studio Code specific
+**/.vscode/
+**/.vscode/launch.json
+**/.vscode/tasks.json
+
+# macOS specific
+**/.DS_Store
+
+# Other
+**/.pub-cache/
+**/pubspec.lock
+**/pubspec.yaml.lock
+
+# Flutter analysis_options.yaml
+**/analysis_options.yaml
+
+# Flutter integration_test
+**/integration_test/flutter_test_config.dart
+**/integration_test/flutter_test_config.opt
+
+# Flutter module specific
+**/*.iml
+**/.gradle/
+**/gradlew
+**/gradlew.bat
+**/local.properties
+**/outputs/
+**/.metadata
+
+# Flutter web
+**/web/
+**/web/index.html
+**/web/favicon.png
+**/web/manifest.json
+
+# Flutter desktop
+**/linux/
+**/macos/
+**/windows/
+
+# Flutter test coverage
+**/coverage/
