@@ -42,6 +42,9 @@ dependencies:
   google_fonts: ^5.1.0
   intl: ^0.18.1
   fluttertoast: ^8.2.2
+  flutter_secure_storage: ^9.0.0
+  another_flushbar: ^1.12.30
+  telephony: ^0.2.0
   borders: ^0.1.0
 
 dev_dependencies:
