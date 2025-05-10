@@ -1,31 +1,25 @@
 class AppUrl {
-  static var localIp = '192.168.29.41';
-  static var awsIp = 'api.playaway.in';
+  // static var localIp = '192.168.29.41';
+  // static var awsIp = 'api.playaway.in';
 
-  // static var baseUrl = 'http://$localIp:8000/myapi';
+  static var baseUrl = 'http://172.31.124.150:8080';
   // static var wsUrl = 'ws://$localIp:8080/ws/updates/';
   // static var paymentUrl = 'http://$localIp:9000/payment';
   // static var kycUrl = 'http://$localIp:9000/kyc';
 
-  static var baseUrl = 'https://$awsIp/myapi';
-  static var paymentUrl = 'https://$awsIp/payment';
-  static var kycUrl = 'https://$awsIp/kyc';
-  static var wsUrl = 'wss://$awsIp/ws/updates/';
+  // static var baseUrl = 'https://$awsIp/myapi';
+  // static var paymentUrl = 'https://$awsIp/payment';
+  // static var kycUrl = 'https://$awsIp/kyc';
+  // static var wsUrl = 'wss://$awsIp/ws/updates/';
 
-  static var loginEndPint = '$baseUrl/accounts/login';
-  static var sendOTPEndPint = '$baseUrl/accounts/sendOTP';
-  static var verifyOTPEndPoint = '$baseUrl/accounts/verifyOTP';
-  static var sendRefferalCodeEndPint = '$baseUrl/accounts/addRefferalCode';
+  static var loginEndPint = '$baseUrl/auth/login';
+  static var signUpEndPint = '$baseUrl/auth/signup';
+  
   static var verifyTokenEndPoint = '$baseUrl/accounts/verify_token';
   static var updateDisplayOrderStatusEndPoint =
       '$baseUrl/accounts/update_display_order_status';
   static var submitFeedbackEndPoint = '$baseUrl/accounts/submit_feedback';
 
-  static var updateKycEndPoint = '$kycUrl/update_kyc_status';
-  static var verifyPanKycEndPoint = '$kycUrl/verify_pan_kyc';
-  static var updateUpiEndPoint = '$kycUrl/update_upi_id';
-  static var updateBankAccountEndPoint = '$kycUrl/verify_bank_account';
-  static var verifyPaymentEndPoint = '$paymentUrl/verify_payment';
 
   static var registerApiEndPoint = '$baseUrl/accounts/register';
 
@@ -54,10 +48,10 @@ class AppUrl {
   static var redeemPromoBalance = '$baseUrl/accounts/redeem_promo_balance';
   static var getTransactionHistory =
       '$baseUrl/accounts/get_transaction_history';
-  static var addMoney = '$paymentUrl/add_money';
-  static var verifyPayment = '$paymentUrl/verify_payment';
-  static var withdrawMoney = '$paymentUrl/withdraw_money';
-  static var tdsDiscount = '$paymentUrl/tds_discount';
+  // static var addMoney = '$paymentUrl/add_money';
+  // static var verifyPayment = '$paymentUrl/verify_payment';
+  // static var withdrawMoney = '$paymentUrl/withdraw_money';
+  // static var tdsDiscount = '$paymentUrl/tds_discount';
   static var getFaq = '$baseUrl/help/faqs';
   static var getCategories = '$baseUrl/help/question_categories';
   static var getChatRoom = '$baseUrl/help/chat_room';

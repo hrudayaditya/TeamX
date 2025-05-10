@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:teamx/res/app_url.dart';
+import 'package:teamx/utils/utils.dart'; // Adjust the path if needed
+import 'package:teamx/view/fantasy/contest_screen.dart'; // Add this import
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,9 +14,53 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _countryCodeController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool isTncRead = false;
+
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    final response = await http.post(
+      Uri.parse(AppUrl.loginEndPint),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "email": email,
+        "password": password,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final jwt = data['token'] ?? '';
+      final username = data['username'] ?? '';
+      final emailFromResponse = data['email'] ?? email;
+
+      // Store values securely
+      await Utils().secureStorage.write(key: 'jwt', value: jwt);
+      await Utils().secureStorage.write(key: 'email', value: emailFromResponse);
+      await Utils().secureStorage.write(key: 'username', value: username);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Login successful!')),
+      );
+
+      // Navigate to ContestScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ContestScreen()),
+      );
+    } else if (response.statusCode == 409) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Incorrect email or password.')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Invalid login credentials.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,15 +69,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          Opacity(
-            opacity: 0.1,
-            child: Image.asset(
-              'assets/teamx-logo.png',
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
           Container(
             margin: const EdgeInsets.only(left: 25, right: 25),
             alignment: Alignment.center,
@@ -45,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       SizedBox(height: height * 0.4),
                       const Text(
-                        "Phone Verification",
+                        "Login",
                         style: TextStyle(
                           fontSize: 14.0,
                           color: Colors.black,
@@ -54,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        "We need to register your phone Number",
+                        "Please enter your email and password",
                         style: TextStyle(
                           fontSize: 16.0,
                           color: Colors.black,
@@ -62,6 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 30),
+                      // Email Field
                       Container(
                         height: 55,
                         decoration: BoxDecoration(
@@ -69,44 +110,60 @@ class _LoginScreenState extends State<LoginScreen> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const SizedBox(width: 10),
-                            SizedBox(
-                              width: 40,
-                              child: TextField(
-                                controller: _countryCodeController,
-                                keyboardType: TextInputType.number,
-                                readOnly: true,
-                                decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: "+91",
-                                ),
-                              ),
-                            ),
-                            const Text(
-                              "|",
-                              style: TextStyle(
-                                fontSize: 33.0,
-                                color: Colors.grey,
-                              ),
-                            ),
                             const SizedBox(width: 10),
                             Expanded(
                               child: TextField(
-                                controller: _phoneNumberController,
-                                keyboardType: TextInputType.phone,
+                                controller: _emailController,
+                                keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  hintText: "Phone",
+                                  hintText: "Email",
                                 ),
-                                inputFormatters: <TextInputFormatter>[
-                                  FilteringTextInputFormatter.digitsOnly,
-                                  LengthLimitingTextInputFormatter(10),
-                                ],
                               ),
-                            )
+                            ),
                           ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      // Password Field
+                      Container(
+                        height: 55,
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 1, color: Colors.grey),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Row(
+                          children: [
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: TextField(
+                                controller: _passwordController,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: "Password",
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      // Sign Up Button below password
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: TextButton(
+                          onPressed: () {
+                            // Handle sign up navigation
+                          },
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -170,7 +227,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           onPressed: () {
-                            // Handle continue button press
+                            if (isTncRead) {
+                              _login();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Please accept Terms and Conditions')),
+                              );
+                            }
                           },
                           child: const Text(
                             "Continue",
