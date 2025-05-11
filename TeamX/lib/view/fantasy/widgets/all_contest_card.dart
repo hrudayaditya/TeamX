@@ -13,7 +13,12 @@ class AllContestCrad extends StatelessWidget {
   final int filledSpots;
   final bool isFree;
   const AllContestCrad({
-    super.key, required this.prize, required this.entry, required this.totalSpots, required this.filledSpots, required this.isFree,
+    super.key,
+    required this.prize,
+    required this.entry,
+    required this.totalSpots,
+    required this.filledSpots,
+    required this.isFree,
   });
 
   @override
@@ -75,7 +80,7 @@ class AllContestCrad extends StatelessWidget {
                               FontWeight.w500),
                           children: <TextSpan>[
                             TextSpan(
-                              text: "\$${entry}",
+                              text: isFree ? "FREE" : "\$${entry}",
                               style: GoogleFonts.poppins(
                                   color: Colors.green,
                                   decoration: isFree ? TextDecoration
@@ -92,7 +97,7 @@ class AllContestCrad extends StatelessWidget {
                   ),
                   Row(
                     children: [
-                      Text("\$25,200",
+                      Text("\$${prize}",
                           style:
                           AppTextStyles.terniaryStyle(
                               22.0,
@@ -129,13 +134,13 @@ class AllContestCrad extends StatelessWidget {
                   spotsFillBar(width),
                   Row(
                     children: [
-                      Text("850 spots left",
+                      Text("${totalSpots - filledSpots} spots left",
                           style: AppTextStyles.primaryStyle(
                               14.0,
                               Color(0x80191d88),
                               FontWeight.w500)),
                       Spacer(),
-                      Text("2500 spots",
+                      Text("$totalSpots spots",
                           style: AppTextStyles.primaryStyle(
                               14.0,
                               Colors.black54,
@@ -236,9 +241,11 @@ class AllContestCrad extends StatelessWidget {
   }
 
   Container spotsFillBar(double width) {
+    double barWidth = width - 35;
+    double percentFilled = totalSpots == 0 ? 0 : filledSpots / totalSpots;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
-      width: width - 35,
+      width: barWidth,
       decoration: BoxDecoration(
         color: AppColors.primaryColor.withOpacity(0.1),
         borderRadius: BorderRadius.circular(5),
@@ -247,7 +254,7 @@ class AllContestCrad extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            width: width / 2,
+            width: barWidth * percentFilled,
             decoration: BoxDecoration(
               color: AppColors.primaryColor,
               borderRadius: BorderRadius.circular(5),
@@ -258,5 +265,4 @@ class AllContestCrad extends StatelessWidget {
       ),
     );
   }
-
 }

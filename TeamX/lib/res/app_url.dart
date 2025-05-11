@@ -2,7 +2,7 @@ class AppUrl {
   // static var localIp = '192.168.29.41';
   // static var awsIp = 'api.playaway.in';
 
-  static var baseUrl = 'http://172.31.124.150:8080';
+  static var baseUrl = 'http://192.168.1.30:8080';
   // static var wsUrl = 'ws://$localIp:8080/ws/updates/';
   // static var paymentUrl = 'http://$localIp:9000/payment';
   // static var kycUrl = 'http://$localIp:9000/kyc';
@@ -12,8 +12,19 @@ class AppUrl {
   // static var kycUrl = 'https://$awsIp/kyc';
   // static var wsUrl = 'wss://$awsIp/ws/updates/';
 
+  // Auth
   static var loginEndPint = '$baseUrl/auth/login';
   static var signUpEndPint = '$baseUrl/auth/signup';
+
+  // Contests
+  static var listContest = '$baseUrl/contests';
+
+
+
+
+
+
+
   
   static var verifyTokenEndPoint = '$baseUrl/accounts/verify_token';
   static var updateDisplayOrderStatusEndPoint =
