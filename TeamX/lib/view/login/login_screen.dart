@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:teamx/res/app_url.dart';
 import 'package:teamx/utils/utils.dart'; // Adjust the path if needed
 import 'package:teamx/view/fantasy/contest_screen.dart'; // Add this import
+import 'package:teamx/view/login/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -155,7 +156,10 @@ class _LoginScreenState extends State<LoginScreen> {
                         alignment: Alignment.centerRight,
                         child: TextButton(
                           onPressed: () {
-                            // Handle sign up navigation
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                            );
                           },
                           child: const Text(
                             "Sign Up",
