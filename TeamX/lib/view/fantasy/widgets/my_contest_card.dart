@@ -358,7 +358,7 @@ class MyContestCard extends StatelessWidget {
         ),
         Row(
           children: [
-            Text("${filled} spots left",
+            Text("${filled} spots taken",
                 style: AppTextStyles.primaryStyle(14.0, Color(0x80191d88), FontWeight.w500)),
             Spacer(),
             Text("${totalSpots} spots",
