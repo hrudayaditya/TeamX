@@ -235,9 +235,11 @@ class _CompleteMatchContestDetailsState extends State<CompleteMatchContestDetail
                         itemCount: 1,
                         itemBuilder: (BuildContext context, int index) {
                           return MyContestCard(
-                            id: 'dummy_id', // <-- Add a real id here if available
+                            id: 'dummy_id', // Replace with a real id if available
                             prize: 2500,
                             entry: 15,
+                            totalSpots: 800,
+                            filledSpots: 300,
                             teams: [
                               {
                                 'captain': 'F kay',
@@ -252,9 +254,8 @@ class _CompleteMatchContestDetailsState extends State<CompleteMatchContestDetail
                                 'viceCaptain': 'F y',
                               },
                             ],
-                            totalSpots: 800,
-                            filledSpots: 300,
                             isFinished: true,
+                            contest: {}, // Pass the full contest details; using {} as a placeholder
                           );
                         },
                       ),
@@ -268,7 +269,12 @@ class _CompleteMatchContestDetailsState extends State<CompleteMatchContestDetail
                       child: ListView.builder(
                         itemCount: 1,
                         itemBuilder: (BuildContext context, int index) {
-                          return MyTeamsCard();
+                           return MyTeamsCard(
+                                teamName: "Team ${index + 1}",
+                                captain: "Captain Name",      // Replace with real data if available
+                                viceCaptain: "Vice Captain",  // Replace with real data if available
+                                roleStats: {"WK": 0, "BAT": 0, "AR": 0, "BOWL": 0},
+                              );
                         },
                       ),
                     ),
