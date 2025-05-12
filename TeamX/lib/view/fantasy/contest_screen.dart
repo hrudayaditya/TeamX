@@ -168,12 +168,43 @@ class _ContestScreenState extends State<ContestScreen>
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
         child: AppBar(
           iconTheme: const IconThemeData(size: 20, color: Colors.white),
-          backgroundColor: const Color(0xff191D88),
+          backgroundColor: const Color.fromARGB(255, 72, 133, 190),
           elevation: 1.0,
           title: Row(
             children: [
-              Text("Contests", style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
+              // Logoff button: clear secure storage values and navigate to login screen.
+              IconButton(
+                icon: const Icon(Icons.logout, color: Colors.white),
+                onPressed: () async {
+                  await Utils().secureStorage.write(key: 'jwt', value: '');
+                  await Utils().secureStorage.write(key: 'email', value: '');
+                  await Utils().secureStorage.write(key: 'username', value: '');
+                  Navigator.pushNamedAndRemoveUntil(
+                    context,
+                    '/login', // Ensure this route is defined in your main.dart
+                    (route) => false,
+                  );
+                },
+              ),
+              const SizedBox(width: 8),
+              Text("My TeamX", style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
               const Spacer(),
+              IconButton(
+                icon: const Icon(Icons.stars, color: Colors.white),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/fantasyPointsSystem');
+                },
+              ),
+              IconButton(
+                icon: Image.asset(
+                  'assets/wallet.png', // Ensure this file exists and is properly listed in pubspec.yaml
+                  width: 24,
+                  height: 24,
+                ),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/walletPage');
+                },
+              ),
             ],
           ),
         ),
