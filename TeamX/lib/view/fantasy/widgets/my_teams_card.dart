@@ -56,6 +56,11 @@ class MyTeamsCard extends StatelessWidget {
     );
   }
 
+  String _cleanTeamName(String name) {
+    // Remove any occurrence of " (Team X)" using regular expression.
+    return name.replaceAll(RegExp(r'\s*\(Team\s*\d+\)'), '');
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -86,7 +91,7 @@ class MyTeamsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header with Team Name and Edit Icon
+            // Header with Team Name and Edit Icon (Team name cleaned)
             Container(
               padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               decoration: BoxDecoration(
@@ -100,7 +105,7 @@ class MyTeamsCard extends StatelessWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      teamName,
+                      _cleanTeamName(teamName),
                       style: AppTextStyles.terniaryStyle(18, Colors.black87, FontWeight.bold),
                     ),
                   ),
