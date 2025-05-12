@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../res/app_text_style.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../res/app_text_style.dart'; // You can remove this if using GoogleFonts directly.
 import '../../../res/color.dart';
 
 class MyTeamsCard extends StatelessWidget {
@@ -16,6 +17,7 @@ class MyTeamsCard extends StatelessWidget {
     required this.roleStats,
   });
 
+  // Helper to build the player image with badge.
   Widget _buildPlayerImage(String badgeText,
       {required double size,
       required Color badgeColor,
@@ -47,7 +49,11 @@ class MyTeamsCard extends StatelessWidget {
               ),
               child: Text(
                 badgeText,
-                style: AppTextStyles.terniaryStyle(10, badgeTextColor, FontWeight.bold),
+                style: GoogleFonts.lato(
+                  fontSize: 10,
+                  fontWeight: FontWeight.bold,
+                  color: badgeTextColor,
+                ),
               ),
             ),
           ),
@@ -64,26 +70,24 @@ class MyTeamsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double imageSize = width * 0.18;
+    double imageSize = width * 0.15;
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-      elevation: 3,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+      elevation: 5,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(16),
           gradient: const LinearGradient(
             colors: [
-              Color(0xffd4dffc),
-              Color(0xbff0f3fe),
-              Color(0x80f0f3fe),
-              Color(0xfff0f3fe),
+              Color(0xffe0f7fa),
+              Color.fromARGB(255, 72, 133, 190),
             ],
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
           image: const DecorationImage(
-            image: AssetImage('assets/ground_lines.png'),
+            image: AssetImage('assets/ground.png'),
             fit: BoxFit.cover,
             opacity: 0.05,
           ),
@@ -91,83 +95,97 @@ class MyTeamsCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Header with Team Name and Edit Icon (Team name cleaned)
+            // Header with team name.
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.7),
+                color: Colors.white.withOpacity(0.85),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(12),
-                  topRight: Radius.circular(12),
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
                 ),
               ),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      _cleanTeamName(teamName),
-                      style: AppTextStyles.terniaryStyle(18, Colors.black87, FontWeight.bold),
-                    ),
-                  ),
-                  // Icon(
-                  //   Icons.mode_edit,
-                  //   color: AppColors.primaryColor,
-                  //   size: 22,
-                  // ),
-                ],
+              child: Text(
+                _cleanTeamName(teamName),
+                style: GoogleFonts.lato(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
               ),
             ),
             const Divider(height: 1, color: Colors.black26),
-            // Captain and ViceCaptain Section (Image above the player's name)
+            // Captain and Vice-Captain Section.
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  // Captain Block
+                  // Captain Block.
                   Column(
                     children: [
                       Text(
                         'CAP',
-                        style: AppTextStyles.terniaryStyle(14, Colors.black54, FontWeight.w600),
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black54,
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      _buildPlayerImage("C", size: imageSize, badgeColor: AppColors.primaryColor, badgeTextColor: Colors.white),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
+                      _buildPlayerImage("C",
+                          size: imageSize,
+                          badgeColor: AppColors.primaryColor,
+                          badgeTextColor: Colors.white),
+                      const SizedBox(height: 8),
                       Text(
                         captain,
-                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w700),
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   ),
-                  // Vice-Captain Block
+                  // Vice-Captain Block.
                   Column(
                     children: [
                       Text(
                         'VC',
-                        style: AppTextStyles.terniaryStyle(14, Colors.black54, FontWeight.w600),
+                        style: GoogleFonts.lato(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black54,
+                        ),
                       ),
-                      const SizedBox(height: 4),
-                      _buildPlayerImage("VC", size: imageSize, badgeColor: Colors.black87, badgeTextColor: Colors.white),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 8),
+                      _buildPlayerImage("VC",
+                          size: imageSize,
+                          badgeColor: Colors.black87,
+                          badgeTextColor: Colors.white),
+                      const SizedBox(height: 8),
                       Text(
                         viceCaptain,
-                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w700),
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
-            // Role Stats Section
+            // Role Stats Section.
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.8),
+                color: Colors.white.withOpacity(0.85),
                 borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(12),
-                  bottomRight: Radius.circular(12),
-                ),
+                    bottomLeft: Radius.circular(16),
+                    bottomRight: Radius.circular(16)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -176,12 +194,20 @@ class MyTeamsCard extends StatelessWidget {
                     children: [
                       Text(
                         role,
-                        style: AppTextStyles.primaryStyle(14, Colors.black54, FontWeight.w500),
+                        style: GoogleFonts.lato(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         '${roleStats[role] ?? 0}',
-                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w600),
+                        style: GoogleFonts.lato(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
                     ],
                   );
