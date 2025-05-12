@@ -18,6 +18,9 @@ class _TeamPreviewState extends State<TeamPreview> {
   late List<Map<String, dynamic>> allRounders;
   late List<Map<String, dynamic>> bowlers;
 
+  String? selectedCaptain;
+  String? selectedViceCaptain;
+
   @override
   void initState() {
     super.initState();
@@ -31,14 +34,19 @@ class _TeamPreviewState extends State<TeamPreview> {
     }).toList();
     allRounders = widget.selectedPlayers.where((p) {
       final role = (p['role']?.toLowerCase() ?? '');
-      return role == 'allrounder' ||
-          role == 'all-rounder' ||
-          role.contains('all');
+      return role == 'allrounder' || role == 'all-rounder' || role.contains('all');
     }).toList();
     bowlers = widget.selectedPlayers.where((p) {
       final role = (p['role']?.toLowerCase() ?? '');
       return role == 'bowler' || role == 'bowl';
     }).toList();
+  }
+
+  void _createTeam() {
+    print('Team Players:');
+    print(widget.selectedPlayers);
+    print('Selected Captain: $selectedCaptain');
+    print('Selected Vice Captain: $selectedViceCaptain');
   }
 
   @override
@@ -52,14 +60,12 @@ class _TeamPreviewState extends State<TeamPreview> {
       ),
       body: Stack(
         children: [
-          // Full screen fixed background image.
           Positioned.fill(
             child: Image.asset(
               'assets/ground.jpg',
               fit: BoxFit.cover,
             ),
           ),
-          // Overlay content.
           Column(
             children: [
               Container(
@@ -72,12 +78,22 @@ class _TeamPreviewState extends State<TeamPreview> {
                   padding: const EdgeInsets.all(5.0),
                   child: SingleChildScrollView(
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
+                      children: [
                         _roleSection('WICKET KEEPERS', wicketkeeper),
                         _roleSection('BATSMAN', batsmen),
                         _roleSection('ALL ROUNDERS', allRounders),
                         _roleSection('BOWLERS', bowlers),
+                        const SizedBox(height: 20),
+                        ElevatedButton(
+                          onPressed: _createTeam,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xff191D88),
+                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          ),
+                          child: Text("Create Team",
+                              style: AppTextStyles.primaryStyle(16, AppColors.white, FontWeight.w600)),
+                        ),
+                        const SizedBox(height: 20),
                       ],
                     ),
                   ),
@@ -103,12 +119,26 @@ class _TeamPreviewState extends State<TeamPreview> {
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: players
-                .map((p) => Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: PlayerIcon(player: p),
-                    ))
-                .toList(),
+            children: players.map((p) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: SelectablePlayerIcon(
+                  player: p,
+                  isCaptain: selectedCaptain == p['name'],
+                  isVice: selectedViceCaptain == p['name'],
+                  onCaptainTap: () {
+                    setState(() {
+                      selectedCaptain = p['name'];
+                    });
+                  },
+                  onViceTap: () {
+                    setState(() {
+                      selectedViceCaptain = p['name'];
+                    });
+                  },
+                ),
+              );
+            }).toList(),
           ),
         ),
       ],
@@ -116,15 +146,26 @@ class _TeamPreviewState extends State<TeamPreview> {
   }
 }
 
-class PlayerIcon extends StatelessWidget {
+class SelectablePlayerIcon extends StatelessWidget {
   final Map<String, dynamic> player;
+  final bool isCaptain;
+  final bool isVice;
+  final VoidCallback onCaptainTap;
+  final VoidCallback onViceTap;
 
-  const PlayerIcon({Key? key, required this.player}) : super(key: key);
+  const SelectablePlayerIcon({
+    Key? key,
+    required this.player,
+    required this.isCaptain,
+    required this.isVice,
+    required this.onCaptainTap,
+    required this.onViceTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         ClipOval(
           child: Image.network(
             player['playerImg'] ?? '',
@@ -142,11 +183,43 @@ class PlayerIcon extends StatelessWidget {
             color: Colors.black,
             borderRadius: BorderRadius.circular(5),
           ),
-          child: Text(player['name'] ?? '',
-              style: AppTextStyles.primaryStyle(12, Colors.white, FontWeight.w600)),
+          child: Text(
+            player['name'] ?? '',
+            style: AppTextStyles.primaryStyle(12, Colors.white, FontWeight.w600),
+          ),
         ),
         Text('${player['credit'] ?? ''} Cr',
             style: AppTextStyles.primaryStyle(14, Colors.white, FontWeight.w600)),
+        const SizedBox(height: 4),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: onCaptainTap,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: isCaptain ? Colors.orange : Colors.grey,
+                  shape: BoxShape.circle,
+                ),
+                child: Text("C", style: AppTextStyles.terniaryStyle(12, Colors.white, FontWeight.w600)),
+              ),
+            ),
+            GestureDetector(
+              onTap: onViceTap,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 4),
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: isVice ? Colors.orange : Colors.grey,
+                  shape: BoxShape.circle,
+                ),
+                child: Text("VC", style: AppTextStyles.terniaryStyle(10, Colors.white, FontWeight.w600)),
+              ),
+            ),
+          ],
+        )
       ],
     );
   }
