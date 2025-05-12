@@ -102,6 +102,23 @@ class _ContestScreenState extends State<ContestScreen>
         .map((c) => c['data'][0] as Map<String, dynamic>)
         .toList();
   }
+  
+  Map<String, int> _countRoleStats(List<dynamic> players) {
+    final Map<String, int> counts = {"WK": 0, "BAT": 0, "AR": 0, "BOWL": 0};
+    for (var player in players) {
+      final role = player['role'];
+      if (role == "WK") {
+        counts["WK"] = counts["WK"]! + 1;
+      } else if (role == "Batsman") {
+        counts["BAT"] = counts["BAT"]! + 1;
+      } else if (role == "Allrounder") {
+        counts["AR"] = counts["AR"]! + 1;
+      } else if (role == "Bowler") {
+        counts["BOWL"] = counts["BOWL"]! + 1;
+      }
+    }
+    return counts;
+  }
 
   List<Map<String, dynamic>> getMultiplierContests() {
     return contests
@@ -113,9 +130,7 @@ class _ContestScreenState extends State<ContestScreen>
   // Build MY TEAMS tab using the fetched response data.
   Column buildMyTeams(double width) {
     List<Widget> teamCards = [];
-    // Iterate through each contest entry.
     for (var contestEntry in myContests) {
-      // Use the contest name as a basis for team title.
       final contest = contestEntry['contest'] as Map<String, dynamic>;
       final contestData = (contest['data'] != null && contest['data'].isNotEmpty)
           ? contest['data'][0] as Map<String, dynamic>
@@ -123,17 +138,23 @@ class _ContestScreenState extends State<ContestScreen>
       final contestName = contestData['name'] ?? "Contest";
       // Get teams array.
       final teams = contestEntry['teams'] as List<dynamic>? ?? [];
+      // Extract teamInfo if available.
+      final teamInfo = contestData['teamInfo'] as List<dynamic>? ?? [];
       for (int i = 0; i < teams.length; i++) {
         final team = teams[i];
-        // Extract captain and viceCaptain names from the team details.
         final captain = team['captain']?['name'] ?? "N/A";
         final viceCaptain = team['viceCaptain']?['name'] ?? "N/A";
-        // Since the API does not provide roleStats, we’ll use default values.
-        final roleStats = {"WK": 0, "BAT": 0, "AR": 0, "BOWL": 0};
-        // Build a team name by combining contest name and team index.
+        final players = team['players'] as List<dynamic>? ?? [];
+        final roleStats = _countRoleStats(players);
+        // Choose team image from teamInfo (if available).
+        String teamImg = "";
+        if (teamInfo.isNotEmpty && teamInfo.length > i) {
+          teamImg = teamInfo[i]['img'] ?? "";
+        }
         final teamName = "$contestName (Team ${i + 1})";
         teamCards.add(MyTeamsCard(
           teamName: teamName,
+          // teamImg: teamImg,
           captain: captain,
           viceCaptain: viceCaptain,
           roleStats: roleStats,
