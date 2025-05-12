@@ -19,6 +19,8 @@ class AppUrl {
   // Contests
   static var listContest = '$baseUrl/contests';
 
+  //Get Players
+  static var getPlayers = '$baseUrl/players/match';
 
 
 
