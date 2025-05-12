@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -9,7 +8,8 @@ import 'fantasy_points_system.dart';
 import 'match_fantsay_page.dart';
 
 class ContestDetailsScreen extends StatefulWidget {
-  const ContestDetailsScreen({Key? key}) : super(key: key);
+  final String id;
+  const ContestDetailsScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   State<ContestDetailsScreen> createState() => _ContestDetailsScreenState();
@@ -17,15 +17,15 @@ class ContestDetailsScreen extends StatefulWidget {
 
 class _ContestDetailsScreenState extends State<ContestDetailsScreen>
     with SingleTickerProviderStateMixin {
-
   late TabController _tabController;
   bool isFree = true;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    // You can use widget.id here for your API call
+    // Example: fetchPlayersForContest(widget.id);
   }
 
   @override
@@ -41,7 +41,7 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
         child: AppBar(
           iconTheme: IconThemeData(
             size: 20,
-            color: Colors.white, // Set the color you want here
+            color: Colors.white,
           ),
           backgroundColor: Color(0xff191D88),
           elevation: 1.0,
@@ -53,18 +53,16 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
                     builder: (context) => CompleteMatchContestDetails(),
                   ));
                 },
-                child: Text("IND vs PAK",
+                child: Text("Contest ID: ${widget.id}",
                     style: AppTextStyles.primaryStyle(
                         20.0, AppColors.white, FontWeight.w600)),
               ),
               Spacer(),
-
               Image.asset(
                 color: Colors.white,
                 'assets/wallet.png',
                 height: 32,
               ),
-
               GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -139,7 +137,7 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
                         Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    MatchFantasyPage()));
+                                    MatchFantasyPage(contestId: widget.id)));
                       },
                       child: Container(
                         width: width,
@@ -357,7 +355,6 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
     );
   }
 
-
   Container spotsFillBar(double width) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
@@ -381,6 +378,4 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
       ),
     );
   }
-
-
 }

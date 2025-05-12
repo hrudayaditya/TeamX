@@ -7,23 +7,37 @@ import '../../../res/color.dart';
 import '../match_fantsay_page.dart';
 
 class AllContestCrad extends StatelessWidget {
+  final String id;
   final int prize;
   final int entry;
   final int totalSpots;
   final int filledSpots;
   final bool isFree;
+  final String matchName;
+  final String venue;
+  final String date;
+  final String status;
+  final List<dynamic> teamInfo;
+
   const AllContestCrad({
     super.key,
+    required this.id,
     required this.prize,
     required this.entry,
     required this.totalSpots,
     required this.filledSpots,
     required this.isFree,
+    required this.matchName,
+    required this.venue,
+    required this.date,
+    required this.status,
+    required this.teamInfo,
   });
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
+    double percentFilled = totalSpots == 0 ? 0 : filledSpots / totalSpots;
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -56,7 +70,50 @@ class AllContestCrad extends StatelessWidget {
           ],
         ),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            // --- Match Info Header ---
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: [
+                  // Team 1 image
+                  if (teamInfo.isNotEmpty)
+                    Image.network(
+                      teamInfo[0]['img'],
+                      width: 32,
+                      height: 32,
+                      errorBuilder: (_, __, ___) => Icon(Icons.sports_cricket),
+                    ),
+                  const SizedBox(width: 8),
+                  // VS
+                  Text('vs', style: TextStyle(fontWeight: FontWeight.bold)),
+                  const SizedBox(width: 8),
+                  // Team 2 image
+                  if (teamInfo.length > 1)
+                    Image.network(
+                      teamInfo[1]['img'],
+                      width: 32,
+                      height: 32,
+                      errorBuilder: (_, __, ___) => Icon(Icons.sports_cricket),
+                    ),
+                  const SizedBox(width: 12),
+                  // Match name and date
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(matchName, style: AppTextStyles.primaryStyle(14, Colors.black, FontWeight.bold)),
+                        Text(date, style: AppTextStyles.primaryStyle(12, Colors.grey, FontWeight.normal)),
+                        Text(venue, style: AppTextStyles.primaryStyle(12, Colors.grey, FontWeight.normal)),
+                        Text(status, style: AppTextStyles.primaryStyle(12, Colors.blueGrey, FontWeight.normal)),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // --- Contest Info ---
             Padding(
               padding: EdgeInsets.only(
                   top: 8, left: 14, right: 14),
@@ -107,9 +164,10 @@ class AllContestCrad extends StatelessWidget {
                       GestureDetector(
                         onTap: () {
                           Navigator.of(context).push(
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      MatchFantasyPage()));
+                            MaterialPageRoute(
+                              builder: (context) => MatchFantasyPage(contestId: id),
+                            ),
+                          );
                         },
                         child: Container(
                           padding: EdgeInsets.symmetric(
@@ -131,7 +189,7 @@ class AllContestCrad extends StatelessWidget {
                       ),
                     ],
                   ),
-                  spotsFillBar(width),
+                  spotsFillBar(width, percentFilled),
                   Row(
                     children: [
                       Text("${totalSpots - filledSpots} spots left",
@@ -183,7 +241,7 @@ class AllContestCrad extends StatelessWidget {
                       size: 11,
                     ),
                   ),
-                  Text("  45%",
+                  Text("  ${(percentFilled * 100).round()}%",
                       style: AppTextStyles.primaryStyle(
                           12.0,
                           Colors.black54,
@@ -240,9 +298,8 @@ class AllContestCrad extends StatelessWidget {
     );
   }
 
-  Container spotsFillBar(double width) {
+  Container spotsFillBar(double width, double percentFilled) {
     double barWidth = width - 35;
-    double percentFilled = totalSpots == 0 ? 0 : filledSpots / totalSpots;
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8),
       width: barWidth,

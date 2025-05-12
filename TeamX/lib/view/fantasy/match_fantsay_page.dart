@@ -11,7 +11,8 @@ import '../../res/color.dart';
 import '../../widgets/upcoming_matches.dart';
 
 class MatchFantasyPage extends StatefulWidget {
-  const MatchFantasyPage({Key? key}) : super(key: key);
+  final String contestId;
+  const MatchFantasyPage({Key? key, required this.contestId}) : super(key: key);
 
   @override
   State<MatchFantasyPage> createState() => _MatchFantasyPageState();

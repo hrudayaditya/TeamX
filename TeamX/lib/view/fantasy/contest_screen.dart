@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:teamx/view/Fantasy/complete_match_contest_details.dart';
+import 'package:teamx/view/Fantasy/contest_details.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../../res/app_url.dart';
@@ -82,18 +82,10 @@ class _ContestScreenState extends State<ContestScreen>
           elevation: 1.0,
           title: Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CompleteMatchContestDetails(),
-                  ));
-                },
-                child: Text("Contests",
-                    style: AppTextStyles.primaryStyle(
-                        20.0, AppColors.white, FontWeight.w600)),
-              ),
+              Text("Contests",
+                  style: AppTextStyles.primaryStyle(
+                      20.0, AppColors.white, FontWeight.w600)),
               Spacer(),
-              // Add wallet or other icons if needed
             ],
           ),
         ),
@@ -153,15 +145,26 @@ class _ContestScreenState extends State<ContestScreen>
                                   "Free Contests",
                                   style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold),
                                 ),
-                                children: getFreeContests()
-                                    .map((match) => AllContestCrad(
-                                          prize: match['prizePool'] ?? 0,
-                                          entry: match['entryFee'] ?? 0,
-                                          totalSpots: match['totalSpots'] ?? 0,
-                                          filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
-                                          isFree: (match['entryFee'] ?? 0) == 0,
-                                        ))
-                                    .toList(),
+                                children: getFreeContests().map((match) {
+                                  final contestObj = contests.firstWhere(
+                                    (c) => c['data'][0]['name'] == match['name'],
+                                    orElse: () => null,
+                                  );
+                                  final contestId = contestObj != null ? contestObj['id'] : '';
+                                  return AllContestCrad(
+                                    id: contestId,
+                                    prize: match['prizePool'] ?? 0,
+                                    entry: match['entryFee'] ?? 0,
+                                    totalSpots: match['totalSpots'] ?? 0,
+                                    filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
+                                    isFree: (match['entryFee'] ?? 0) == 0,
+                                    matchName: match['name'] ?? '',
+                                    venue: match['venue'] ?? '',
+                                    date: match['date'] ?? '',
+                                    status: match['status'] ?? '',
+                                    teamInfo: match['teamInfo'] ?? [],
+                                  );
+                                }).toList(),
                               ),
                             if (getMultiplierContests().isNotEmpty)
                               ExpansionTile(
@@ -170,17 +173,27 @@ class _ContestScreenState extends State<ContestScreen>
                                   "Multiplier Contests",
                                   style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold),
                                 ),
-                                children: getMultiplierContests()
-                                    .map((match) => AllContestCrad(
-                                          prize: match['prizePool'] ?? 0,
-                                          entry: match['entryFee'] ?? 0,
-                                          totalSpots: match['totalSpots'] ?? 0,
-                                          filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
-                                          isFree: (match['entryFee'] ?? 0) == 0,
-                                        ))
-                                    .toList(),
+                                children: getMultiplierContests().map((match) {
+                                  final contestObj = contests.firstWhere(
+                                    (c) => c['data'][0]['name'] == match['name'],
+                                    orElse: () => null,
+                                  );
+                                  final contestId = contestObj != null ? contestObj['id'] : '';
+                                  return AllContestCrad(
+                                    id: contestId,
+                                    prize: match['prizePool'] ?? 0,
+                                    entry: match['entryFee'] ?? 0,
+                                    totalSpots: match['totalSpots'] ?? 0,
+                                    filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
+                                    isFree: (match['entryFee'] ?? 0) == 0,
+                                    matchName: match['name'] ?? '',
+                                    venue: match['venue'] ?? '',
+                                    date: match['date'] ?? '',
+                                    status: match['status'] ?? '',
+                                    teamInfo: match['teamInfo'] ?? [],
+                                  );
+                                }).toList(),
                               ),
-                            // Add more collapsible sections as needed
                           ],
                         ),
                       ),
