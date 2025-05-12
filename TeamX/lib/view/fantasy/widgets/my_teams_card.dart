@@ -16,210 +16,176 @@ class MyTeamsCard extends StatelessWidget {
     required this.roleStats,
   });
 
+  Widget _buildPlayerImage(String badgeText,
+      {required double size,
+      required Color badgeColor,
+      required Color badgeTextColor}) {
+    return Container(
+      width: size,
+      height: size,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          ClipOval(
+            child: Image.asset(
+              'assets/cricket-player.png',
+              width: size,
+              height: size,
+              fit: BoxFit.cover,
+            ),
+          ),
+          // Positioned badge
+          Positioned(
+            right: -4,
+            bottom: -4,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              decoration: BoxDecoration(
+                color: badgeColor,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.white, width: 1.5),
+              ),
+              child: Text(
+                badgeText,
+                style: AppTextStyles.terniaryStyle(10, badgeTextColor, FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    return Stack(
-      children: [
-        Container(
-          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: const [
-                Color(0xffd4dffc),
-                Color(0xbff0f3fe),
-                Color(0x80f0f3fe),
-                Color(0xfff0f3fe),
-              ],
-              begin: Alignment.bottomCenter,
-              end: Alignment.topCenter,
-            ),
-            color: const Color(0xfff8f8fe),
-            borderRadius: BorderRadius.circular(10),
-            border: Border.all(width: 2.5, color: Colors.white),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  spreadRadius: 2,
-                  blurRadius: 20)
+    double imageSize = width * 0.18;
+    return Card(
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xffd4dffc),
+              Color(0xbff0f3fe),
+              Color(0x80f0f3fe),
+              Color(0xfff0f3fe),
             ],
-            image: const DecorationImage(
-              image: AssetImage('assets/ground_lines.png'),
-              fit: BoxFit.fitWidth,
-            ),
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
           ),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white30,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
-                  ),
-                  border: const Border(
-                    bottom: BorderSide(width: 0.5, color: Colors.white),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      teamName,
-                      style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w700),
-                    ),
-                    const Icon(
-                      Icons.mode_edit,
-                      color: Colors.white,
-                      size: 22,
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, left: 14, right: 14),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            Text(
-                              'CAP',
-                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
-                            ),
-                            Text(
-                              captain,
-                              style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(width: 25),
-                        Column(
-                          children: [
-                            Text(
-                              'VC',
-                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
-                            ),
-                            Text(
-                              viceCaptain,
-                              style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          width: width * 0.2,
-                          height: 70,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  'assets/cricket-player.png',
-                                  height: 50,
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'C',
-                                    style: AppTextStyles.terniaryStyle(7, Colors.white, FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: width * 0.2,
-                          height: 70,
-                          child: Stack(
-                            children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  'assets/cricket-player.png',
-                                  height: 50,
-                                ),
-                              ),
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                child: Container(
-                                  padding: const EdgeInsets.all(4),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                      color: Colors.black,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    'VC',
-                                    style: AppTextStyles.terniaryStyle(7, Colors.black, FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 14),
-              Container(
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
-                decoration: BoxDecoration(
-                  color: Colors.white30,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(8),
-                    bottomRight: Radius.circular(8),
-                  ),
-                  border: const Border(
-                    top: BorderSide(width: 0.5, color: Colors.white),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    for (var role in ['WK', 'BAT', 'AR', 'BOWL'])
-                      RichText(
-                        textAlign: TextAlign.center,
-                        text: TextSpan(
-                          text: "$role  ",
-                          style: AppTextStyles.primaryStyle(16.0, Colors.black54, FontWeight.w500),
-                          children: <TextSpan>[
-                            TextSpan(
-                              text: '${roleStats[role] ?? 0}',
-                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                  ],
-                ),
-              )
-            ],
+          image: const DecorationImage(
+            image: AssetImage('assets/ground_lines.png'),
+            fit: BoxFit.cover,
+            opacity: 0.05,
           ),
         ),
-      ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Header with Team Name and Edit Icon
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.7),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
+                ),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      teamName,
+                      style: AppTextStyles.terniaryStyle(18, Colors.black87, FontWeight.bold),
+                    ),
+                  ),
+                  // Icon(
+                  //   Icons.mode_edit,
+                  //   color: AppColors.primaryColor,
+                  //   size: 22,
+                  // ),
+                ],
+              ),
+            ),
+            const Divider(height: 1, color: Colors.black26),
+            // Captain and ViceCaptain Section (Image above the player's name)
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  // Captain Block
+                  Column(
+                    children: [
+                      Text(
+                        'CAP',
+                        style: AppTextStyles.terniaryStyle(14, Colors.black54, FontWeight.w600),
+                      ),
+                      const SizedBox(height: 4),
+                      _buildPlayerImage("C", size: imageSize, badgeColor: AppColors.primaryColor, badgeTextColor: Colors.white),
+                      const SizedBox(height: 4),
+                      Text(
+                        captain,
+                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  // Vice-Captain Block
+                  Column(
+                    children: [
+                      Text(
+                        'VC',
+                        style: AppTextStyles.terniaryStyle(14, Colors.black54, FontWeight.w600),
+                      ),
+                      const SizedBox(height: 4),
+                      _buildPlayerImage("VC", size: imageSize, badgeColor: Colors.black87, badgeTextColor: Colors.white),
+                      const SizedBox(height: 4),
+                      Text(
+                        viceCaptain,
+                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w700),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            // Role Stats Section
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.8),
+                borderRadius: const BorderRadius.only(
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12),
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: ['WK', 'BAT', 'AR', 'BOWL'].map((role) {
+                  return Column(
+                    children: [
+                      Text(
+                        role,
+                        style: AppTextStyles.primaryStyle(14, Colors.black54, FontWeight.w500),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${roleStats[role] ?? 0}',
+                        style: AppTextStyles.terniaryStyle(16, Colors.black, FontWeight.w600),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
