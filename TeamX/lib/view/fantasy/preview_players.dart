@@ -74,6 +74,24 @@ class _TeamPreviewState extends State<TeamPreview> {
   }
 
   Future<void> _createTeam() async {
+    // Check if both captain and vice captain are selected.
+    if (selectedCaptain == null || selectedViceCaptain == null) {
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Selection Required"),
+          content: const Text("Please select both a Captain and a Vice Captain."),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text("OK"),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
     final utils = Utils();
     final email = await utils.fetchDataSecure('email');
     print("Contest Data: ${widget.contest}");
@@ -114,7 +132,7 @@ class _TeamPreviewState extends State<TeamPreview> {
       orElse: () => {},
     );
 
-    // Prepare team data; save players as-is along with captain and vice captain objects.
+    // Prepare team data; saving players as-is with captain and vice captain information.
     final teamData = {
       "userEmail": email,
       "contestId": widget.contest['id'] ?? widget.contest['contestId'],
