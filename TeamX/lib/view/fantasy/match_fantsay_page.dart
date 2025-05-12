@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:teamx/view/Fantasy/chosse_captain_and_vice_captian.dart';
 import 'package:teamx/view/Fantasy/preview_players.dart';
 import 'package:teamx/view/Fantasy/widgets/team_and_player_info.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import '../../cards/glassmorphism_card.dart';
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
 import '../../widgets/upcoming_matches.dart';
+import '../../res/app_url.dart';
 
 class MatchFantasyPage extends StatefulWidget {
   final String contestId;
@@ -20,15 +23,53 @@ class MatchFantasyPage extends StatefulWidget {
 
 class _MatchFantasyPageState extends State<MatchFantasyPage>
     with SingleTickerProviderStateMixin {
-  int count = 9;
   late TabController _tabController;
+
+  List<dynamic> wicketKeepers = [];
+  List<dynamic> batsmen = [];
+  List<dynamic> allRounders = [];
+  List<dynamic> bowlers = [];
+  bool isLoading = true;
+
+  int count = 9;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     _tabController = TabController(length: 4, vsync: this);
+    fetchPlayers();
+  }
+
+  Future<void> fetchPlayers() async {
+    final url = "${AppUrl.getPlayers}/${widget.contestId}";
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final List<dynamic> players = jsonDecode(response.body);
+      setState(() {
+        wicketKeepers = players.where((p) {
+          final role = (p['role']?.toLowerCase() ?? '');
+          return role == 'wk' || role.contains('wicket');
+        }).toList();
+        batsmen = players.where((p) {
+          final role = (p['role']?.toLowerCase() ?? '');
+          return role == 'batsman' || role == 'bat';
+        }).toList();
+        allRounders = players.where((p) {
+          final role = (p['role']?.toLowerCase() ?? '');
+          return role == 'allrounder' || role == 'all-rounder' || role.contains('all');
+        }).toList();
+        bowlers = players.where((p) {
+          final role = (p['role']?.toLowerCase() ?? '');
+          return role == 'bowler' || role == 'bowl';
+        }).toList();
+        isLoading = false;
+      });
+    } else {
+      setState(() {
+        isLoading = false;
+      });
+      // Optionally show error
+    }
   }
 
   @override
@@ -44,7 +85,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
         child: AppBar(
           iconTheme: IconThemeData(
             size: 20,
-            color: Colors.white, // Set the color you want here
+            color: Colors.white,
           ),
           backgroundColor: Color(0xff191D88),
           elevation: 1.0,
@@ -58,15 +99,10 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
         onTap: () {
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChooseCaptainAndViceCaptain(
-              batsmen: ['S Gill', 'R Sharma', 'V Kohli'],
-              bowlers: [
-                'MD Siraj',
-                'Y Cahal',
-                'P Cummins',
-                'J Bumrah',
-              ],
-              allRounders: ['G Maxwell', 'R Jadeja'],
-              wicketkeeper: ['K L Rahul', 'Q Decock'],
+              batsmen: batsmen.map((p) => p['name'] as String).toList(),
+              bowlers: bowlers.map((p) => p['name'] as String).toList(),
+              allRounders: allRounders.map((p) => p['name'] as String).toList(),
+              wicketkeeper: wicketKeepers.map((p) => p['name'] as String).toList(),
             ),
           ));
         },
@@ -115,17 +151,12 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                   style: AppTextStyles.primaryStyle(
                       14.0, AppColors.white, FontWeight.w600),
                 ),
-
-
                 TeamAndPlayerInfo(),
-
-
                 playersCounterBar(width),
               ],
             ),
           ),
           // ---- End of top Blue Container -----
-
           Container(
             decoration: BoxDecoration(
                 color: Color(0xfff8f8fe),
@@ -142,12 +173,6 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               labelColor: AppColors.primaryColor,
               dividerColor: Colors.transparent,
               indicatorWeight: 4,
-              onTap: (index) {
-                if (index == 0) {}
-                if (index == 1) {}
-                if (index == 2) {}
-                if (index == 3) {}
-              },
               tabs: [
                 Tab(
                   height: 30.0,
@@ -187,7 +212,6 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               ],
             ),
           ),
-
           const SizedBox(
             height: 5.0,
           ),
@@ -195,6 +219,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             child: TabBarView(
               controller: _tabController,
               children: [
+                // WK
                 Column(
                   children: [
                     Container(
@@ -207,12 +232,18 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       ),
                     ),
                     topBarPlayerTile(width),
-                    buildPlayerTile(
-                      width,
-                      count,
+                    Expanded(
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              itemCount: wicketKeepers.length,
+                              itemBuilder: (context, index) =>
+                                  playerTile(wicketKeepers[index], width),
+                            ),
                     ),
                   ],
                 ),
+                // BAT
                 Column(
                   children: [
                     Container(
@@ -225,9 +256,18 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       ),
                     ),
                     topBarPlayerTile(width),
-                    buildPlayerTile(width, 10),
+                    Expanded(
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              itemCount: batsmen.length,
+                              itemBuilder: (context, index) =>
+                                  playerTile(batsmen[index], width),
+                            ),
+                    ),
                   ],
                 ),
+                // AR
                 Column(
                   children: [
                     Container(
@@ -240,9 +280,18 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       ),
                     ),
                     topBarPlayerTile(width),
-                    buildPlayerTile(width, 5),
+                    Expanded(
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              itemCount: allRounders.length,
+                              itemBuilder: (context, index) =>
+                                  playerTile(allRounders[index], width),
+                            ),
+                    ),
                   ],
                 ),
+                // BOWL
                 Column(
                   children: [
                     Container(
@@ -255,7 +304,15 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       ),
                     ),
                     topBarPlayerTile(width),
-                    buildPlayerTile(width, 6),
+                    Expanded(
+                      child: isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              itemCount: bowlers.length,
+                              itemBuilder: (context, index) =>
+                                  playerTile(bowlers[index], width),
+                            ),
+                    ),
                   ],
                 ),
               ],
@@ -265,8 +322,6 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
       ),
     );
   }
-
-
 
   Container playersCounterBar(double width) {
     return Container(
@@ -285,7 +340,6 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                   return Expanded(
                     child: Container(
                       alignment: Alignment.topCenter,
-                      // width: 30,
                       decoration: ShapeDecoration(
                         color: Color(0xffE80F88),
                         shape: TrapeziumBorder(
@@ -309,7 +363,6 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                 } else {
                   return Expanded(
                     child: Container(
-                      // width: 20,
                       decoration: ShapeDecoration(
                         color: Colors.white,
                         shape: TrapeziumBorder(
@@ -365,20 +418,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                 ]),
             child: Row(
               children: [
-                Container(
-                  padding: EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                      color: AppColors.cardBlue.withOpacity(0.2),
-                      shape: BoxShape.circle),
-                  margin: EdgeInsets.only(right: 8),
-                  child: Icon(
-                    Icons.edit_outlined,
-                    size: 14,
-                    color: AppColors.cardBlue,
-                  ),
-                ),
                 AutoSizeText(
-                  "POINTS",
+                  "Style",
                   minFontSize: 10,
                   maxFontSize: 14,
                   style: AppTextStyles.primaryStyle(
@@ -407,109 +448,61 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
     );
   }
 
-  Expanded buildPlayerTile(double width, int count) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: count,
-        itemBuilder: (BuildContext context, int index) {
-          return Container(
-            // margin: EdgeInsets.symmetric(vertical: 8),
-            padding: EdgeInsets.only(left: 4, top: 16),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(color: Colors.white, width: 1),
+  Widget playerTile(dynamic player, double width) {
+    return Container(
+      padding: EdgeInsets.only(left: 4, top: 16),
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(color: Colors.white, width: 1),
+        ),
+      ),
+      child: Row(
+        children: [
+          Image.network(
+            player['playerImg'] ?? '',
+            width: width * 0.125,
+            errorBuilder: (_, __, ___) => Icon(Icons.person),
+          ),
+          SizedBox(width: 8),
+          SizedBox(
+            width: width * 0.4,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                player['name'] ?? '',
+                style: AppTextStyles.terniaryStyle(
+                    14, Colors.black, FontWeight.w500),
               ),
             ),
-            child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  'assets/cricket-player.png',
-                  width: width * 0.125,
-                ),
-                SizedBox(width: 8),
-                SizedBox(
-                  width: width * 0.4,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'A Rossington',
-                      style: AppTextStyles.terniaryStyle(
-                          14, Colors.black, FontWeight.w500),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: width * 0.2,
-                  child: Center(
-                    child: Text(
-                      '120',
-                      style: AppTextStyles.terniaryStyle(
-                          14, Colors.black54, FontWeight.w500),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: width * .135,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Text(
-                      '7.5',
-                      style: AppTextStyles.terniaryStyle(
-                          14, Colors.black, FontWeight.w600),
-                    ),
-                  ),
-                ),
-                SizedBox(
-                  width: 7,
-                ),
-                Icon(
-                  Icons.add_circle_outline_rounded,
-                  color: AppColors.green,
-                  size: 20,
-                )
-              ],
+          ),
+          SizedBox(
+            width: width * 0.2,
+            child: Center(
+              child: Text(
+                player['battingStyle'] ?? '',
+                style: AppTextStyles.terniaryStyle(
+                    14, Colors.black54, FontWeight.w500),
+              ),
             ),
-          );
-        },
-      ),
-    );
-  }
-}
-
-class MyContestCard extends StatelessWidget {
-  final String id;
-  final int prize;
-  final int entry;
-  final int totalSpots;
-  final int filledSpots;
-  final List<Map<String, String>> teams;
-  final bool isFinished;
-  MyContestCard({
-    super.key,
-    required this.id,
-    required this.prize,
-    required this.entry,
-    required this.totalSpots,
-    required this.filledSpots,
-    required this.teams,
-    required this.isFinished,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MatchFantasyPage(contestId: id),
-        ));
-      },
-      child: Container(
-        child: Text(
-          entry == 0 ? "FREE" : "\$${entry}",
-          style: AppTextStyles.terniaryStyle(
-              18, Colors.white, FontWeight.w700),
-        ),
+          ),
+          SizedBox(
+            width: width * .135,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                player['credit']?.toString() ?? '',
+                style: AppTextStyles.terniaryStyle(
+                    14, Colors.black, FontWeight.w600),
+              ),
+            ),
+          ),
+          SizedBox(width: 7),
+          Icon(
+            Icons.add_circle_outline_rounded,
+            color: AppColors.green,
+            size: 20,
+          )
+        ],
       ),
     );
   }
