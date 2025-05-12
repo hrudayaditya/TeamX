@@ -6,6 +6,7 @@ import 'package:teamx/view/Fantasy/preview_players.dart';
 import 'package:teamx/view/Fantasy/widgets/team_and_player_info.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:teamx/utils/utils.dart';
 
 import '../../cards/glassmorphism_card.dart';
 import '../../res/app_text_style.dart';
@@ -497,11 +498,18 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             ),
           ),
           SizedBox(width: 7),
-          Icon(
-            Icons.add_circle_outline_rounded,
-            color: AppColors.green,
-            size: 20,
-          )
+          GestureDetector(
+            onTap: () async {
+              final utils = Utils();
+              String email = await utils.fetchDataSecure('email');
+              print('Player ID: ${player['id']}, User Email: $email');
+            },
+            child: Icon(
+              Icons.add_circle_outline_rounded,
+              color: AppColors.green,
+              size: 20,
+            ),
+          ),
         ],
       ),
     );
