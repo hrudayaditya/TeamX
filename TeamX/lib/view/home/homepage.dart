@@ -1,7 +1,7 @@
 // import 'package:flutter/material.dart';
 // import 'package:teamx/view/Fantasy/contest_screen.dart';
 // import 'package:provider/provider.dart';
-//
+
 // import '../../cards/glassmorphism_card.dart';
 // import '../../data/response/status.dart';
 // import '../../res/app_text_style.dart';
@@ -9,14 +9,14 @@
 // import '../../view_model/matches_view_model.dart';
 // import '../../widgets/upcoming_matches.dart';
 // import '../Fantasy/match_fantsay_page.dart';
-//
+
 // class FantasyView extends StatefulWidget {
 //   const FantasyView({Key? key}) : super(key: key);
-//
+
 //   @override
 //   State<FantasyView> createState() => _FantasyViewState();
 // }
-//
+
 // class _FantasyViewState extends State<FantasyView> {
 //   @override
 //   Widget build(BuildContext context) {
