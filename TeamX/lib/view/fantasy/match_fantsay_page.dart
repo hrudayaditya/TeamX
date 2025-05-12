@@ -476,3 +476,41 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
     );
   }
 }
+
+class MyContestCard extends StatelessWidget {
+  final String id;
+  final int prize;
+  final int entry;
+  final int totalSpots;
+  final int filledSpots;
+  final List<Map<String, String>> teams;
+  final bool isFinished;
+  MyContestCard({
+    super.key,
+    required this.id,
+    required this.prize,
+    required this.entry,
+    required this.totalSpots,
+    required this.filledSpots,
+    required this.teams,
+    required this.isFinished,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => MatchFantasyPage(contestId: id),
+        ));
+      },
+      child: Container(
+        child: Text(
+          entry == 0 ? "FREE" : "\$${entry}",
+          style: AppTextStyles.terniaryStyle(
+              18, Colors.white, FontWeight.w700),
+        ),
+      ),
+    );
+  }
+}

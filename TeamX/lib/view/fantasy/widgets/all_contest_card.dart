@@ -43,7 +43,7 @@ class AllContestCrad extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context) =>
-                    ContestDetailsScreen()));
+                    ContestDetailsScreen(id:id)));
       },
       child: Container(
         margin: EdgeInsets.symmetric(

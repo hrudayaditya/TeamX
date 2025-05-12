@@ -6,6 +6,7 @@ import '../../../res/color.dart';
 import '../match_fantsay_page.dart';
 
 class MyContestCard extends StatelessWidget {
+  final String id; // <-- Add this
   final int prize;
   final int entry;
   final int totalSpots;
@@ -14,6 +15,7 @@ class MyContestCard extends StatelessWidget {
   final bool isFinished;
   MyContestCard({
     super.key,
+    required this.id, // <-- Add this
     required this.prize,
     required this.entry,
     required this.totalSpots,
@@ -87,7 +89,7 @@ class MyContestCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MatchFantasyPage()));
+                            builder: (context) => MatchFantasyPage(contestId: id)));
                       },
                       child: Container(
                         padding:
@@ -97,7 +99,7 @@ class MyContestCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
-                          entry == 0 ? "FREE" : "\$15",
+                          entry == 0 ? "FREE" : "\$${entry}",
                           style: AppTextStyles.terniaryStyle(
                               18, Colors.white, FontWeight.w700),
                         ),
@@ -204,7 +206,7 @@ class MyContestCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Joined with 2 Team(s)",
+                  Text("Joined with ${teams.length} Team(s)",
                       style: AppTextStyles.terniaryStyle(
                           14, Colors.black87, FontWeight.w500)),
                   SizedBox(
@@ -269,7 +271,7 @@ class MyContestCard extends StatelessWidget {
                           14, AppColors.primaryColor, FontWeight.w600),
                     ),
                     Text(
-                      'Yow Won \$30',
+                      'You Won \$30',
                       style: AppTextStyles.terniaryStyle(
                           14, AppColors.green, FontWeight.w600),
                     ),

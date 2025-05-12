@@ -218,6 +218,7 @@ class _ContestScreenState extends State<ContestScreen>
             itemCount: 1,
             itemBuilder: (BuildContext context, int index) {
               return MyContestCard(
+              id: 'dummy_id',
                 prize: 850,
                 entry: 15,
                 teams: [
