@@ -64,7 +64,7 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
             size: 20,
             color: Colors.white, // Set the color you want here
           ),
-          backgroundColor: Color(0xff191D88),
+          backgroundColor: Color.fromARGB(255, 72, 133, 190),
           elevation: 1.0,
           title: Text("POINTS SYSTEM",
               style: AppTextStyles.primaryStyle(
