@@ -32,6 +32,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
   List<dynamic> bowlers = [];
   bool isLoading = true;
 
+  List<dynamic> selectedPlayers = [];
+
   int count = 9;
 
   @override
@@ -98,6 +100,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: GestureDetector(
         onTap: () {
+          print('Selected Players: $selectedPlayers');
+          // You can keep your navigation here if needed
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => ChooseCaptainAndViceCaptain(
               batsmen: batsmen.map((p) => p['name'] as String).toList(),
@@ -450,6 +454,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
   }
 
   Widget playerTile(dynamic player, double width) {
+    bool isSelected = selectedPlayers.any((p) => p['id'] == player['id']);
     return Container(
       padding: EdgeInsets.only(left: 4, top: 16),
       decoration: BoxDecoration(
@@ -502,11 +507,21 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             onTap: () async {
               final utils = Utils();
               String email = await utils.fetchDataSecure('email');
-              print('Player ID: ${player['id']}, User Email: $email');
+              setState(() {
+                if (isSelected) {
+                  selectedPlayers.removeWhere((p) => p['id'] == player['id']);
+                  print('Removed Player ID: ${player['id']}, User Email: $email');
+                } else {
+                  selectedPlayers.add(player);
+                  print('Added Player ID: ${player['id']}, User Email: $email');
+                }
+              });
             },
             child: Icon(
-              Icons.add_circle_outline_rounded,
-              color: AppColors.green,
+              isSelected
+                  ? Icons.remove_circle_outline_rounded
+                  : Icons.add_circle_outline_rounded,
+              color: isSelected ? Colors.red : AppColors.green,
               size: 20,
             ),
           ),
