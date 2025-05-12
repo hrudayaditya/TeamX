@@ -1,187 +1,152 @@
 import 'package:flutter/material.dart';
 import 'package:teamx/view/Fantasy/widgets/team_and_player_info.dart';
-
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
 
 class TeamPreview extends StatefulWidget {
+  final List<Map<String, dynamic>> selectedPlayers;
 
-  final List<String> batsmen;
-  final List<String> bowlers;
-  final List<String> wicketkeeper;
-  final List<String> allRounders;
-
-
-  const TeamPreview({
-    required this.batsmen,required this.bowlers,required this.allRounders,required this.wicketkeeper,
-  });
+  const TeamPreview({required this.selectedPlayers, Key? key}) : super(key: key);
 
   @override
   State<TeamPreview> createState() => _TeamPreviewState();
 }
 
 class _TeamPreviewState extends State<TeamPreview> {
+  late List<Map<String, dynamic>> wicketkeeper;
+  late List<Map<String, dynamic>> batsmen;
+  late List<Map<String, dynamic>> allRounders;
+  late List<Map<String, dynamic>> bowlers;
+
+  @override
+  void initState() {
+    super.initState();
+    wicketkeeper = widget.selectedPlayers.where((p) {
+      final role = (p['role']?.toLowerCase() ?? '');
+      return role == 'wk' || role.contains('wicket');
+    }).toList();
+    batsmen = widget.selectedPlayers.where((p) {
+      final role = (p['role']?.toLowerCase() ?? '');
+      return role == 'batsman' || role == 'bat';
+    }).toList();
+    allRounders = widget.selectedPlayers.where((p) {
+      final role = (p['role']?.toLowerCase() ?? '');
+      return role == 'allrounder' ||
+          role == 'all-rounder' ||
+          role.contains('all');
+    }).toList();
+    bowlers = widget.selectedPlayers.where((p) {
+      final role = (p['role']?.toLowerCase() ?? '');
+      return role == 'bowler' || role == 'bowl';
+    }).toList();
+  }
 
   @override
   Widget build(BuildContext context) {
-
-    double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(
-          double.infinity,
-          AppBar().preferredSize.height,
-        ),
-        child: AppBar(
-          iconTheme: IconThemeData(
-            size: 20,
-            color: Colors.white, // Set the color you want here
-          ),
-          backgroundColor: Color(0xff191D88),
-          elevation: 1.0,
-          title: Text("Team Preview",
-              style: AppTextStyles.primaryStyle(
-                  20.0, AppColors.white, FontWeight.w600)),
-        ),
+      appBar: AppBar(
+        backgroundColor: const Color(0xff191D88),
+        elevation: 1.0,
+        title: Text("Team Preview",
+            style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
       ),
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color(0xff191D88),
+          // Full screen fixed background image.
+          Positioned.fill(
+            child: Image.asset(
+              'assets/ground.jpg',
+              fit: BoxFit.cover,
             ),
-            child: TeamAndPlayerInfo(),
           ),
-          Expanded(
-            child: Container(
-              // constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage('assets/ground.jpg'),
-                    fit: BoxFit.cover),
+          // Overlay content.
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                color: const Color(0xff191D88).withOpacity(0.85),
+                child: TeamAndPlayerInfo(),
               ),
-              child: Padding(
-                padding: const EdgeInsets.all(5.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    Text('WICKET KEEPERS',
-                      style: AppTextStyles.terniaryStyle(
-                        14.0,
-                        Colors.white,
-                        FontWeight.w600,
-                      ),
-                    ),
-
-                    Row(
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: SingleChildScrollView(
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        for(int i = 0; i < widget.wicketkeeper.length; i++)
-                          PlayerIcon(
-                            player: widget.wicketkeeper,
-                            i: i,
-                            player_type: 'wk',
-                          ),
+                        _roleSection('WICKET KEEPERS', wicketkeeper),
+                        _roleSection('BATSMAN', batsmen),
+                        _roleSection('ALL ROUNDERS', allRounders),
+                        _roleSection('BOWLERS', bowlers),
                       ],
                     ),
-
-                    SizedBox(height:8),
-
-                    Text('BATSMAN',
-                      style: AppTextStyles.terniaryStyle(
-                        14.0,
-                        Colors.white,
-                        FontWeight.w600,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        for(int i=0;i<widget.batsmen.length;i++)
-                          PlayerIcon(player: widget.batsmen, i: i,player_type: 'bat',),
-                      ],
-                    ),
-
-                    SizedBox(height:8),
-
-                    Text('ALL ROUNDERS',
-                      style: AppTextStyles.terniaryStyle(
-                        14.0,
-                        Colors.white,
-                        FontWeight.w600,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        for(int i = 0; i < widget.allRounders.length;i++)
-                          PlayerIcon(player: widget.allRounders, i: i,player_type: 'bat_ball',),
-                      ],
-                    ),
-
-                    SizedBox(height:8),
-
-                    Text('BOWLERS',
-                      style: AppTextStyles.terniaryStyle(
-                        14.0,
-                        Colors.white,
-                        FontWeight.w600,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        for(int i=0;i<widget.bowlers.length;i++)
-                          PlayerIcon(player: widget.bowlers, i: i,player_type: 'ball',),
-                      ],
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ],
       ),
     );
   }
+
+  Widget _roleSection(String title, List<Map<String, dynamic>> players) {
+    if (players.isEmpty) return const SizedBox.shrink();
+    return Column(
+      children: [
+        const SizedBox(height: 8),
+        Text(
+          title,
+          style: AppTextStyles.terniaryStyle(14.0, Colors.white, FontWeight.w600),
+        ),
+        const SizedBox(height: 4),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: players
+                .map((p) => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: PlayerIcon(player: p),
+                    ))
+                .toList(),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
 class PlayerIcon extends StatelessWidget {
-  const PlayerIcon({
-    Key? key,
-    required this.player,
-    required this.i,
-    required this.player_type,
-  }) : super(key: key);
+  final Map<String, dynamic> player;
 
-  final List<String> player;
-  final int i;
-  final String player_type;
+  const PlayerIcon({Key? key, required this.player}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Image.asset(
-          'assets/cricket-player.png',
-          width: 40,
+        ClipOval(
+          child: Image.network(
+            player['playerImg'] ?? '',
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover,
+            errorBuilder: (_, __, ___) =>
+                Image.asset('assets/cricket-player.png', width: 50, height: 50),
+          ),
         ),
+        const SizedBox(height: 4),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+          padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
           decoration: BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.circular(5),
           ),
-          child: Text(
-              player[i],
-              style: AppTextStyles.primaryStyle(12, Colors.white, FontWeight.w600)
-          ),
+          child: Text(player['name'] ?? '',
+              style: AppTextStyles.primaryStyle(12, Colors.white, FontWeight.w600)),
         ),
-        Text(
-            '7.5 Cr',
-            style: AppTextStyles.primaryStyle(14, Colors.white, FontWeight.w600)
-        ),
+        Text('${player['credit'] ?? ''} Cr',
+            style: AppTextStyles.primaryStyle(14, Colors.white, FontWeight.w600)),
       ],
     );
   }
