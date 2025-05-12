@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-
 import '../../../res/app_text_style.dart';
 import '../../../res/color.dart';
 
 class MyTeamsCard extends StatelessWidget {
+  final String teamName;
+  final String captain;
+  final String viceCaptain;
+  final Map<String, int> roleStats; // e.g. {'WK':1, 'BAT':2, 'AR':5, 'BOWL':3}
+
   const MyTeamsCard({
     super.key,
+    required this.teamName,
+    required this.captain,
+    required this.viceCaptain,
+    required this.roleStats,
   });
 
   @override
@@ -14,54 +22,54 @@ class MyTeamsCard extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                    Color(0xffd4dffc),
-                    Color(0xbff0f3fe),
-                    Color(0x80f0f3fe),
-                    Color(0xfff0f3fe),
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter),
-              color: Color(0xfff8f8fe),
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2.5, color: Colors.white),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    spreadRadius: 2,
-                    blurRadius: 20)
+            gradient: LinearGradient(
+              colors: const [
+                Color(0xffd4dffc),
+                Color(0xbff0f3fe),
+                Color(0x80f0f3fe),
+                Color(0xfff0f3fe),
               ],
-              image: DecorationImage(
-                  image: AssetImage('assets/ground_lines.png'),
-                  fit: BoxFit.fitWidth)),
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+            ),
+            color: const Color(0xfff8f8fe),
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(width: 2.5, color: Colors.white),
+            boxShadow: [
+              BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  spreadRadius: 2,
+                  blurRadius: 20)
+            ],
+            image: const DecorationImage(
+              image: AssetImage('assets/ground_lines.png'),
+              fit: BoxFit.fitWidth,
+            ),
+          ),
           child: Column(
             children: [
               Container(
-                padding:
-                EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.white30,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
                   ),
-                  border: Border(
-                    bottom:
-                    BorderSide(width: 0.5, color: Colors.white),
+                  border: const Border(
+                    bottom: BorderSide(width: 0.5, color: Colors.white),
                   ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'ADITYA (T1)',
-                      style: AppTextStyles.terniaryStyle(
-                          16, Colors.white, FontWeight.w700),
+                      teamName,
+                      style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w700),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.mode_edit,
                       color: Colors.white,
                       size: 22,
@@ -70,7 +78,7 @@ class MyTeamsCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(top: 8, left: 14, right: 14),
+                padding: const EdgeInsets.only(top: 8, left: 14, right: 14),
                 child: Column(
                   children: [
                     Row(
@@ -78,35 +86,29 @@ class MyTeamsCard extends StatelessWidget {
                         Column(
                           children: [
                             Text(
-                              'IND',
-                              style: AppTextStyles.terniaryStyle(
-                                  16, Colors.white, FontWeight.w600),
+                              'CAP',
+                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
                             ),
                             Text(
-                              '4',
-                              style: AppTextStyles.terniaryStyle(
-                                  18, Colors.white, FontWeight.w600),
+                              captain,
+                              style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w600),
                             ),
                           ],
                         ),
-                        SizedBox(
-                          width: 25,
-                        ),
+                        const SizedBox(width: 25),
                         Column(
                           children: [
                             Text(
-                              'PAK',
-                              style: AppTextStyles.terniaryStyle(
-                                  16, Colors.white, FontWeight.w600),
+                              'VC',
+                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
                             ),
                             Text(
-                              '7',
-                              style: AppTextStyles.terniaryStyle(
-                                  18, Colors.white, FontWeight.w600),
+                              viceCaptain,
+                              style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w600),
                             ),
                           ],
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Container(
                           width: width * 0.2,
                           height: 70,
@@ -123,7 +125,7 @@ class MyTeamsCard extends StatelessWidget {
                                 top: 0,
                                 left: 0,
                                 child: Container(
-                                  padding: EdgeInsets.all(4),
+                                  padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
                                     color: AppColors.primaryColor,
                                     shape: BoxShape.circle,
@@ -134,44 +136,14 @@ class MyTeamsCard extends StatelessWidget {
                                   ),
                                   child: Text(
                                     'C',
-                                    style:
-                                    AppTextStyles.terniaryStyle(
-                                        7,
-                                        Colors.white,
-                                        FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: width * 0.2,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 2, vertical: 2),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.primaryColor,
-                                    borderRadius:
-                                    BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    'A Rossington',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                    AppTextStyles.terniaryStyle(
-                                        9,
-                                        Colors.white,
-                                        FontWeight.w600),
+                                    style: AppTextStyles.terniaryStyle(7, Colors.white, FontWeight.w600),
                                   ),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(
-                          width: 10,
-                        ),
+                        const SizedBox(width: 10),
                         Container(
                           width: width * 0.2,
                           height: 70,
@@ -188,7 +160,7 @@ class MyTeamsCard extends StatelessWidget {
                                 top: 0,
                                 left: 0,
                                 child: Container(
-                                  padding: EdgeInsets.all(4),
+                                  padding: const EdgeInsets.all(4),
                                   decoration: BoxDecoration(
                                     color: AppColors.white,
                                     shape: BoxShape.circle,
@@ -199,35 +171,7 @@ class MyTeamsCard extends StatelessWidget {
                                   ),
                                   child: Text(
                                     'VC',
-                                    style:
-                                    AppTextStyles.terniaryStyle(
-                                        7,
-                                        Colors.black,
-                                        FontWeight.w600),
-                                  ),
-                                ),
-                              ),
-                              Positioned(
-                                bottom: 0,
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  width: width * 0.2,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 2, vertical: 2),
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius:
-                                    BorderRadius.circular(4),
-                                  ),
-                                  child: Text(
-                                    'S Singh',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style:
-                                    AppTextStyles.terniaryStyle(
-                                        9,
-                                        Colors.black,
-                                        FontWeight.w600),
+                                    style: AppTextStyles.terniaryStyle(7, Colors.black, FontWeight.w600),
                                   ),
                                 ),
                               ),
@@ -239,85 +183,36 @@ class MyTeamsCard extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 14,
-              ),
+              const SizedBox(height: 14),
               Container(
-                padding:
-                EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                 decoration: BoxDecoration(
                   color: Colors.white30,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(8),
                     bottomRight: Radius.circular(8),
                   ),
-                  border: Border(
+                  border: const Border(
                     top: BorderSide(width: 0.5, color: Colors.white),
                   ),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'WK  ',
-                        style: AppTextStyles.primaryStyle(
-                            16.0, Colors.black54, FontWeight.w500),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '1',
-                            style: AppTextStyles.terniaryStyle(
-                                16, Colors.white, FontWeight.w600),
-                          ),
-                        ],
+                    for (var role in ['WK', 'BAT', 'AR', 'BOWL'])
+                      RichText(
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          text: "$role  ",
+                          style: AppTextStyles.primaryStyle(16.0, Colors.black54, FontWeight.w500),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '${roleStats[role] ?? 0}',
+                              style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.w600),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'BAT  ',
-                        style: AppTextStyles.primaryStyle(
-                            16.0, Colors.black54, FontWeight.w500),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '2',
-                            style: AppTextStyles.terniaryStyle(
-                                16, Colors.white, FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'AR  ',
-                        style: AppTextStyles.primaryStyle(
-                            16.0, Colors.black54, FontWeight.w500),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '5',
-                            style: AppTextStyles.terniaryStyle(
-                                16, Colors.white, FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
-                    RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
-                        text: 'BOWL  ',
-                        style: AppTextStyles.primaryStyle(
-                            16.0, Colors.black54, FontWeight.w500),
-                        children: <TextSpan>[
-                          TextSpan(
-                            text: '3',
-                            style: AppTextStyles.terniaryStyle(
-                                16, Colors.white, FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ),
                   ],
                 ),
               )
