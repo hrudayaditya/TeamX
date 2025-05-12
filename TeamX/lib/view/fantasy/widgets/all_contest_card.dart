@@ -43,7 +43,22 @@ class AllContestCrad extends StatelessWidget {
         Navigator.of(context).push(
             MaterialPageRoute(
                 builder: (context) =>
-                    ContestDetailsScreen(id:id)));
+                    ContestDetailsScreen(
+                      id: id,
+                      contest: {
+                        "id": id,
+                        "prize": prize,
+                        "entryFee": entry,
+                        "totalSpots": totalSpots,
+                        "filledSpots": filledSpots,
+                        "isFree": isFree,
+                        "matchName": matchName,
+                        "venue": venue,
+                        "date": date,
+                        "status": status,
+                        "teamInfo": teamInfo,
+                      },
+                    )));
       },
       child: Container(
         margin: EdgeInsets.symmetric(
@@ -165,7 +180,22 @@ class AllContestCrad extends StatelessWidget {
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) => MatchFantasyPage(contestId: id),
+                              builder: (context) => MatchFantasyPage(
+                                contestId: id,
+                                contest: {
+                                  "id": id,
+                                  "prize": prize,
+                                  "entryFee": entry,
+                                  "totalSpots": totalSpots,
+                                  "filledSpots": filledSpots,
+                                  "isFree": isFree,
+                                  "matchName": matchName,
+                                  "venue": venue,
+                                  "date": date,
+                                  "status": status,
+                                  "teamInfo": teamInfo,
+                                },
+                              ),
                             ),
                           );
                         },

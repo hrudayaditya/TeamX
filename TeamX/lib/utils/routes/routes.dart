@@ -8,7 +8,7 @@ class Routes {
     switch (settings.name) {
       case RoutesName.splash:
         return MaterialPageRoute(
-          builder: (BuildContext context) => const ContestDetailsScreen(id: "0"),
+          builder: (BuildContext context) => const ContestDetailsScreen(id: "0", contest: {}),
         );
       default:
         return MaterialPageRoute(builder: (_) {

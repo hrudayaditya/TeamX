@@ -22,6 +22,10 @@ class AppUrl {
   //Get Players
   static var getPlayers = '$baseUrl/players/match';
 
+  //Create Team
+  static var createTeam = '$baseUrl/teams';
+  static var reduceAmount = '$baseUrl/auth/deduct';
+
 
 
 

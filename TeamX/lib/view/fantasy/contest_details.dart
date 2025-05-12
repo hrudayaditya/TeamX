@@ -9,7 +9,8 @@ import 'match_fantsay_page.dart';
 
 class ContestDetailsScreen extends StatefulWidget {
   final String id;
-  const ContestDetailsScreen({Key? key, required this.id}) : super(key: key);
+  final dynamic contest; // Added contest property to pass full contest details
+  const ContestDetailsScreen({Key? key, required this.id, required this.contest}) : super(key: key);
 
   @override
   State<ContestDetailsScreen> createState() => _ContestDetailsScreenState();
@@ -137,7 +138,10 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen>
                         Navigator.of(context).push(
                             MaterialPageRoute(
                                 builder: (context) =>
-                                    MatchFantasyPage(contestId: widget.id)));
+                                    MatchFantasyPage(
+                                      contestId: widget.id,
+                                      contest: widget.contest, // pass the full contest details
+                                    )));
                       },
                       child: Container(
                         width: width,

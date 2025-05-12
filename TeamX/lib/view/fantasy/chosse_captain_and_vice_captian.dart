@@ -245,7 +245,7 @@ class _ChooseCaptainAndViceCaptainState extends State<ChooseCaptainAndViceCaptai
                   }));
               
               Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => TeamPreview(selectedPlayers: selectedPlayers),
+                builder: (context) => TeamPreview(selectedPlayers: selectedPlayers, contest: {},),
               ));
             },
             child: Container(

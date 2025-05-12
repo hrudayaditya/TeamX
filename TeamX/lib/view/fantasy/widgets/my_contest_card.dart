@@ -89,7 +89,11 @@ class MyContestCard extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => MatchFantasyPage(contestId: id)));
+                          builder: (context) => MatchFantasyPage(
+                            contestId: id,
+                            contest: {}, // pass the complete contest details
+                          ),
+                        ));
                       },
                       child: Container(
                         padding:

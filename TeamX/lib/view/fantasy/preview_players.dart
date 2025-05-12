@@ -1,12 +1,22 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:teamx/view/Fantasy/widgets/team_and_player_info.dart';
+import 'package:http/http.dart' as http;
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
+import '../../res/app_url.dart';
+import '../../utils/utils.dart';
 
 class TeamPreview extends StatefulWidget {
   final List<Map<String, dynamic>> selectedPlayers;
+  // Accept contest details in the new format
+  final Map<String, dynamic> contest;
 
-  const TeamPreview({required this.selectedPlayers, Key? key}) : super(key: key);
+  const TeamPreview({
+    required this.selectedPlayers,
+    required this.contest,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<TeamPreview> createState() => _TeamPreviewState();
@@ -42,15 +52,111 @@ class _TeamPreviewState extends State<TeamPreview> {
     }).toList();
   }
 
-  void _createTeam() {
-    print('Team Players:');
-    print(widget.selectedPlayers);
+  Future<bool> _confirmPayment(int amount) async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text("Confirm Payment"),
+            content: Text("This contest costs $amount. Do you want to proceed?"),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text("No"),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text("Yes"),
+              )
+            ],
+          ),
+        )) ??
+        false;
+  }
+
+  Future<void> _createTeam() async {
+    final utils = Utils();
+    final email = await utils.fetchDataSecure('email');
+    print("Contest Data: ${widget.contest}");
+    final contestAmount = widget.contest['entryFee'] ?? 0;
+    print("Contest Entry Fee: $contestAmount");
+
+    if (contestAmount > 0) {
+      bool confirmed = await _confirmPayment(contestAmount);
+      if (!confirmed) return;
+
+      final reduceResponse = await http.post(
+        Uri.parse(AppUrl.reduceAmount),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({
+          "email": email,
+          "amount": contestAmount,
+        }),
+      );
+
+      if (reduceResponse.statusCode < 200 || reduceResponse.statusCode >= 300) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Payment failed. Please try again.")),
+        );
+        print("Reduce amount failed. Response: ${reduceResponse.body}");
+        return;
+      } else {
+        print("Wallet deducted successfully. Response: ${reduceResponse.body}");
+      }
+    }
+
+    // Find captain and vice captain objects from the selected players list.
+    final captainObject = widget.selectedPlayers.firstWhere(
+      (p) => p['name'] == selectedCaptain,
+      orElse: () => {},
+    );
+    final viceCaptainObject = widget.selectedPlayers.firstWhere(
+      (p) => p['name'] == selectedViceCaptain,
+      orElse: () => {},
+    );
+
+    // Prepare team data; save players as-is along with captain and vice captain objects.
+    final teamData = {
+      "userEmail": email,
+      "contestId": widget.contest['id'] ?? widget.contest['contestId'],
+      "players": widget.selectedPlayers,
+      "captain": captainObject,
+      "viceCaptain": viceCaptainObject,
+    };
+
+    final createResponse = await http.post(
+      Uri.parse(AppUrl.createTeam),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(teamData),
+    );
+
+    if (createResponse.statusCode == 201) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Team created successfully!")),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Failed to create team.")),
+      );
+      print("Failed to create team. TeamData: ${jsonEncode(teamData)}");
+      print("Response: ${createResponse.body}");
+    }
+
+    print('Contest Details: ${widget.contest}');
+    print('Team Players: ${widget.selectedPlayers}');
     print('Selected Captain: $selectedCaptain');
     print('Selected Vice Captain: $selectedViceCaptain');
   }
 
   @override
   Widget build(BuildContext context) {
+    // Display contest details using the new format:
+    // For example, show the "name" from the first item in the "data" array.
+    String contestName = widget.contest['data'] != null &&
+            widget.contest['data'].isNotEmpty &&
+            widget.contest['data'][0]['name'] != null
+        ? widget.contest['data'][0]['name']
+        : 'Contest Details';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xff191D88),
@@ -73,6 +179,17 @@ class _TeamPreviewState extends State<TeamPreview> {
                 color: const Color(0xff191D88).withOpacity(0.85),
                 child: TeamAndPlayerInfo(),
               ),
+              // Display contest details.
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(8),
+                color: Colors.white70,
+                child: Text(
+                  "Contest: $contestName",
+                  style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
@@ -85,13 +202,16 @@ class _TeamPreviewState extends State<TeamPreview> {
                         _roleSection('BOWLERS', bowlers),
                         const SizedBox(height: 20),
                         ElevatedButton(
-                          onPressed: _createTeam,
+                          onPressed:
+                              widget.selectedPlayers.isNotEmpty ? _createTeam : null,
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xff191D88),
-                            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           ),
                           child: Text("Create Team",
-                              style: AppTextStyles.primaryStyle(16, AppColors.white, FontWeight.w600)),
+                              style: AppTextStyles.primaryStyle(
+                                  16, AppColors.white, FontWeight.w600)),
                         ),
                         const SizedBox(height: 20),
                       ],
@@ -203,7 +323,8 @@ class SelectablePlayerIcon extends StatelessWidget {
                   color: isCaptain ? Colors.orange : Colors.grey,
                   shape: BoxShape.circle,
                 ),
-                child: Text("C", style: AppTextStyles.terniaryStyle(12, Colors.white, FontWeight.w600)),
+                child: Text("C",
+                    style: AppTextStyles.terniaryStyle(12, Colors.white, FontWeight.w600)),
               ),
             ),
             GestureDetector(
@@ -215,7 +336,8 @@ class SelectablePlayerIcon extends StatelessWidget {
                   color: isVice ? Colors.orange : Colors.grey,
                   shape: BoxShape.circle,
                 ),
-                child: Text("VC", style: AppTextStyles.terniaryStyle(10, Colors.white, FontWeight.w600)),
+                child: Text("VC",
+                    style: AppTextStyles.terniaryStyle(10, Colors.white, FontWeight.w600)),
               ),
             ),
           ],

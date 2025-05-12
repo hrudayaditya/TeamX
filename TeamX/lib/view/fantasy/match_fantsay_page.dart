@@ -15,7 +15,8 @@ import '../../res/app_url.dart';
 
 class MatchFantasyPage extends StatefulWidget {
   final String contestId;
-  const MatchFantasyPage({Key? key, required this.contestId}) : super(key: key);
+  final Map<String, dynamic> contest; // Add contest details as a parameter
+  const MatchFantasyPage({Key? key, required this.contestId, required this.contest}) : super(key: key);
 
   @override
   State<MatchFantasyPage> createState() => _MatchFantasyPageState();
@@ -97,8 +98,12 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
       floatingActionButton: GestureDetector(
         onTap: () {
           print('Selected Players: $selectedPlayers');
+          // Directly send contest details from widget.contest
           Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => TeamPreview(selectedPlayers: selectedPlayers),
+            builder: (context) => TeamPreview(
+              selectedPlayers: selectedPlayers,
+              contest: widget.contest, // directly pass the complete contest details
+            ),
           ));
         },
         child: Container(
@@ -106,10 +111,10 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
           width: 130,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(40),
-            color: Color(0xff191D88),
+            color: const Color(0xff191D88),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black12, spreadRadius: 2, blurRadius: 20, offset: Offset(0, 5))
+                  color: Colors.black12, spreadRadius: 2, blurRadius: 20, offset: const Offset(0, 5))
             ],
           ),
           child: Row(
