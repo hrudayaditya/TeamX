@@ -177,7 +177,7 @@ class _TeamPreviewState extends State<TeamPreview> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff191D88),
+        backgroundColor: const Color.fromARGB(255, 72, 133, 190),
         elevation: 1.0,
         title: Text("Team Preview",
             style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
@@ -223,8 +223,7 @@ class _TeamPreviewState extends State<TeamPreview> {
                           onPressed:
                               widget.selectedPlayers.isNotEmpty ? _createTeam : null,
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff191D88),
-                            padding:
+                            backgroundColor: const Color.fromARGB(255, 72, 133, 190),                            padding:
                                 const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                           ),
                           child: Text("Create Team",
