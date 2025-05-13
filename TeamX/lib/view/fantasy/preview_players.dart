@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:teamx/view/Fantasy/widgets/team_and_player_info.dart';
 import 'package:http/http.dart' as http;
+import 'package:teamx/view/fantasy/contest_screen.dart';
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
 import '../../res/app_url.dart';
@@ -150,6 +151,11 @@ class _TeamPreviewState extends State<TeamPreview> {
     if (createResponse.statusCode == 201) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("Team created successfully!")),
+      );
+      // Navigate to ContestScreen after successful team creation
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ContestScreen()),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
