@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,7 +22,7 @@ class ContestScreen extends StatefulWidget {
 class _ContestScreenState extends State<ContestScreen>
     with SingleTickerProviderStateMixin, RouteAware {
   late TabController _tabController;
-
+  
   // For public contests (CONTESTS tab)
   List<dynamic> contests = [];
   bool isLoading = true;
@@ -29,6 +30,8 @@ class _ContestScreenState extends State<ContestScreen>
   // For combined contest & team data for current user (MY CONTESTS and MY TEAMS tabs)
   List<dynamic> myContests = [];
   bool isMyContestsLoading = true;
+  
+  Timer? _contestTimer;
 
   @override
   void initState() {
@@ -48,6 +51,18 @@ class _ContestScreenState extends State<ContestScreen>
     // Initial data load.
     fetchContests();
     fetchMyContests();
+
+    // Set up periodic fetch for contests every 10 minutes.
+    _contestTimer = Timer.periodic(const Duration(minutes: 10), (timer) {
+      fetchContests();
+    });
+  }
+
+  @override
+  void dispose() {
+    _contestTimer?.cancel();
+    _tabController.dispose();
+    super.dispose();
   }
 
   // Public contests GET request.
@@ -154,7 +169,6 @@ class _ContestScreenState extends State<ContestScreen>
         final teamName = "$contestName (Team ${i + 1})";
         teamCards.add(MyTeamsCard(
           teamName: teamName,
-          // teamImg: teamImg,
           captain: captain,
           viceCaptain: viceCaptain,
           roleStats: roleStats,
@@ -164,7 +178,7 @@ class _ContestScreenState extends State<ContestScreen>
     if (teamCards.isEmpty) {
       return Column(
         children: [
-          SizedBox(height: 50),
+          const SizedBox(height: 50),
           Center(child: Text("No teams found", style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600))),
         ],
       );
@@ -232,6 +246,15 @@ class _ContestScreenState extends State<ContestScreen>
       ),
       body: Column(
         children: [
+          // Total count of contests displayed at the top
+          Container(
+            padding: const EdgeInsets.all(8),
+            alignment: Alignment.center,
+            child: Text(
+              "Total Contests: ${contests.length}",
+              style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold),
+            ),
+          ),
           TabBar(
             controller: _tabController,
             indicatorColor: AppColors.primaryColor,
