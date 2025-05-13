@@ -7,10 +7,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:teamx/utils/utils.dart';
 
-import '../../cards/glassmorphism_card.dart';
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
-import '../../widgets/upcoming_matches.dart';
 import '../../res/app_url.dart';
 
 class MatchFantasyPage extends StatefulWidget {
@@ -420,13 +418,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                   selectedPlayers.removeWhere((p) => p['id'] == player['id']);
                   print('Removed Player ID: ${player['id']}, User Email: $email');
                 } else {
-                  // Prevent selecting more than maxPlayers (8)
-                  if (selectedPlayers.length >= 8) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("You can't select more than 8 players.")),
-                    );
-                    return;
-                  }
+                  // Add the complete player map.
                   selectedPlayers.add(Map<String, dynamic>.from(player));
                   print('Added Player ID: ${player['id']}, User Email: $email');
                 }
