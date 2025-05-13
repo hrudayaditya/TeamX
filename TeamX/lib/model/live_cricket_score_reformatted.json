@@ -1,0 +1,899 @@
+[
+  {
+    "id": "79836368-125a-433f-9329-3b3df4423f45",
+    "data": [
+      {
+        "name": "Estonia Women vs Bulgaria Women, 3rd T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Estonian National Cricket and Rugby Field, Tallinn",
+        "date": "2025-05-16",
+        "dateTimeGMT": "2025-05-16T06:30:00",
+        "teams": [
+          "Estonia Women",
+          "Bulgaria Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bulgaria Women",
+            "shortname": "BW",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          },
+          {
+            "name": "Estonia Women",
+            "shortname": "EW",
+            "img": "https://g.cricapi.com/iapi/601-637876983045042040.webp?w=48"
+          }
+        ],
+        "series_id": "9334b089-75cf-40c7-b000-43ecfa5d9f36",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "59fbb266-f132-469f-a7db-3ae345825ce4",
+    "data": [
+      {
+        "name": "Estonia Women vs Bulgaria Women, 2nd T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Estonian National Cricket and Rugby Field, Tallinn",
+        "date": "2025-05-15",
+        "dateTimeGMT": "2025-05-15T10:45:00",
+        "teams": [
+          "Estonia Women",
+          "Bulgaria Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bulgaria Women",
+            "shortname": "BW",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          },
+          {
+            "name": "Estonia Women",
+            "shortname": "EW",
+            "img": "https://g.cricapi.com/iapi/601-637876983045042040.webp?w=48"
+          }
+        ],
+        "series_id": "9334b089-75cf-40c7-b000-43ecfa5d9f36",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "3a54bb7e-48c7-49b2-a573-5af873cd86d5",
+    "data": [
+      {
+        "name": "Estonia Women vs Bulgaria Women, 1st T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Estonian National Cricket and Rugby Field, Tallinn",
+        "date": "2025-05-15",
+        "dateTimeGMT": "2025-05-15T06:30:00",
+        "teams": [
+          "Estonia Women",
+          "Bulgaria Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bulgaria Women",
+            "shortname": "BW",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          },
+          {
+            "name": "Estonia Women",
+            "shortname": "EW",
+            "img": "https://g.cricapi.com/iapi/601-637876983045042040.webp?w=48"
+          }
+        ],
+        "series_id": "9334b089-75cf-40c7-b000-43ecfa5d9f36",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "43494c74-9065-4ef6-900f-282e5aea6f86",
+    "data": [
+      {
+        "name": "United Arab Emirates vs Scotland, 66th Match",
+        "matchType": "odi",
+        "status": "Match not started",
+        "venue": "SV Kampong CC, Kampong, Utrecht",
+        "date": "2025-05-14",
+        "dateTimeGMT": "2025-05-14T09:00:00",
+        "teams": [
+          "United Arab Emirates",
+          "Scotland"
+        ],
+        "teamInfo": [
+          {
+            "name": "Scotland",
+            "shortname": "SCO",
+            "img": "https://g.cricapi.com/iapi/79-637877081763746652.webp?w=48"
+          },
+          {
+            "name": "United Arab Emirates",
+            "shortname": "UAE",
+            "img": "https://g.cricapi.com/iapi/92-637877081068315608.webp?w=48"
+          }
+        ],
+        "series_id": "9b836620-68cb-4798-9647-d479aa871b76",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "1c596157-edbf-4193-81b6-5f943b836d89",
+    "data": [
+      {
+        "name": "Japan vs Cook Islands, 2nd T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Sano International Cricket Ground, Sano, Kanto",
+        "date": "2025-05-14",
+        "dateTimeGMT": "2025-05-14T02:00:00",
+        "teams": [
+          "Japan",
+          "Cook Islands"
+        ],
+        "teamInfo": [
+          {
+            "name": "Cook Islands",
+            "shortname": "COI",
+            "img": "https://g.cricapi.com/iapi/2342-637987698055825091.webp?w=48"
+          },
+          {
+            "name": "Japan",
+            "shortname": "JPN",
+            "img": "https://g.cricapi.com/iapi/618-637928917609353191.png?w=48"
+          }
+        ],
+        "series_id": "c20d0b43-3cb1-4fa7-90f7-352828531f17",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "02cc1905-4270-43d5-915d-a2e0c065945f",
+    "data": [
+      {
+        "name": "Japan vs Cook Islands, 1st T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Sano International Cricket Ground, Sano, Kanto",
+        "date": "2025-05-13",
+        "dateTimeGMT": "2025-05-13T02:00:00",
+        "teams": [
+          "Japan",
+          "Cook Islands"
+        ],
+        "teamInfo": [
+          {
+            "name": "Cook Islands",
+            "shortname": "COI",
+            "img": "https://g.cricapi.com/iapi/2342-637987698055825091.webp?w=48"
+          },
+          {
+            "name": "Japan",
+            "shortname": "JPN",
+            "img": "https://g.cricapi.com/iapi/618-637928917609353191.png?w=48"
+          }
+        ],
+        "series_id": "c20d0b43-3cb1-4fa7-90f7-352828531f17",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "1e323731-5681-4321-902a-2d28dca5a61d",
+    "data": [
+      {
+        "name": "United Arab Emirates vs Netherlands, 65th Match",
+        "matchType": "odi",
+        "status": "Match not started",
+        "venue": "SV Kampong CC, Kampong, Utrecht",
+        "date": "2025-05-12",
+        "dateTimeGMT": "2025-05-12T09:00:00",
+        "teams": [
+          "United Arab Emirates",
+          "Netherlands"
+        ],
+        "teamInfo": [
+          {
+            "name": "Netherlands",
+            "shortname": "NED",
+            "img": "https://g.cricapi.com/iapi/55-637877084465746618.webp?w=48"
+          },
+          {
+            "name": "United Arab Emirates",
+            "shortname": "UAE",
+            "img": "https://g.cricapi.com/iapi/92-637877081068315608.webp?w=48"
+          }
+        ],
+        "series_id": "9b836620-68cb-4798-9647-d479aa871b76",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "3df8dddc-8ef1-400e-8da1-ef8f9fbc139b",
+    "data": [
+      {
+        "name": "Japan vs Thailand, Final",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Sano International Cricket Ground, Sano, Kanto",
+        "date": "2025-05-11",
+        "dateTimeGMT": "2025-05-11T00:30:00",
+        "teams": [
+          "Japan",
+          "Thailand"
+        ],
+        "teamInfo": [
+          {
+            "name": "Japan",
+            "shortname": "JPN",
+            "img": "https://g.cricapi.com/iapi/618-637928917609353191.png?w=48"
+          },
+          {
+            "name": "Thailand",
+            "shortname": "THAI",
+            "img": "https://g.cricapi.com/iapi/661-637873698140793668.webp?w=48"
+          }
+        ],
+        "series_id": "d7f39636-282f-4b75-81da-1570aa9734e6",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "11e309ab-a99d-4a3b-8588-66cd12a34156",
+    "data": [
+      {
+        "name": "Tbc vs Tbc, Final",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-20",
+        "dateTimeGMT": "2025-05-20T02:30:00",
+        "teams": [
+          "Tbc",
+          "Tbc"
+        ],
+        "teamInfo": [
+          {
+            "name": "Tbc",
+            "shortname": "TBC",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "1a7c5a28-285b-4b0b-bc10-6fa2a7d177ab",
+    "data": [
+      {
+        "name": "Tbc vs Tbc, 2nd Semi Final",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-19",
+        "dateTimeGMT": "2025-05-19T02:30:00",
+        "teams": [
+          "Tbc",
+          "Tbc"
+        ],
+        "teamInfo": [
+          {
+            "name": "Tbc",
+            "shortname": "TBC",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "97925a77-6ce3-44b8-8e35-c99fb270ad45",
+    "data": [
+      {
+        "name": "Tbc vs Tbc, 1st Semi Final",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-18",
+        "dateTimeGMT": "2025-05-18T02:30:00",
+        "teams": [
+          "Tbc",
+          "Tbc"
+        ],
+        "teamInfo": [
+          {
+            "name": "Tbc",
+            "shortname": "TBC",
+            "img": "https://h.cricapi.com/img/icon512.png"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "6e3ab56b-4e37-4de5-bc79-2a8dab206c60",
+    "data": [
+      {
+        "name": "Greece Women vs Germany Women, 4th T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Marina Ground, Corfu",
+        "date": "2025-05-11",
+        "dateTimeGMT": "2025-05-11T12:00:00",
+        "teams": [
+          "Greece Women",
+          "Germany Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Germany Women",
+            "shortname": "GEMW",
+            "img": "https://g.cricapi.com/iapi/1682-637926300796611117.webp?w=48"
+          },
+          {
+            "name": "Greece Women",
+            "shortname": "GW",
+            "img": "https://g.cricapi.com/iapi/609-637873697911451014.webp?w=48"
+          }
+        ],
+        "series_id": "7124ea9a-d213-4d0e-8f21-5392fb244eb3",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "31fe7a04-77e0-4909-9050-c336b9e60b05",
+    "data": [
+      {
+        "name": "Greece Women vs Germany Women, 3rd T20I",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "Marina Ground, Corfu",
+        "date": "2025-05-11",
+        "dateTimeGMT": "2025-05-11T08:00:00",
+        "teams": [
+          "Greece Women",
+          "Germany Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Germany Women",
+            "shortname": "GEMW",
+            "img": "https://g.cricapi.com/iapi/1682-637926300796611117.webp?w=48"
+          },
+          {
+            "name": "Greece Women",
+            "shortname": "GW",
+            "img": "https://g.cricapi.com/iapi/609-637873697911451014.webp?w=48"
+          }
+        ],
+        "series_id": "7124ea9a-d213-4d0e-8f21-5392fb244eb3",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "0dc03d12-a181-4467-9105-450cfa238e91",
+    "data": [
+      {
+        "name": "Netherlands vs Scotland, 64th Match",
+        "matchType": "odi",
+        "status": "Netherlands won by 19 runs",
+        "venue": "VRA Cricket Ground, Amstelveen",
+        "date": "2025-05-10",
+        "dateTimeGMT": "2025-05-10T09:00:00",
+        "teams": [
+          "Netherlands",
+          "Scotland"
+        ],
+        "teamInfo": [
+          {
+            "name": "Netherlands",
+            "shortname": "NED",
+            "img": "https://g.cricapi.com/iapi/55-637877084465746618.webp?w=48"
+          },
+          {
+            "name": "Scotland",
+            "shortname": "SCO",
+            "img": "https://g.cricapi.com/iapi/79-637877081763746652.webp?w=48"
+          }
+        ],
+        "score": [
+          {
+            "r": 282,
+            "w": 7,
+            "o": 50,
+            "inning": "Netherlands Inning 1"
+          },
+          {
+            "r": 263,
+            "w": 9,
+            "o": 50,
+            "inning": "Scotland Inning 1"
+          }
+        ],
+        "series_id": "9b836620-68cb-4798-9647-d479aa871b76",
+        "fantasyEnabled": true,
+        "bbbEnabled": true,
+        "hasSquad": true,
+        "matchStarted": true,
+        "matchEnded": true
+      }
+    ]
+  },
+  {
+    "id": "f781e308-283b-4c4e-a90d-5211759a823a",
+    "data": [
+      {
+        "name": "Greece Women vs Germany Women, 2nd T20I",
+        "matchType": "t20",
+        "status": "Germany Women won by 66 runs",
+        "venue": "Marina Ground, Corfu",
+        "date": "2025-05-10",
+        "dateTimeGMT": "2025-05-10T12:00:00",
+        "teams": [
+          "Greece Women",
+          "Germany Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Germany Women",
+            "shortname": "GEMW",
+            "img": "https://g.cricapi.com/iapi/1682-637926300796611117.webp?w=48"
+          },
+          {
+            "name": "Greece Women",
+            "shortname": "GW",
+            "img": "https://g.cricapi.com/iapi/609-637873697911451014.webp?w=48"
+          }
+        ],
+        "score": [
+          {
+            "r": 153,
+            "w": 4,
+            "o": 20,
+            "inning": "Germany Women Inning 1"
+          },
+          {
+            "r": 87,
+            "w": 8,
+            "o": 20,
+            "inning": "Greece Women Inning 1"
+          }
+        ],
+        "series_id": "7124ea9a-d213-4d0e-8f21-5392fb244eb3",
+        "fantasyEnabled": true,
+        "bbbEnabled": true,
+        "hasSquad": true,
+        "matchStarted": true,
+        "matchEnded": true
+      }
+    ]
+  },
+  {
+    "id": "3c00d327-b9d2-44d3-8462-e1bd1d9675d7",
+    "data": [
+      {
+        "name": "Greece Women vs Germany Women, 1st T20I",
+        "matchType": "t20",
+        "status": "Germany Women won by 105 runs",
+        "venue": "Marina Ground, Corfu",
+        "date": "2025-05-10",
+        "dateTimeGMT": "2025-05-10T08:00:00",
+        "teams": [
+          "Greece Women",
+          "Germany Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Germany Women",
+            "shortname": "GEMW",
+            "img": "https://g.cricapi.com/iapi/1682-637926300796611117.webp?w=48"
+          },
+          {
+            "name": "Greece Women",
+            "shortname": "GW",
+            "img": "https://g.cricapi.com/iapi/609-637873697911451014.webp?w=48"
+          }
+        ],
+        "score": [
+          {
+            "r": 166,
+            "w": 8,
+            "o": 20,
+            "inning": "Germany Women Inning 1"
+          },
+          {
+            "r": 61,
+            "w": 10,
+            "o": 16.5,
+            "inning": "Greece Women Inning 1"
+          }
+        ],
+        "series_id": "7124ea9a-d213-4d0e-8f21-5392fb244eb3",
+        "fantasyEnabled": true,
+        "bbbEnabled": true,
+        "hasSquad": true,
+        "matchStarted": true,
+        "matchEnded": true
+      }
+    ]
+  },
+  {
+    "id": "e6e136b9-a11a-475f-a973-1bbddb00b02b",
+    "data": [
+      {
+        "name": "Malaysia Women vs Qatar Women, 18th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-16",
+        "dateTimeGMT": "2025-05-16T06:30:00",
+        "teams": [
+          "Malaysia Women",
+          "Qatar Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Malaysia Women",
+            "shortname": "ML-W",
+            "img": "https://g.cricapi.com/iapi/1551-637926306213013515.webp?w=48"
+          },
+          {
+            "name": "Qatar Women",
+            "shortname": "QAT-W",
+            "img": "https://g.cricapi.com/iapi/1578-637914186206691459.png?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "e98307ef-66ef-47c3-9a33-3ebd77bb0de1",
+    "data": [
+      {
+        "name": "Kuwait Women vs Qatar Women, 16th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-16",
+        "dateTimeGMT": "2025-05-16T02:00:00",
+        "teams": [
+          "Kuwait Women",
+          "Qatar Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Kuwait Women",
+            "shortname": "KU-W",
+            "img": "https://g.cricapi.com/iapi/1588-637926303022728393.webp?w=48"
+          },
+          {
+            "name": "Qatar Women",
+            "shortname": "QAT-W",
+            "img": "https://g.cricapi.com/iapi/1578-637914186206691459.png?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "bf778220-a4f5-4401-90a8-f98dda77c6fb",
+    "data": [
+      {
+        "name": "Hong Kong Women vs Bahrain Women, 17th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-16",
+        "dateTimeGMT": "2025-05-16T02:30:00",
+        "teams": [
+          "Hong Kong Women",
+          "Bahrain Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bahrain Women",
+            "shortname": "BAH-W",
+            "img": "https://g.cricapi.com/iapi/1597-637926302418123133.webp?w=48"
+          },
+          {
+            "name": "Hong Kong Women",
+            "shortname": "HKGW",
+            "img": "https://g.cricapi.com/iapi/1123-637877089446450033.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "551f20bf-cff6-4288-8e90-d243521acba2",
+    "data": [
+      {
+        "name": "United Arab Emirates Women vs Qatar Women, 15th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-15",
+        "dateTimeGMT": "2025-05-15T06:30:00",
+        "teams": [
+          "United Arab Emirates Women",
+          "Qatar Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Qatar Women",
+            "shortname": "QAT-W",
+            "img": "https://g.cricapi.com/iapi/1578-637914186206691459.png?w=48"
+          },
+          {
+            "name": "United Arab Emirates Women",
+            "shortname": "UAEW",
+            "img": "https://g.cricapi.com/iapi/1136-637877081374906304.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "b6436345-ccee-4b82-968c-21610175b26d",
+    "data": [
+      {
+        "name": "Nepal Women vs Bahrain Women, 14th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-15",
+        "dateTimeGMT": "2025-05-15T02:30:00",
+        "teams": [
+          "Nepal Women",
+          "Bahrain Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bahrain Women",
+            "shortname": "BAH-W",
+            "img": "https://g.cricapi.com/iapi/1597-637926302418123133.webp?w=48"
+          },
+          {
+            "name": "Nepal Women",
+            "shortname": "NEPW",
+            "img": "https://g.cricapi.com/iapi/54-637877084789981539.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "d53abb76-308d-46b4-ac0f-ae62f6da7cbc",
+    "data": [
+      {
+        "name": "Thailand Women vs Bhutan Women, 13rd Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-15",
+        "dateTimeGMT": "2025-05-15T02:00:00",
+        "teams": [
+          "Bhutan Women",
+          "Bhutan Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Bhutan Women",
+            "shortname": "BHU-W",
+            "img": "https://g.cricapi.com/iapi/1587-637928913171062293?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": false,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "51d49e5e-8774-4e9f-ae25-8e8633bbd0bc",
+    "data": [
+      {
+        "name": "United Arab Emirates Women vs Malaysia Women, 12th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-13",
+        "dateTimeGMT": "2025-05-13T06:30:00",
+        "teams": [
+          "United Arab Emirates Women",
+          "Malaysia Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Malaysia Women",
+            "shortname": "ML-W",
+            "img": "https://g.cricapi.com/iapi/1551-637926306213013515.webp?w=48"
+          },
+          {
+            "name": "United Arab Emirates Women",
+            "shortname": "UAEW",
+            "img": "https://g.cricapi.com/iapi/1136-637877081374906304.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "a8c34ba8-05b9-4a8b-aa65-8f54e0a47500",
+    "data": [
+      {
+        "name": "Thailand Women vs Kuwait Women, 10th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-13",
+        "dateTimeGMT": "2025-05-13T02:30:00",
+        "teams": [
+          "Thailand Women",
+          "Kuwait Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Kuwait Women",
+            "shortname": "KU-W",
+            "img": "https://g.cricapi.com/iapi/1588-637926303022728393.webp?w=48"
+          },
+          {
+            "name": "Thailand Women",
+            "shortname": "THW",
+            "img": "https://g.cricapi.com/iapi/2351-637985730472466346.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  },
+  {
+    "id": "65ee1d10-5b72-453c-958b-a061d7f3f151",
+    "data": [
+      {
+        "name": "Nepal Women vs Hong Kong Women, 11th Match",
+        "matchType": "t20",
+        "status": "Match not started",
+        "venue": "TBC, TBC",
+        "date": "2025-05-13",
+        "dateTimeGMT": "2025-05-13T02:00:00",
+        "teams": [
+          "Nepal Women",
+          "Hong Kong Women"
+        ],
+        "teamInfo": [
+          {
+            "name": "Hong Kong Women",
+            "shortname": "HKGW",
+            "img": "https://g.cricapi.com/iapi/1123-637877089446450033.webp?w=48"
+          },
+          {
+            "name": "Nepal Women",
+            "shortname": "NEPW",
+            "img": "https://g.cricapi.com/iapi/54-637877084789981539.webp?w=48"
+          }
+        ],
+        "series_id": "d98be13e-3b73-4858-99f3-b58c7131704b",
+        "fantasyEnabled": false,
+        "bbbEnabled": false,
+        "hasSquad": true,
+        "matchStarted": false,
+        "matchEnded": false
+      }
+    ]
+  }
+]
