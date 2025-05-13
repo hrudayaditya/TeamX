@@ -25,6 +25,27 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
+    // Hardcoded admin check.
+    if (email == "admin@example.com" && password == "admin") {
+      // Save admin details to secure storage.
+      await Utils().secureStorage.write(key: 'jwt', value: "admin_token");
+      await Utils().secureStorage.write(key: 'email', value: email);
+      await Utils().secureStorage.write(key: 'username', value: "Admin");
+      await Utils().secureStorage.write(key: 'admin', value: "true");
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Admin login successful!')),
+      );
+
+      // Navigate to ContestScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const ContestScreen()),
+      );
+      return;
+    }
+
+    // Normal API login if not admin.
     final response = await http.post(
       Uri.parse(AppUrl.loginEndPint),
       headers: {'Content-Type': 'application/json'},
@@ -40,10 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
       final username = data['username'] ?? '';
       final emailFromResponse = data['email'] ?? email;
 
-      // Store values securely
+      // Store values securely and mark user as non-admin.
       await Utils().secureStorage.write(key: 'jwt', value: jwt);
       await Utils().secureStorage.write(key: 'email', value: emailFromResponse);
       await Utils().secureStorage.write(key: 'username', value: username);
+      await Utils().secureStorage.write(key: 'admin', value: "false");
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Login successful!')),

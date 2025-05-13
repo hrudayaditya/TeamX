@@ -26,7 +26,7 @@ class _ViewAllContestState extends State<ViewAllContest> {
         child: AppBar(
           iconTheme: IconThemeData(
             size: 20,
-            color: Colors.white, // Set the color you want here
+            color: Colors.white,
           ),
           backgroundColor: Color(0xff191D88),
           elevation: 1.0,
@@ -64,11 +64,17 @@ class _ViewAllContestState extends State<ViewAllContest> {
               itemCount: widget.contest.length,
               itemBuilder: (BuildContext context, int index) {
                 return AllContestCrad(
-                  prize: widget.contest[index]['prize'],
-                  entry: widget.contest[index]['entry'],
-                  totalSpots: widget.contest[index]['totalSpots'],
-                  filledSpots: widget.contest[index]['filled'],
-                  isFree: widget.contest[index]['isFree'],
+                  id: widget.contest[index]['id'] ?? '',
+                  prize: widget.contest[index]['prize'] ?? 0,
+                  entry: widget.contest[index]['entry'] ?? 0,
+                  totalSpots: widget.contest[index]['totalSpots'] ?? 0,
+                  filledSpots: widget.contest[index]['filled'] ?? 0,
+                  isFree: widget.contest[index]['isFree'] ?? false,
+                  matchName: widget.contest[index]['matchName'] ?? '',
+                  venue: widget.contest[index]['venue'] ?? '',
+                  date: widget.contest[index]['date'] ?? '',
+                  status: widget.contest[index]['status'] ?? '',
+                  teamInfo: widget.contest[index]['teamInfo'] ?? [],
                 );
               },
             ),
