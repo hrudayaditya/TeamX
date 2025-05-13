@@ -203,6 +203,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Row(
                     children: [
                       Checkbox(
+                        activeColor: Color(0xff191D88),
                         value: isTncRead,
                         onChanged: (bool? value) {
                           setState(() {
@@ -249,39 +250,53 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 45,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
+                  GestureDetector(
+                    onTap: isLoading
+                        ? null
+                        : () {
+                            if (isTncRead) {
+                              _signup();
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'Please accept Terms and Conditions')),
+                              );
+                            }
+                          },
+                    child: Container(
+                      height: 45,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: const Color(0xff191D88),
+                        boxShadow: const [
+                          BoxShadow(
+                            color: Colors.black12,
+                            spreadRadius: 2,
+                            blurRadius: 20,
+                            offset: Offset(0, 5),
+                          )
+                        ],
                       ),
-                      onPressed: isLoading
-                          ? null
-                          : () {
-                              if (isTncRead) {
-                                _signup();
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Please accept Terms and Conditions')),
-                                );
-                              }
-                            },
-                      child: isLoading
-                          ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                          : const Text(
-                              "Sign Up",
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.white,
-                              ),
-                            ),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          isLoading
+                              ? const CircularProgressIndicator(
+                                  color: Colors.white,
+                                )
+                              : const Text(
+                                  "Sign Up",
+                                  style: TextStyle(
+                                    fontSize: 20.0,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                        ],
+                      ),
                     ),
                   ),
                 ],

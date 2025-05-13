@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import 'package:teamx/res/app_text_style.dart';
 import 'dart:convert';
 import 'package:teamx/res/app_url.dart';
+import 'package:teamx/res/color.dart';
 import 'package:teamx/utils/utils.dart'; // Adjust the path if needed
 import 'package:teamx/view/fantasy/contest_screen.dart'; // Add this import
 import 'package:teamx/view/login/signup_screen.dart';
@@ -158,7 +160,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                              MaterialPageRoute(
+                                  builder: (context) => const SignUpScreen()),
                             );
                           },
                           child: const Text(
@@ -174,6 +177,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         children: [
                           Checkbox(
+                            activeColor: Color(0xff191D88),
                             value: isTncRead,
                             onChanged: (bool? value) {
                               setState(() {
@@ -220,31 +224,39 @@ class _LoginScreenState extends State<LoginScreen> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      SizedBox(
-                        width: double.infinity,
-                        height: 45,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          onPressed: () {
-                            if (isTncRead) {
-                              _login();
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Please accept Terms and Conditions')),
-                              );
-                            }
-                          },
-                          child: const Text(
-                            "Continue",
-                            style: TextStyle(
-                              fontSize: 14.0,
-                              color: Colors.white,
-                            ),
+                      GestureDetector(
+                        onTap: () {
+                          if (isTncRead) {
+                            _login();
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text(
+                                      'Please accept Terms and Conditions')),
+                            );
+                          }
+                        },
+                        child: Container(
+                          height: 45,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Color(0xff191D88),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Colors.black12,
+                                    spreadRadius: 2,
+                                    blurRadius: 20,
+                                    offset: Offset(0, 5))
+                              ]),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Continue",
+                                  style: AppTextStyles.primaryStyle(
+                                      20.0, AppColors.white, FontWeight.w700)),
+                            ],
                           ),
                         ),
                       ),
