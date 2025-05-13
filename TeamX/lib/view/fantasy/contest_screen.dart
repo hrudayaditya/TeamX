@@ -297,6 +297,10 @@ class _ContestScreenState extends State<ContestScreen>
     }
   }
 
+  void refreshContests() {
+    fetchContests();
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -435,6 +439,9 @@ class _ContestScreenState extends State<ContestScreen>
                                       date: match['date'] ?? '',
                                       status: match['status'] ?? '',
                                       teamInfo: match['teamInfo'] ?? [],
+                                      onDelete: () {
+                                        refreshContests();
+                                      },
                                     );
                                   }).toList(),
                                 ),
@@ -460,6 +467,9 @@ class _ContestScreenState extends State<ContestScreen>
                                       date: match['date'] ?? '',
                                       status: match['status'] ?? '',
                                       teamInfo: match['teamInfo'] ?? [],
+                                      onDelete: () {
+                                        refreshContests();
+                                      },
                                     );
                                   }).toList(),
                                 ),
