@@ -21,25 +21,25 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
     [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +2 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+8 PTS'},{'Type':'Century Bonus','Points':'+16 PTS'}],
     [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'Maiden Over Bonus','Points':'+12 PTS'},{'Type':'3 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+16 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
     [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'2x'}, {'Type':'Vice Captain','Points':'1.5x'}]
+    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
   ];
   List t10Points = [
     [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'30 Runs Bonus','Points':'+8 PTS'},{'Type':'Half Century Bonus','Points':'+16 PTS'}],
     [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'2 Wicket Bonus','Points':'+8 PTS'},{'Type':'3 Wicket Bonus','Points':'+16 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
     [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'2x'}, {'Type':'Vice Captain','Points':'1.5x'}]
+    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
   ];
   List odiPoints = [
     [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+4 PTS'},{'Type':'Century Bonus','Points':'+8 PTS'}],
     [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'4 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+8 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
     [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'2x'}, {'Type':'Vice Captain','Points':'1.5x'}]
+    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
   ];
   List testPoints = [
     [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+4 PTS'},{'Type':'Century Bonus','Points':'+8 PTS'}],
     [{'Type':'Wicket(Excluding Run Out)','Points':'+16 PTS'},{'Type':'4 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+8 PTS'}],
     [{'Type':'Catch','Points':'+8 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'2x'}, {'Type':'Vice Captain','Points':'1.5x'}]
+    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
   ];
 
 
