@@ -412,6 +412,23 @@ class _ContestScreenState extends State<ContestScreen>
       ),
       body: Column(
         children: [
+          // Show "Welcome Admin!" if admin=true
+          FutureBuilder<String?>(
+            future: Utils().secureStorage.read(key: 'admin'),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data == "true") {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 12, bottom: 4),
+                  child: Text(
+                    "Welcome Admin!",
+                    style: AppTextStyles.primaryStyle(18, Colors.blue, FontWeight.bold),
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            },
+          ),
           // Total count of contests displayed at the top
           Container(
             padding: const EdgeInsets.all(8),
