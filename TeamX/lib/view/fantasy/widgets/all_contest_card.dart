@@ -1,10 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:teamx/res/app_url.dart';
+import 'package:teamx/utils/utils.dart';
 import 'package:teamx/view/Fantasy/contest_details.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import '../../../res/app_text_style.dart';
 import '../../../res/color.dart';
 import '../match_fantsay_page.dart';
+
+// You can add this helper function at the top of the file (or import it from your wallet_service.dart file)
+Future<double> fetchWalletAmount() async {
+  final utils = Utils();
+  final email = await utils.fetchDataSecure('email');
+  final url = "${AppUrl.wallet}?email=$email"; // e.g., "http://192.168.1.30:8080/auth/wallet?email=new@example.com"
+  final response = await http.get(Uri.parse(url));
+  if (response.statusCode == 200) {
+    final data = jsonDecode(response.body);
+    // Assuming your response is like: {"email": "new@example.com", "wallet": 25}
+    return (data['wallet'] as num).toDouble();
+  } else {
+    throw Exception("Failed to fetch wallet amount: ${response.statusCode}");
+  }
+}
 
 class AllContestCrad extends StatelessWidget {
   final String id;
@@ -177,7 +196,28 @@ class AllContestCrad extends StatelessWidget {
                               FontWeight.w700)),
                       Spacer(),
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
+                          // If contest is not free, check wallet balance from backend.
+                          if (!isFree) {
+                            try {
+                              final double walletAmt = await fetchWalletAmount();
+                              // If wallet money is less than entry fee, show notification and exit.
+                              if (walletAmt < entry) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Insufficient funds. Please add money to your wallet."),
+                                  ),
+                                );
+                                return;
+                              }
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Error fetching wallet: $e")),
+                              );
+                              return;
+                            }
+                          }
+                          // Otherwise, navigate to the MatchFantasyPage.
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => MatchFantasyPage(
@@ -200,20 +240,14 @@ class AllContestCrad extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 16),
+                          padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 16),
                           decoration: BoxDecoration(
                             color: AppColors.green,
-                            borderRadius:
-                            BorderRadius.circular(4),
+                            borderRadius: BorderRadius.circular(4),
                           ),
                           child: Text(
                             isFree ? "FREE" : "\$${entry}",
-                            style:
-                            AppTextStyles.terniaryStyle(
-                                18,
-                                Colors.white,
-                                FontWeight.w700),
+                            style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w700),
                           ),
                         ),
                       ),
