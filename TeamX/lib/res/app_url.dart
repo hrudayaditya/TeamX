@@ -15,6 +15,7 @@ class AppUrl {
   // Auth
   static var loginEndPint = '$baseUrl/auth/login';
   static var signUpEndPint = '$baseUrl/auth/signup';
+  static var wallet = '$baseUrl/auth/wallet';
 
   // Contests
   static var listContest = '$baseUrl/contests';
