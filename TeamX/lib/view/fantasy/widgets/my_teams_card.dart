@@ -38,19 +38,19 @@ class MyTeamsCard extends StatelessWidget {
           ),
           // Positioned badge
           Positioned(
-            right: -4,
-            bottom: -4,
+            right: -3,
+            bottom: -3,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
               decoration: BoxDecoration(
                 color: badgeColor,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.white, width: 1.5),
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors.white, width: 1.2),
               ),
               child: Text(
                 badgeText,
                 style: GoogleFonts.lato(
-                  fontSize: 10,
+                  fontSize: 8,
                   fontWeight: FontWeight.bold,
                   color: badgeTextColor,
                 ),
@@ -70,14 +70,14 @@ class MyTeamsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    double imageSize = width * 0.15;
+    double imageSize = width * 0.12; // Reduced image size
     return Card(
-      margin: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-      elevation: 5,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(12),
           gradient: const LinearGradient(
             colors: [
               Color(0xffe0f7fa),
@@ -97,18 +97,18 @@ class MyTeamsCard extends StatelessWidget {
           children: [
             // Header with team name.
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.85),
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
+                  topLeft: Radius.circular(12),
+                  topRight: Radius.circular(12),
                 ),
               ),
               child: Text(
                 _cleanTeamName(teamName),
                 style: GoogleFonts.lato(
-                  fontSize: 20,
+                  fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
@@ -117,7 +117,7 @@ class MyTeamsCard extends StatelessWidget {
             const Divider(height: 1, color: Colors.black26),
             // Captain and Vice-Captain Section.
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -127,21 +127,21 @@ class MyTeamsCard extends StatelessWidget {
                       Text(
                         'CAP',
                         style: GoogleFonts.lato(
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       _buildPlayerImage("C",
                           size: imageSize,
                           badgeColor: AppColors.primaryColor,
                           badgeTextColor: Colors.white),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       Text(
                         captain,
                         style: GoogleFonts.lato(
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                         ),
@@ -154,21 +154,21 @@ class MyTeamsCard extends StatelessWidget {
                       Text(
                         'VC',
                         style: GoogleFonts.lato(
-                          fontSize: 14,
+                          fontSize: 12,
                           fontWeight: FontWeight.w600,
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       _buildPlayerImage("VC",
                           size: imageSize,
                           badgeColor: Colors.black87,
                           badgeTextColor: Colors.white),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 6),
                       Text(
                         viceCaptain,
                         style: GoogleFonts.lato(
-                          fontSize: 18,
+                          fontSize: 14,
                           fontWeight: FontWeight.w700,
                           color: Colors.black,
                         ),
@@ -180,12 +180,12 @@ class MyTeamsCard extends StatelessWidget {
             ),
             // Role Stats Section.
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
               decoration: BoxDecoration(
                 color: Colors.white.withOpacity(0.85),
                 borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(16),
-                    bottomRight: Radius.circular(16)),
+                    bottomLeft: Radius.circular(12),
+                    bottomRight: Radius.circular(12)),
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -195,16 +195,16 @@ class MyTeamsCard extends StatelessWidget {
                       Text(
                         role,
                         style: GoogleFonts.lato(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w500,
                           color: Colors.black54,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         '${roleStats[role] ?? 0}',
                         style: GoogleFonts.lato(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
