@@ -317,7 +317,9 @@ class _ContestScreenState extends State<ContestScreen>
               ),
               const Spacer(),
               GestureDetector(
-                onTap: _showWalletPopup,
+                onTap: () {
+                  Navigator.pushNamed(context, '/walletPage');
+                },
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   // decoration: BoxDecoration(
