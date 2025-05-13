@@ -182,63 +182,50 @@ class _TeamPreviewState extends State<TeamPreview> {
         title: Text("Team Preview",
             style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
       ),
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              'assets/ground.jpg',
-              fit: BoxFit.cover,
+      body: SizedBox.expand(
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                'assets/ground.jpg',
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Column(
-            children: [
-              // Container(
-              //   width: double.infinity,
-              //   color: const Color(0xff191D88).withOpacity(0.85),
-              //   child: TeamAndPlayerInfo(teamInfo: [], selectedPlayersCount: null, team2Count: 0, maxPlayers: 0, team1Count: 0, creditsLeft: 0,),
-              // ),
-              // Display contest details.
-              // Container(
-              //   width: double.infinity,
-              //   padding: const EdgeInsets.all(8),
-              //   color: Colors.white70,
-              //   child: Text(
-              //     "Contest: $contestName",
-              //     style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600),
-              //     textAlign: TextAlign.center,
-              //   ),
-              // ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(5.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        _roleSection('WICKET KEEPERS', wicketkeeper),
-                        _roleSection('BATSMAN', batsmen),
-                        _roleSection('ALL ROUNDERS', allRounders),
-                        _roleSection('BOWLERS', bowlers),
-                        const SizedBox(height: 20),
-                        ElevatedButton(
-                          onPressed:
-                              widget.selectedPlayers.isNotEmpty ? _createTeam : null,
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color.fromARGB(255, 72, 133, 190),                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _roleSection('WICKET KEEPERS', wicketkeeper),
+                          _roleSection('BATSMAN', batsmen),
+                          _roleSection('ALL ROUNDERS', allRounders),
+                          _roleSection('BOWLERS', bowlers),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed:
+                                widget.selectedPlayers.isNotEmpty ? _createTeam : null,
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color.fromARGB(255, 72, 133, 190),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                            ),
+                            child: Text("Create Team",
+                                style: AppTextStyles.primaryStyle(
+                                    16, AppColors.white, FontWeight.w600)),
                           ),
-                          child: Text("Create Team",
-                              style: AppTextStyles.primaryStyle(
-                                  16, AppColors.white, FontWeight.w600)),
-                        ),
-                        const SizedBox(height: 20),
-                      ],
+                          const SizedBox(height: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
