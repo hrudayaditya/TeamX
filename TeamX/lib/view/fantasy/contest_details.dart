@@ -152,10 +152,22 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                     ),
                   ),
                   const Spacer(),
-                  Image.asset(
-                    'assets/wallet.png',
-                    color: Colors.white,
-                    height: 32,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/walletPage');
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      // decoration: BoxDecoration(
+                      //   border: Border.all(width: 1.75, color: Colors.white),
+                      //   shape: BoxShape.circle,
+                      // ),
+                      child: Image.asset(
+                        'assets/wallet.png',
+                        color: Colors.white,
+                        height: 32,
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 6),
                   GestureDetector(
