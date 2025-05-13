@@ -15,7 +15,7 @@ import '../../res/app_url.dart';
 
 class MatchFantasyPage extends StatefulWidget {
   final String contestId;
-  final Map<String, dynamic> contest; // Add contest details as a parameter
+  final Map<String, dynamic> contest;
   const MatchFantasyPage({Key? key, required this.contestId, required this.contest}) : super(key: key);
 
   @override
