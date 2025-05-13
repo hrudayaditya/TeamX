@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
+import 'package:teamx/res/app_url.dart';
+import 'dart:convert';
 import '../../../res/app_text_style.dart';
 import '../../../res/color.dart';
 import '../match_fantsay_page.dart';
@@ -25,6 +28,40 @@ class MyContestCard extends StatelessWidget {
     required this.isFinished,
     required this.contest,
   });
+
+  Future<double> fetchPoints(String contestId) async {
+    final url = AppUrl.getPoints + '/contest/' + contestId;
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['points'] is List) {
+        double total = 0.0;
+        for (final p in data['points']) {
+          total += (p['point'] as num).toDouble();
+        }
+        return total;
+      }
+    }
+    return 0.0;
+  }
+
+  Future<double> fetchTeamPoints(String contestId) async {
+    final url = AppUrl.getPoints + '/contest/' + contestId;
+    print('Fetching points from: $url');
+    final response = await http.get(Uri.parse(url));
+    print('Response: ${response.body}');
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      if (data['points'] is List) {
+        double total = 0.0;
+        for (final p in data['points']) {
+          total += (p['point'] as num).toDouble();
+        }
+        return total;
+      }
+    }
+    return 0.0;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,31 +186,6 @@ class MyContestCard extends StatelessWidget {
                   ),
                   child: Icon(Icons.wine_bar_outlined, color: Colors.black54, size: 11),
                 ),
-                // Text("  45%",
-                //     style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
-                // SizedBox(width: 10),
-                // Container(
-                //   padding: EdgeInsets.all(1),
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     border: Border.all(color: Colors.black54, width: 1),
-                //   ),
-                //   child: Text("M",
-                //       style: AppTextStyles.primaryStyle(11.0, Colors.black54, FontWeight.w500)),
-                // ),
-                // Text("  Upto 11",
-                //     style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
-                // Spacer(),
-                // Container(
-                //   padding: EdgeInsets.all(1),
-                //   decoration: BoxDecoration(
-                //     shape: BoxShape.circle,
-                //     border: Border.all(color: Colors.black54, width: 1),
-                //   ),
-                //   child: Icon(Icons.currency_rupee, color: Colors.black54, size: 11),
-                // ),
-                // Text("  Flexible",
-                //     style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
               ],
             ),
           ),
@@ -229,51 +241,41 @@ class MyContestCard extends StatelessWidget {
                   ],
                 )
               : SizedBox(),
-          // Footer row
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-            alignment: Alignment.center,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  children: [
-                    Text('PLAYER_ID',
-                        style: AppTextStyles.terniaryStyle(14, AppColors.primaryColor, FontWeight.w600)),
-                    Text('You Won \$30',
-                        style: AppTextStyles.terniaryStyle(14, AppColors.green, FontWeight.w600)),
-                  ],
-                ),
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
-                  margin: EdgeInsets.only(right: 8),
-                  decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                  child: Text("T1",
-                      style: AppTextStyles.terniaryStyle(14, Colors.white, FontWeight.w600)),
-                ),
-                // Text("456.5",
-                //     style: AppTextStyles.terniaryStyle(10, Colors.black54, FontWeight.w600)),
-                // Text('#44', style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w600)),
-              ],
-            ),
+          // Footer row with points and winnings
+          FutureBuilder<double>(
+            future: fetchPoints(id),
+            builder: (context, snapshot) {
+              double totalPoints = snapshot.data ?? 0.0;
+              double winnings = 0.5 * totalPoints;
+              return Column(
+                children: teams.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  return Container(
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Team ${index + 1}: You Won \$${winnings.toStringAsFixed(2)} (Points: ${totalPoints.toStringAsFixed(1)})',
+                          style: AppTextStyles.terniaryStyle(14, AppColors.green, FontWeight.w600),
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(2),
+                          ),
+                          child: Text("T${index + 1}",
+                              style: AppTextStyles.terniaryStyle(14, Colors.white, FontWeight.w600)),
+                        ),
+                      ],
+                    ),
+                  );
+                }).toList(),
+              );
+            },
           ),
-          // !isFinished
-          //     ? Container(
-          //         margin: EdgeInsets.symmetric(horizontal: 14, vertical: 10),
-          //         height: 40,
-          //         decoration: BoxDecoration(
-          //             borderRadius: BorderRadius.circular(12),
-          //             border: Border.all(color: AppColors.primaryColor, width: 1)),
-          //         alignment: Alignment.center,
-          //         child: Text(
-          //           'Add a new Team',
-          //           style: AppTextStyles.terniaryStyle(14, AppColors.primaryColor, FontWeight.w600),
-          //         ),
-          //       )
-          //     : SizedBox(),
         ],
       ),
     );
@@ -293,7 +295,6 @@ class MyContestCard extends StatelessWidget {
               Text("Team ${index + 1}",
                   style: AppTextStyles.terniaryStyle(14, Colors.black, FontWeight.w600)),
               Spacer(),
-              // Icon(Icons.edit_rounded, size: 18, color: Colors.black),
             ],
           ),
           Row(
