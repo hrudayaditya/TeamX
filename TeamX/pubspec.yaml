@@ -47,6 +47,9 @@ dependencies:
   telephony: ^0.2.0
   borders: ^0.1.0
 
+dependency_overrides:
+  win32: ^5.5.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
