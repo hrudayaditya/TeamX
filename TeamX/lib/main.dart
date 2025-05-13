@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:teamx/view/fantasy/fantasy_points_system.dart';
+import 'package:teamx/view/fantasy/wallet_details.dart';
 import 'package:teamx/view/splash/splash_screen.dart';
 import 'package:teamx/view/login/login_screen.dart';
 
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/fantasyPointsSystem': (context) => const FantasyPointsSystem(),
+        '/walletPage': (context) => const WalletPage(),
       },
       home: const SplashScreen(),
     );
