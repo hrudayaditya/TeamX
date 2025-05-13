@@ -87,7 +87,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
         child: AppBar(
           iconTheme: IconThemeData(size: 20, color: Colors.white),
-          backgroundColor: Color(0xff191D88),
+          backgroundColor: const Color.fromARGB(255, 72, 133, 190),
           elevation: 1.0,
           title: Text("Create Team",
               style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
@@ -131,7 +131,7 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
         children: [
           // Top blue container with team info.
           Container(
-            decoration: BoxDecoration(color: Color(0xff191D88)),
+            decoration: BoxDecoration(color: const Color.fromARGB(255, 72, 133, 190)),
             child: Column(
               children: [
                 SizedBox(height: 4),
