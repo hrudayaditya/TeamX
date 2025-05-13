@@ -47,7 +47,7 @@ class _ChooseCaptainAndViceCaptainState extends State<ChooseCaptainAndViceCaptai
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
         child: AppBar(
           iconTheme: const IconThemeData(size: 20, color: Colors.white),
-          backgroundColor: const Color(0xff191D88),
+          backgroundColor: const Color.fromARGB(255, 72, 133, 190),
           elevation: 1.0,
           title: Text(
             "Create Team",
@@ -253,7 +253,7 @@ class _ChooseCaptainAndViceCaptainState extends State<ChooseCaptainAndViceCaptai
               width: 130,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(40),
-                color: const Color(0xff191D88),
+                color: const Color.fromARGB(255, 72, 133, 190),
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black12,
