@@ -192,22 +192,22 @@ class _TeamPreviewState extends State<TeamPreview> {
           ),
           Column(
             children: [
-              Container(
-                width: double.infinity,
-                color: const Color(0xff191D88).withOpacity(0.85),
-                child: TeamAndPlayerInfo(),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   color: const Color(0xff191D88).withOpacity(0.85),
+              //   child: TeamAndPlayerInfo(teamInfo: [], selectedPlayersCount: null, team2Count: 0, maxPlayers: 0, team1Count: 0, creditsLeft: 0,),
+              // ),
               // Display contest details.
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(8),
-                color: Colors.white70,
-                child: Text(
-                  "Contest: $contestName",
-                  style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+              // Container(
+              //   width: double.infinity,
+              //   padding: const EdgeInsets.all(8),
+              //   color: Colors.white70,
+              //   child: Text(
+              //     "Contest: $contestName",
+              //     style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600),
+              //     textAlign: TextAlign.center,
+              //   ),
+              // ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.all(5.0),
