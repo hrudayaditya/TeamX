@@ -37,11 +37,14 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
 
   int count = 9;
 
+  Map<String, dynamic>? contestDetails;
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
     fetchPlayers();
+    contestDetails = widget.contest;
   }
 
   Future<void> fetchPlayers() async {
@@ -134,10 +137,24 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             decoration: BoxDecoration(color: const Color.fromARGB(255, 72, 133, 190)),
             child: Column(
               children: [
-                SizedBox(height: 4),
-                Text("Maximum 10 Players from a team",
-                    style: AppTextStyles.primaryStyle(14.0, AppColors.white, FontWeight.w600)),
-                TeamAndPlayerInfo(),
+                const SizedBox(height: 4),
+                // Dynamic max players text
+                Text(
+                  contestDetails != null && contestDetails!['totalSpots'] != null
+                      ? "Maximum ${contestDetails!['totalSpots']} Players from a team"
+                      : "Maximum Players from a team",
+                  style: AppTextStyles.primaryStyle(14.0, AppColors.white, FontWeight.w600),
+                ),
+                // Dynamic team info
+                if (contestDetails != null && contestDetails!['teamInfo'] != null)
+                  TeamAndPlayerInfo(
+                    teamInfo: contestDetails?['teamInfo'] ?? [],
+                    selectedPlayersCount: selectedPlayers.length,
+                    maxPlayers: 8, // <-- Set max player count to 8 here
+                    team1Count: selectedPlayers.where((p) => p['teamName'] == (contestDetails?['teamInfo']?[0]?['name'] ?? '')).length,
+                    team2Count: selectedPlayers.where((p) => p['teamName'] == (contestDetails?['teamInfo']?[1]?['name'] ?? '')).length,
+                    creditsLeft: 100 - selectedPlayers.fold<double>(0, (sum, p) => sum + (p['credit'] ?? 0)),
+                  ),
                 playersCounterBar(width),
               ],
             ),
@@ -403,7 +420,13 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                   selectedPlayers.removeWhere((p) => p['id'] == player['id']);
                   print('Removed Player ID: ${player['id']}, User Email: $email');
                 } else {
-                  // Add the complete player map.
+                  // Prevent selecting more than maxPlayers (8)
+                  if (selectedPlayers.length >= 8) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("You can't select more than 8 players.")),
+                    );
+                    return;
+                  }
                   selectedPlayers.add(Map<String, dynamic>.from(player));
                   print('Added Player ID: ${player['id']}, User Email: $email');
                 }
