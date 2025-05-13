@@ -136,7 +136,7 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
             preferredSize: Size(double.infinity, AppBar().preferredSize.height),
             child: AppBar(
               iconTheme: const IconThemeData(size: 20, color: Colors.white),
-              backgroundColor: const Color(0xff191D88),
+              backgroundColor: const Color.fromARGB(255, 72, 133, 190),
               elevation: 1.0,
               title: Row(
                 children: [
@@ -147,7 +147,7 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                       ));
                     },
                     child: Text(
-                      "Contest ID: ${widget.id}",
+                      "Current Stats",
                       style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600),
                     ),
                   ),
