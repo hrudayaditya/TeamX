@@ -216,7 +216,7 @@ class _ContestScreenState extends State<ContestScreen>
         builder: (context) {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            backgroundColor: Colors.white,
+            backgroundColor: const Color.fromARGB(255, 72, 133, 190),
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
@@ -239,7 +239,7 @@ class _ContestScreenState extends State<ContestScreen>
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primaryColor,
+                      backgroundColor: const Color.fromARGB(255, 72, 133, 190),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                     ),
                     onPressed: () {
@@ -260,7 +260,7 @@ class _ContestScreenState extends State<ContestScreen>
         builder: (context) {
           return Dialog(
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            backgroundColor: Colors.white,
+            backgroundColor: const Color.fromARGB(255, 72, 133, 190),
             child: Container(
               padding: const EdgeInsets.all(16),
               child: Column(
@@ -309,63 +309,101 @@ class _ContestScreenState extends State<ContestScreen>
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
         child: AppBar(
-          iconTheme: const IconThemeData(size: 20, color: Colors.white),
-          backgroundColor: const Color.fromARGB(255, 72, 133, 190),
+          backgroundColor: const Color.fromARGB(255, 72, 133, 190), // Updated header color
+          iconTheme: const IconThemeData(color: Colors.white, size: 20),
           elevation: 1.0,
-          title: Row(
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(width: 8),
-              Image.asset(
-                'assets/teamx-logo.png', // Ensure this file exists in assets and is listed in pubspec.yaml
-                height: 70, // Adjust the size as needed
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/walletPage');
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(width: 1.75, color: Colors.white),
-                  //   shape: BoxShape.circle,
-                  // ),
-                  child: Image.asset(
-                    'assets/wallet.png',
-                    color: Colors.white,
-                    height: 32,
+              Row(
+                children: [
+                  const SizedBox(width: 8),
+                  Image.asset(
+                    'assets/teamx-logo.png', // Ensure this file exists in assets and is listed in pubspec.yaml
+                    height: 70,
                   ),
-                ),
-              ),
-              const SizedBox(width: 6),
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/fantasyPointsSystem');
-                },
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    border: Border.all(width: 1.75, color: Colors.white),
-                    shape: BoxShape.circle,
+                  const Spacer(),
+                  // Display extra user icon only for admin.
+                  FutureBuilder<String?>(
+                    future: Utils().secureStorage.read(key: 'admin'),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData && snapshot.data == "true") {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.pushNamed(context, '/allAccounts');
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.all(6),
+                            child: const Icon(Icons.person, color: Colors.white, size: 32),
+                          ),
+                        );
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    },
                   ),
-                  child: Text(
-                    "PTS",
-                    style: AppTextStyles.terniaryStyle(10.0, AppColors.white, FontWeight.w700),
+                  const SizedBox(width: 6),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/walletPage');
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      child: Image.asset(
+                        'assets/wallet.png',
+                        color: Colors.white,
+                        height: 32,
+                      ),
+                    ),
                   ),
-                ),
+                  const SizedBox(width: 6),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/fantasyPointsSystem');
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(6),
+                      decoration: BoxDecoration(
+                        border: Border.all(width: 1.75, color: Colors.white),
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        "PTS",
+                        style: AppTextStyles.terniaryStyle(10.0, Colors.white, FontWeight.w700),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 6),
+                  IconButton(
+                    icon: const Icon(Icons.logout, color: Colors.white),
+                    onPressed: () async {
+                      await Utils().secureStorage.write(key: 'jwt', value: '');
+                      await Utils().secureStorage.write(key: 'email', value: '');
+                      await Utils().secureStorage.write(key: 'username', value: '');
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/login',
+                        (route) => false,
+                      );
+                    },
+                  ),
+                ],
               ),
-              const SizedBox(width: 6),
-              IconButton(
-                icon: const Icon(Icons.logout, color: Colors.white),
-                onPressed: () async {
-                  await Utils().secureStorage.write(key: 'jwt', value: '');
-                  await Utils().secureStorage.write(key: 'email', value: '');
-                  await Utils().secureStorage.write(key: 'username', value: '');
-                  Navigator.pushNamedAndRemoveUntil(
-                    context,
-                    '/login', // Ensure this route is defined in your main.dart
-                    (route) => false,
-                  );
+              // New line for welcome header, if admin.
+              FutureBuilder<String?>(
+                future: Utils().secureStorage.read(key: 'admin'),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData && snapshot.data == "true") {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        "Welcome Admin!",
+                        style: AppTextStyles.primaryStyle(16, Colors.white, FontWeight.bold),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
                 },
               ),
             ],
