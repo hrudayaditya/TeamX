@@ -27,6 +27,8 @@ class AppUrl {
   static var reduceAmount = '$baseUrl/auth/deduct';
   static var viewTeam = '$baseUrl/teams/combined';
 
+  // Points
+  static var getPoints = '$baseUrl/points';
 
 
   
