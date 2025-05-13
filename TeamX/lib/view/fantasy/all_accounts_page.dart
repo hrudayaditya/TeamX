@@ -42,8 +42,8 @@ class _AllAccountsPageState extends State<AllAccountsPage> {
     }
   }
 
-  Future<void> deleteAccount(String id) async {
-    final url = "${AppUrl.accounts}/delete/$id";
+  Future<void> deleteAccount(String email) async {
+    final url = "${AppUrl.accounts}/delete?email=$email";
     final response = await http.delete(Uri.parse(url));
     if (response.statusCode == 200) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -77,7 +77,7 @@ class _AllAccountsPageState extends State<AllAccountsPage> {
                   subtitle: Text(account["email"]),
                   trailing: GestureDetector(
                     onTap: () {
-                      deleteAccount(account["id"]);
+                      deleteAccount(account["email"]);
                     },
                     child: Container(
                       padding: const EdgeInsets.all(4),
