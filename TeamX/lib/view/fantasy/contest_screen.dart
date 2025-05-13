@@ -207,7 +207,47 @@ class _ContestScreenState extends State<ContestScreen>
           elevation: 1.0,
           title: Row(
             children: [
-              // Logoff button: clear secure storage values and navigate to login screen.
+              const SizedBox(width: 8),
+              Image.asset(
+                'assets/teamx-logo.png', // Ensure this file exists in assets and is listed in pubspec.yaml
+                height: 70, // Adjust the size as needed
+              ),
+              const Spacer(),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/walletPage');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  // decoration: BoxDecoration(
+                  //   border: Border.all(width: 1.75, color: Colors.white),
+                  //   shape: BoxShape.circle,
+                  // ),
+                  child: Image.asset(
+                    'assets/wallet.png',
+                    color: Colors.white,
+                    height: 32,
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, '/fantasyPointsSystem');
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    border: Border.all(width: 1.75, color: Colors.white),
+                    shape: BoxShape.circle,
+                  ),
+                  child: Text(
+                    "PTS",
+                    style: AppTextStyles.terniaryStyle(10.0, AppColors.white, FontWeight.w700),
+                  ),
+                ),
+              ),
+              const SizedBox(width: 6),
               IconButton(
                 icon: const Icon(Icons.logout, color: Colors.white),
                 onPressed: () async {
@@ -219,25 +259,6 @@ class _ContestScreenState extends State<ContestScreen>
                     '/login', // Ensure this route is defined in your main.dart
                     (route) => false,
                   );
-                },
-              ),
-              const SizedBox(width: 8),
-              Text("My TeamX", style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
-              const Spacer(),
-              IconButton(
-                icon: const Icon(Icons.stars, color: Colors.white),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/fantasyPointsSystem');
-                },
-              ),
-              IconButton(
-                icon: Image.asset(
-                  'assets/wallet.png', // Ensure this file exists and is properly listed in pubspec.yaml
-                  width: 24,
-                  height: 24,
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/walletPage');
                 },
               ),
             ],
