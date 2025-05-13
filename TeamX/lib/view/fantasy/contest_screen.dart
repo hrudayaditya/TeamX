@@ -194,6 +194,109 @@ class _ContestScreenState extends State<ContestScreen>
     );
   }
 
+  Future<Map<String, dynamic>> _fetchWalletBalance() async {
+    // Use a fixed email or fetch it from secure storage if needed.
+    final utils = Utils();
+    final email = await utils.fetchDataSecure('email');
+    final url = AppUrl.wallet+"?email=$email";
+    final response = await http.get(Uri.parse(url));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception("Failed to fetch wallet balance");
+    }
+  }
+
+  void _showWalletPopup() async {
+    try {
+      final walletData = await _fetchWalletBalance();
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            backgroundColor: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Wallet Balance",
+                    style: AppTextStyles.primaryStyle(18, AppColors.black, FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    "Email: ${walletData['email']}\nBalance: \$${walletData['wallet']}",
+                    style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("OK", style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.bold)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            backgroundColor: Colors.white,
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Error",
+                    style: AppTextStyles.primaryStyle(18, AppColors.black, FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    "Failed to fetch wallet balance: $e",
+                    style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primaryColor,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                    ),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Text("OK", style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.bold)),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -214,9 +317,7 @@ class _ContestScreenState extends State<ContestScreen>
               ),
               const Spacer(),
               GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, '/walletPage');
-                },
+                onTap: _showWalletPopup,
                 child: Container(
                   padding: const EdgeInsets.all(6),
                   // decoration: BoxDecoration(
