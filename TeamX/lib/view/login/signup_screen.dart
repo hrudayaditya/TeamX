@@ -26,6 +26,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
     final password = _passwordController.text.trim();
     final phone = _phoneController.text.trim();
 
+    // Input validations
+    if (username.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty ||
+        phone.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('All fields are required.')),
+      );
+      return;
+    }
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a valid email address.')),
+      );
+      return;
+    }
+    if (password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Password must be at least 6 characters.')),
+      );
+      return;
+    }
+    if (!RegExp(r'^\d{10,}$').hasMatch(phone)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a valid phone number.')),
+      );
+      return;
+    }
+
     setState(() => isLoading = true);
 
     final response = await http.post(
@@ -116,6 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextField(
+                            key: const Key('signup_username'),
                             controller: _usernameController,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
@@ -139,6 +170,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextField(
+                            key: const Key('signup_email'),
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: const InputDecoration(
@@ -163,6 +195,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextField(
+                            key: const Key('signup_password'),
                             controller: _passwordController,
                             obscureText: true,
                             decoration: const InputDecoration(
@@ -187,6 +220,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         const SizedBox(width: 10),
                         Expanded(
                           child: TextField(
+                            key: const Key('signup_phone'),
                             controller: _phoneController,
                             keyboardType: TextInputType.phone,
                             decoration: const InputDecoration(
@@ -298,6 +332,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ],
                       ),
                     ),
+                  ),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    key: const Key('signup_submit_btn'),
+                    onPressed: _signup,
+                    child: const Text('Sign Up'),
                   ),
                 ],
               ),

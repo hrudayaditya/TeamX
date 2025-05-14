@@ -25,6 +25,27 @@ class _LoginScreenState extends State<LoginScreen> {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
 
+    // Input validations
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email and password are required.')),
+      );
+      return;
+    }
+    if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(email)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Enter a valid email address.')),
+      );
+      return;
+    }
+    if (password.length < 6) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Password must be at least 6 characters.')),
+      );
+      return;
+    }
+
     // Hardcoded admin check.
     if (email == "admin@example.com" && password == "admin") {
       // Save admin details to secure storage.
@@ -139,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: TextField(
+                                key: const Key('login_email'),
                                 controller: _emailController,
                                 keyboardType: TextInputType.emailAddress,
                                 decoration: const InputDecoration(
@@ -163,6 +185,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             const SizedBox(width: 10),
                             Expanded(
                               child: TextField(
+                                key: const Key('login_password'),
                                 controller: _passwordController,
                                 obscureText: true,
                                 decoration: const InputDecoration(
@@ -275,9 +298,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Continue",
-                                  style: AppTextStyles.primaryStyle(
-                                      20.0, AppColors.white, FontWeight.w700)),
+                              ElevatedButton(
+                                key: const Key('login_continue_btn'),
+                                onPressed: _login,
+                                child: const Text('Continue'),
+                              ),
                             ],
                           ),
                         ),
