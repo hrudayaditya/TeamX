@@ -1,4 +1,4 @@
-// Main entry point for the TeamX Fantasy Sports application
+// Main entry point for the TeamX Fantasy Sports applicationen
 import 'package:flutter/material.dart';
 import 'package:teamx/view/fantasy/all_accounts_page.dart';
 import 'package:teamx/view/fantasy/fantasy_points_system.dart';
