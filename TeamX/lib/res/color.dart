@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 
+/// Color configurations for the TeamX Fantasy Sports application
+///
+/// This file contains:
+/// 1. Primary and secondary color schemes
+/// 2. UI element specific colors
+/// 3. Status and feedback colors
+/// 4. Theme color variations
 class AppColors {
   static const Color black = Colors.black;
   static const Color white = Colors.white;

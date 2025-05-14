@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+/// Text style configurations for the TeamX Fantasy Sports application
+///
+/// This file contains:
+/// 1. Custom text styles for different UI elements
+/// 2. Font size and weight configurations
+/// 3. Color schemes for text
+/// 4. Style variations (primary, secondary, tertiary)
 class AppTextStyles {
   AppTextStyles(double d, MaterialColor red, FontWeight bold);
 
