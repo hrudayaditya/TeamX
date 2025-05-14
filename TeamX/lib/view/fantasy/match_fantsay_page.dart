@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:teamx/utils/utils.dart';
 
-import '../../cards/glassmorphism_card.dart';
 import '../../res/app_text_style.dart';
 import '../../res/color.dart';
 import '../../widgets/upcoming_matches.dart';
@@ -16,7 +15,9 @@ import '../../res/app_url.dart';
 class MatchFantasyPage extends StatefulWidget {
   final String contestId;
   final Map<String, dynamic> contest;
-  const MatchFantasyPage({Key? key, required this.contestId, required this.contest}) : super(key: key);
+  const MatchFantasyPage(
+      {Key? key, required this.contestId, required this.contest})
+      : super(key: key);
 
   @override
   State<MatchFantasyPage> createState() => _MatchFantasyPageState();
@@ -93,7 +94,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
           backgroundColor: const Color.fromARGB(255, 72, 133, 190),
           elevation: 1.0,
           title: Text("Create Team",
-              style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600)),
+              style: AppTextStyles.primaryStyle(
+                  20.0, AppColors.white, FontWeight.w600)),
         ),
       ),
       // FAB passes only selectedPlayers to the TeamPreview page.
@@ -105,7 +107,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
           Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => TeamPreview(
               selectedPlayers: selectedPlayers,
-              contest: widget.contest, // directly pass the complete contest details
+              contest:
+                  widget.contest, // directly pass the complete contest details
             ),
           ));
         },
@@ -117,15 +120,20 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             color: const Color(0xff191D88),
             boxShadow: [
               BoxShadow(
-                  color: Colors.black12, spreadRadius: 2, blurRadius: 20, offset: const Offset(0, 5))
+                  color: Colors.black12,
+                  spreadRadius: 2,
+                  blurRadius: 20,
+                  offset: const Offset(0, 5))
             ],
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.remove_red_eye_outlined, color: Colors.white, size: 18),
+              Icon(Icons.remove_red_eye_outlined,
+                  color: Colors.white, size: 18),
               Text(" PREVIEW",
-                  style: AppTextStyles.primaryStyle(16.0, AppColors.white, FontWeight.w700)),
+                  style: AppTextStyles.primaryStyle(
+                      16.0, AppColors.white, FontWeight.w700)),
             ],
           ),
         ),
@@ -134,26 +142,40 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
         children: [
           // Top blue container with team info.
           Container(
-            decoration: BoxDecoration(color: const Color.fromARGB(255, 72, 133, 190)),
+            decoration:
+                BoxDecoration(color: const Color.fromARGB(255, 72, 133, 190)),
             child: Column(
               children: [
                 const SizedBox(height: 4),
                 // Dynamic max players text
                 Text(
-                  contestDetails != null && contestDetails!['totalSpots'] != null
+                  contestDetails != null &&
+                          contestDetails!['totalSpots'] != null
                       ? "Maximum ${contestDetails!['totalSpots']} Players from a team"
                       : "Maximum Players from a team",
-                  style: AppTextStyles.primaryStyle(14.0, AppColors.white, FontWeight.w600),
+                  style: AppTextStyles.primaryStyle(
+                      14.0, AppColors.white, FontWeight.w600),
                 ),
                 // Dynamic team info
-                if (contestDetails != null && contestDetails!['teamInfo'] != null)
+                if (contestDetails != null &&
+                    contestDetails!['teamInfo'] != null)
                   TeamAndPlayerInfo(
                     teamInfo: contestDetails?['teamInfo'] ?? [],
                     selectedPlayersCount: selectedPlayers.length,
                     maxPlayers: 8, // <-- Set max player count to 8 here
-                    team1Count: selectedPlayers.where((p) => p['teamName'] == (contestDetails?['teamInfo']?[0]?['name'] ?? '')).length,
-                    team2Count: selectedPlayers.where((p) => p['teamName'] == (contestDetails?['teamInfo']?[1]?['name'] ?? '')).length,
-                    creditsLeft: 100 - selectedPlayers.fold<double>(0, (sum, p) => sum + (p['credit'] ?? 0)),
+                    team1Count: selectedPlayers
+                        .where((p) =>
+                            p['teamName'] ==
+                            (contestDetails?['teamInfo']?[0]?['name'] ?? ''))
+                        .length,
+                    team2Count: selectedPlayers
+                        .where((p) =>
+                            p['teamName'] ==
+                            (contestDetails?['teamInfo']?[1]?['name'] ?? ''))
+                        .length,
+                    creditsLeft: 100 -
+                        selectedPlayers.fold<double>(
+                            0, (sum, p) => sum + (p['credit'] ?? 0)),
                   ),
                 playersCounterBar(width),
               ],
@@ -165,7 +187,10 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                 color: Color(0xfff8f8fe),
                 border: Border.all(width: 1.5, color: Colors.white),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.05), spreadRadius: 2, blurRadius: 20)
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      spreadRadius: 2,
+                      blurRadius: 20)
                 ]),
             child: TabBar(
               controller: _tabController,
@@ -174,10 +199,30 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               dividerColor: Colors.transparent,
               indicatorWeight: 4,
               tabs: [
-                Tab(height: 30.0, child: Text("WK", maxLines: 2, style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w500))),
-                Tab(height: 30.0, child: Text("BAT", maxLines: 2, style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w500))),
-                Tab(height: 30.0, child: Text("AR", maxLines: 2, style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w500))),
-                Tab(height: 30.0, child: Text("BOWL", maxLines: 2, style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w500))),
+                Tab(
+                    height: 30.0,
+                    child: Text("WK",
+                        maxLines: 2,
+                        style: AppTextStyles.terniaryStyle(
+                            14, AppColors.black, FontWeight.w500))),
+                Tab(
+                    height: 30.0,
+                    child: Text("BAT",
+                        maxLines: 2,
+                        style: AppTextStyles.terniaryStyle(
+                            14, AppColors.black, FontWeight.w500))),
+                Tab(
+                    height: 30.0,
+                    child: Text("AR",
+                        maxLines: 2,
+                        style: AppTextStyles.terniaryStyle(
+                            14, AppColors.black, FontWeight.w500))),
+                Tab(
+                    height: 30.0,
+                    child: Text("BOWL",
+                        maxLines: 2,
+                        style: AppTextStyles.terniaryStyle(
+                            14, AppColors.black, FontWeight.w500))),
               ],
             ),
           ),
@@ -192,7 +237,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text("Select 1 - 8 Wicket Keepers",
-                          style: AppTextStyles.terniaryStyle(15, AppColors.black, FontWeight.w500),
+                          style: AppTextStyles.terniaryStyle(
+                              15, AppColors.black, FontWeight.w500),
                           maxLines: 2),
                     ),
                     topBarPlayerTile(width),
@@ -213,7 +259,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text("Select 1 - 8 Batsman",
-                          style: AppTextStyles.terniaryStyle(15, AppColors.black, FontWeight.w500),
+                          style: AppTextStyles.terniaryStyle(
+                              15, AppColors.black, FontWeight.w500),
                           maxLines: 2),
                     ),
                     topBarPlayerTile(width),
@@ -234,7 +281,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text("Select 1 - 8 All Rounders",
-                          style: AppTextStyles.terniaryStyle(15, AppColors.black, FontWeight.w500),
+                          style: AppTextStyles.terniaryStyle(
+                              15, AppColors.black, FontWeight.w500),
                           maxLines: 2),
                     ),
                     topBarPlayerTile(width),
@@ -255,7 +303,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                     Container(
                       margin: EdgeInsets.only(bottom: 5),
                       child: Text("Select 1 - 8 Bowlers",
-                          style: AppTextStyles.terniaryStyle(15, AppColors.black, FontWeight.w500),
+                          style: AppTextStyles.terniaryStyle(
+                              15, AppColors.black, FontWeight.w500),
                           maxLines: 2),
                     ),
                     topBarPlayerTile(width),
@@ -297,13 +346,16 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       decoration: ShapeDecoration(
                         color: Color(0xffE80F88),
                         shape: TrapeziumBorder(
-                          side: const BorderSide(color: Color(0xffE80F88), width: 2),
+                          side: const BorderSide(
+                              color: Color(0xffE80F88), width: 2),
                           borderRadius: BorderRadius.circular(0),
-                          borderOffset: const BorderOffset.diagonal(tlbr: Offset(-6, 0)),
+                          borderOffset:
+                              const BorderOffset.diagonal(tlbr: Offset(-6, 0)),
                         ),
                       ),
                       child: Text(index == count - 1 ? count.toString() : "",
-                          style: AppTextStyles.terniaryStyle(10, Colors.white, FontWeight.w600)),
+                          style: AppTextStyles.terniaryStyle(
+                              10, Colors.white, FontWeight.w600)),
                     ),
                   );
                 } else {
@@ -312,9 +364,11 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                       decoration: ShapeDecoration(
                         color: Colors.white,
                         shape: TrapeziumBorder(
-                          side: const BorderSide(color: Color(0xffE80F88), width: 2),
+                          side: const BorderSide(
+                              color: Color(0xffE80F88), width: 2),
                           borderRadius: BorderRadius.circular(0),
-                          borderOffset: const BorderOffset.diagonal(tlbr: Offset(-6, 0)),
+                          borderOffset:
+                              const BorderOffset.diagonal(tlbr: Offset(-6, 0)),
                         ),
                       ),
                     ),
@@ -324,7 +378,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             ),
           ),
           SizedBox(width: 13),
-          Icon(Icons.remove_circle_outline_rounded, size: 24, color: Colors.white)
+          Icon(Icons.remove_circle_outline_rounded,
+              size: 24, color: Colors.white)
         ],
       ),
     );
@@ -346,14 +401,18 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
                 border: Border.all(width: 1.5, color: Colors.white),
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
-                  BoxShadow(color: Colors.black.withOpacity(0.05), spreadRadius: 2, blurRadius: 20)
+                  BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      spreadRadius: 2,
+                      blurRadius: 20)
                 ]),
             child: Row(
               children: [
                 AutoSizeText("Style",
                     minFontSize: 10,
                     maxFontSize: 14,
-                    style: AppTextStyles.primaryStyle(14, Colors.black54, FontWeight.w500)),
+                    style: AppTextStyles.primaryStyle(
+                        14, Colors.black54, FontWeight.w500)),
               ],
             ),
           ),
@@ -363,7 +422,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               child: AutoSizeText("CREDITS",
                   minFontSize: 10,
                   maxFontSize: 14,
-                  style: AppTextStyles.primaryStyle(14, AppColors.black, FontWeight.w500)),
+                  style: AppTextStyles.primaryStyle(
+                      14, AppColors.black, FontWeight.w500)),
             ),
           ),
           SizedBox(width: 20),
@@ -392,14 +452,16 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             child: Align(
               alignment: Alignment.centerLeft,
               child: Text(player['name'] ?? '',
-                  style: AppTextStyles.terniaryStyle(14, Colors.black, FontWeight.w500)),
+                  style: AppTextStyles.terniaryStyle(
+                      14, Colors.black, FontWeight.w500)),
             ),
           ),
           SizedBox(
             width: width * 0.2,
             child: Center(
               child: Text(player['battingStyle'] ?? '',
-                  style: AppTextStyles.terniaryStyle(14, Colors.black54, FontWeight.w500)),
+                  style: AppTextStyles.terniaryStyle(
+                      14, Colors.black54, FontWeight.w500)),
             ),
           ),
           SizedBox(
@@ -407,7 +469,8 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
             child: Align(
               alignment: Alignment.centerRight,
               child: Text(player['credit']?.toString() ?? '',
-                  style: AppTextStyles.terniaryStyle(14, Colors.black, FontWeight.w600)),
+                  style: AppTextStyles.terniaryStyle(
+                      14, Colors.black, FontWeight.w600)),
             ),
           ),
           SizedBox(width: 7),
@@ -418,12 +481,15 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               setState(() {
                 if (isSelected) {
                   selectedPlayers.removeWhere((p) => p['id'] == player['id']);
-                  print('Removed Player ID: ${player['id']}, User Email: $email');
+                  print(
+                      'Removed Player ID: ${player['id']}, User Email: $email');
                 } else {
                   // Prevent selecting more than maxPlayers (8)
                   if (selectedPlayers.length >= 8) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("You can't select more than 8 players.")),
+                      const SnackBar(
+                          content:
+                              Text("You can't select more than 8 players.")),
                     );
                     return;
                   }
@@ -433,7 +499,9 @@ class _MatchFantasyPageState extends State<MatchFantasyPage>
               });
             },
             child: Icon(
-              isSelected ? Icons.remove_circle_outline_rounded : Icons.add_circle_outline_rounded,
+              isSelected
+                  ? Icons.remove_circle_outline_rounded
+                  : Icons.add_circle_outline_rounded,
               color: isSelected ? Colors.red : AppColors.green,
               size: 20,
             ),
