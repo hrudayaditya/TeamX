@@ -1,5 +1,13 @@
 import 'package:flutter/material.dart';
 
+/// Authentication ViewModel for managing user authentication state and operations
+///
+/// This class handles:
+/// 1. User login and signup
+/// 2. Token management
+/// 3. User session state
+/// 4. Authentication error handling
+
 class AuthViewModelSingleton {
   static final AuthViewModel _instance = AuthViewModel();
   static AuthViewModel get instance => _instance;

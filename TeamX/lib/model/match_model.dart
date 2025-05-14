@@ -1,3 +1,15 @@
+/// Core data models for cricket match information and management
+///
+/// This file contains the following key classes:
+/// 1. MatchListModel - Manages a collection of matches and their squads
+/// 2. Squad - Represents a cricket team's squad information
+/// 3. Player - Represents individual player statistics and details
+/// 4. Team - Represents a cricket team with its players
+/// 5. Innings - Represents match innings data
+/// 6. Venue - Represents match venue information
+/// 7. Matches - Main class representing a cricket match with all its details
+
+/// Manages a collection of matches and their associated squads
 class MatchListModel {
   late List<Matches> matches;
   late Map<int, Matches> matchesMap;
@@ -5,9 +17,16 @@ class MatchListModel {
 
   MatchListModel(
       {this.matches = const [],
-        this.matchesMap = const <int, Matches>{},
-        this.tournamentSquads = const <int, Squad>{}});
+      this.matchesMap = const <int, Matches>{},
+      this.tournamentSquads = const <int, Squad>{}});
 
+  /// Creates a MatchListModel from JSON data
+  ///
+  /// Sorts matches by:
+  /// 1. Status (active matches first)
+  /// 2. Priority
+  /// 3. Start time
+  /// 4. Total volume
   MatchListModel.fromJson(List<dynamic> json,
       {Map<int, Squad> tournamentSquadsOld = const <int, Squad>{}}) {
     matches = <Matches>[];
@@ -52,11 +71,13 @@ class MatchListModel {
     return data;
   }
 
+  /// Updates a specific match in the collection
   void updateMatch(dynamic json) {
     final match = Matches.fromJson(json);
     matchesMap[match.mid] = match;
   }
 
+  /// Updates tournament squads information
   void updateTournamentSquads(dynamic json) {
     tournamentSquads = <int, Squad>{};
     for (var element in json) {
@@ -67,11 +88,12 @@ class MatchListModel {
   }
 }
 
+/// Represents a cricket team's squad information
 class Squad {
-  late int sid;
-  late String name;
-  late String logo;
-  late String abbreviation;
+  late int sid; // Squad ID
+  late String name; // Team name
+  late String logo; // Team logo URL
+  late String abbreviation; // Team abbreviation
 
   Squad({
     required this.sid,
@@ -102,21 +124,22 @@ class Squad {
   }
 }
 
+/// Represents individual player statistics and details
 class Player {
-  late int id;
-  late String name;
-  late int matchId;
-  late int runs;
-  late int balls;
-  late int fours;
-  late int sixes;
-  late int oversCompleted;
-  late int ballsBowled;
-  late int runsConceded;
-  late int wickets;
-  late bool playing;
-  late String howOut;
-  late int position;
+  late int id; // Player ID
+  late String name; // Player name
+  late int matchId; // Associated match ID
+  late int runs; // Runs scored
+  late int balls; // Balls faced
+  late int fours; // Number of fours
+  late int sixes; // Number of sixes
+  late int oversCompleted; // Overs bowled
+  late int ballsBowled; // Balls bowled
+  late int runsConceded; // Runs conceded
+  late int wickets; // Wickets taken
+  late bool playing; // Whether player is in playing XI
+  late String howOut; // Dismissal information
+  late int position; // Batting position
 
   Player({
     required this.id,
@@ -146,11 +169,11 @@ class Player {
       fours: json['fours'] == null ? 0 : json['fours'] as int,
       sixes: json['sixes'] == null ? 0 : json['sixes'] as int,
       oversCompleted:
-      json['overs_completed'] == null ? 0 : json['overs_completed'] as int,
+          json['overs_completed'] == null ? 0 : json['overs_completed'] as int,
       ballsBowled:
-      json['balls_bowled'] == null ? 0 : json['balls_bowled'] as int,
+          json['balls_bowled'] == null ? 0 : json['balls_bowled'] as int,
       runsConceded:
-      json['runs_conceded'] == null ? 0 : json['runs_conceded'] as int,
+          json['runs_conceded'] == null ? 0 : json['runs_conceded'] as int,
       wickets: json['wickets'] == null ? 0 : json['wickets'] as int,
       playing: json['playing'] == null ? false : json['playing'] as bool,
       howOut: json['how_out'] == null ? "" : json['how_out'] as String,
@@ -176,12 +199,13 @@ class Player {
   }
 }
 
+/// Represents a cricket team with its players
 class Team {
-  late int id;
-  late String name;
-  late Map<int, Player> players;
-  late String logo;
-  late String abbreviation;
+  late int id; // Team ID
+  late String name; // Team name
+  late Map<int, Player> players; // Map of player ID to Player object
+  late String logo; // Team logo URL
+  late String abbreviation; // Team abbreviation
 
   Team({
     required this.id,
@@ -225,15 +249,16 @@ class Team {
   }
 }
 
+/// Represents match innings data
 class Innings {
-  late int num;
-  late int matchId;
-  int? battingTeamId;
-  int? bowlingTeamId;
-  late int runs;
-  late int wickets;
-  late int overs;
-  late int balls;
+  late int num; // Innings number (1 or 2)
+  late int matchId; // Associated match ID
+  int? battingTeamId; // ID of batting team
+  int? bowlingTeamId; // ID of bowling team
+  late int runs; // Total runs scored
+  late int wickets; // Wickets fallen
+  late int overs; // Overs completed
+  late int balls; // Balls bowled
 
   Innings({
     required this.num,
@@ -276,11 +301,12 @@ class Innings {
   }
 }
 
+/// Represents match venue information
 class Venue {
-  late int id;
-  late String name;
-  late String city;
-  late String country;
+  late int id; // Venue ID
+  late String name; // Venue name
+  late String city; // City name
+  late String country; // Country name
 
   // Constructor
   Venue({
@@ -311,36 +337,37 @@ class Venue {
   }
 }
 
+/// Main class representing a cricket match with all its details
 class Matches {
-  late int mid;
-  late String name;
-  late String shortName;
-  late String subtitle;
-  late String startTime;
-  String? endTime;
-  int? matchType;
-  late Map<int, Team> teams = <int, Team>{};
-  int? winnerId;
-  int? toss;
-  late int inningsNo;
-  Venue? venue;
-  late int status;
-  late int gameState;
-  String? equation;
-  String? result;
-  String? winMargin;
-  late String tournament;
-  late String tournamentAbbr;
-  late Innings innings1;
-  late Innings innings2;
-  int? strikerId;
-  int? nonStrikerId;
-  int? bowlerId;
-  late int numInstruments;
-  late bool isPlayingXIPopulated;
-  late double totalVolume;
-  late String totalVolumeStr;
-  late int priority;
+  late int mid; // Match ID
+  late String name; // Match name
+  late String shortName; // Short match name
+  late String subtitle; // Match subtitle
+  late String startTime; // Match start time
+  String? endTime; // Match end time
+  int? matchType; // Type of match (T20, ODI, etc.)
+  late Map<int, Team> teams; // Map of team ID to Team object
+  int? winnerId; // ID of winning team
+  int? toss; // Toss result
+  late int inningsNo; // Current innings number
+  Venue? venue; // Match venue
+  late int status; // Match status
+  late int gameState; // Current game state
+  String? equation; // Required run rate equation
+  String? result; // Match result
+  String? winMargin; // Winning margin
+  late String tournament; // Tournament name
+  late String tournamentAbbr; // Tournament abbreviation
+  late Innings innings1; // First innings data
+  late Innings innings2; // Second innings data
+  int? strikerId; // Current striker's ID
+  int? nonStrikerId; // Current non-striker's ID
+  int? bowlerId; // Current bowler's ID
+  late int numInstruments; // Number of instruments
+  late bool isPlayingXIPopulated; // Whether playing XI is set
+  late double totalVolume; // Total match volume
+  late String totalVolumeStr; // Total volume as string
+  late int priority; // Match priority
 
   Matches({
     required this.mid,
@@ -375,6 +402,7 @@ class Matches {
   })  : innings1 = innings1 ?? Innings(num: 1, matchId: mid),
         innings2 = innings2 ?? Innings(num: 2, matchId: mid);
 
+  /// Gets the current batting team
   Team? getBattingTeam() {
     Team? battingTeam;
     if (inningsNo == 1) {
@@ -387,6 +415,7 @@ class Matches {
     return battingTeam;
   }
 
+  /// Gets the current bowling team
   Team? getBowlingTeam() {
     Team? bowlingTeam;
     if (inningsNo == 1) {
@@ -399,6 +428,7 @@ class Matches {
     return bowlingTeam;
   }
 
+  /// Gets the team that batted first
   Team? getBattingFirstTeam() {
     int? teamId = innings1.battingTeamId;
     if (teamId == null) {
@@ -413,6 +443,7 @@ class Matches {
     return teams[teamId];
   }
 
+  /// Gets the team that bowled first
   Team? getBowlingFirstTeam() {
     int? teamId = innings1.bowlingTeamId;
     if (teamId == null) {
@@ -421,26 +452,31 @@ class Matches {
     return teams[teamId];
   }
 
+  /// Gets the current striker
   Player? getStriker() {
     Team? battingTeam = getBattingTeam();
     return battingTeam?.players[strikerId];
   }
 
+  /// Gets the current non-striker
   Player? getNonStriker() {
     Team? battingTeam = getBattingTeam();
     return battingTeam?.players[nonStrikerId];
   }
 
+  /// Gets the current bowler
   Player? getBowler() {
     Team? bowlingTeam = getBowlingTeam();
     return bowlingTeam?.players[bowlerId];
   }
 
+  /// Gets a batsman by their ID
   Player? getBatsman(int pid) {
     Team? battingTeam = getBattingTeam();
     return battingTeam?.players[pid];
   }
 
+  /// Gets a bowler by their ID
   Player? getBowlerFromPid(int pid) {
     Team? bowlingTeam = getBowlingTeam();
     return bowlingTeam?.players[pid];
@@ -456,6 +492,7 @@ class Matches {
     return teamMap;
   }
 
+  /// Updates batsman's details
   void updateBatsmanDetails(Map<String, dynamic> json) {
     Team? battingTeam = getBattingTeam();
     Player? batsman = battingTeam?.players[json['id']];
@@ -465,6 +502,7 @@ class Matches {
     batsman?.sixes = json['sixes'];
   }
 
+  /// Updates bowler's details
   void updateBowlerDetails(Map<String, dynamic> json) {
     Team? bowlingTeam = getBowlingTeam();
     Player? bowler = bowlingTeam?.players[json['id']];

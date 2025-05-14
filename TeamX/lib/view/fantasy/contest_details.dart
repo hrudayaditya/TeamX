@@ -10,17 +10,29 @@ import 'complete_match_contest_details.dart';
 import 'fantasy_points_system.dart';
 import 'match_fantsay_page.dart';
 
+/// Screen that displays detailed information about a fantasy sports contest
+///
+/// This screen shows:
+/// 1. Contest overview and prize pool
+/// 2. Team lineups and player statistics
+/// 3. Match status and live updates
+/// 4. User's team performance
+/// 5. Leaderboard and rankings
+
 class ContestDetailsScreen extends StatefulWidget {
   final String id;
   final dynamic contest; // fallback contest details if needed
 
-  const ContestDetailsScreen({Key? key, required this.id, required this.contest}) : super(key: key);
+  const ContestDetailsScreen(
+      {Key? key, required this.id, required this.contest})
+      : super(key: key);
 
   @override
   State<ContestDetailsScreen> createState() => _ContestDetailsScreenState();
 }
 
-class _ContestDetailsScreenState extends State<ContestDetailsScreen> with SingleTickerProviderStateMixin {
+class _ContestDetailsScreenState extends State<ContestDetailsScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   bool isFree = true; // Example flag to show FREE or price
 
@@ -70,7 +82,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
   // Build a fill bar showing the ratio of spots left to total spots.
   Container spotsFillBar(double width, int spotsLeft, int totalSpots) {
     final barWidth = width - 35; // Available width for the bar.
-    final fraction = totalSpots > 0 ? ((totalSpots-spotsLeft) / totalSpots) : 0.0;
+    final fraction =
+        totalSpots > 0 ? ((totalSpots - spotsLeft) / totalSpots) : 0.0;
     final fillWidth = barWidth * fraction;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
@@ -98,7 +111,7 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    
+
     return FutureBuilder<Map<String, dynamic>>(
       future: _fetchContestDetails(),
       builder: (context, contestSnapshot) {
@@ -111,7 +124,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
             body: Center(
               child: Text(
                 'Error: ${contestSnapshot.error}',
-                style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500),
+                style: AppTextStyles.primaryStyle(
+                    16, Colors.black54, FontWeight.w500),
               ),
             ),
           );
@@ -119,17 +133,18 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
         // Extract contest details from fetched data.
         final contestDetails = contestSnapshot.data!;
         // Use the first element of "data" if available; otherwise fallback.
-        final contestData = (contestDetails['data'] != null && contestDetails['data'].isNotEmpty)
+        final contestData = (contestDetails['data'] != null &&
+                contestDetails['data'].isNotEmpty)
             ? contestDetails['data'][0] as Map<String, dynamic>
             : widget.contest;
-        
+
         // Extract header values.
         final contestName = contestData['name'] ?? "Contest";
         final prizePool = contestData['prizePool'] ?? 0;
         final entryFee = contestData['entryFee'] ?? 0;
         final totalSpots = contestData['totalSpots'] ?? 0;
         final spotsLeft = contestData['spotsLeft'] ?? totalSpots;
-        
+
         return Scaffold(
           backgroundColor: const Color(0xffeef0fc),
           appBar: PreferredSize(
@@ -148,7 +163,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                     },
                     child: Text(
                       "Current Stats",
-                      style: AppTextStyles.primaryStyle(20.0, AppColors.white, FontWeight.w600),
+                      style: AppTextStyles.primaryStyle(
+                          20.0, AppColors.white, FontWeight.w600),
                     ),
                   ),
                   const Spacer(),
@@ -184,7 +200,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                       ),
                       child: Text(
                         "PTS",
-                        style: AppTextStyles.terniaryStyle(10.0, AppColors.white, FontWeight.w700),
+                        style: AppTextStyles.terniaryStyle(
+                            10.0, AppColors.white, FontWeight.w700),
                       ),
                     ),
                   ),
@@ -203,18 +220,22 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Max Prize Pool",
-                            style: AppTextStyles.primaryStyle(14.0, Colors.black54, FontWeight.w500)),
+                            style: AppTextStyles.primaryStyle(
+                                14.0, Colors.black54, FontWeight.w500)),
                         const SizedBox(height: 2),
                         Text("\$${prizePool}",
-                            style: AppTextStyles.terniaryStyle(22.0, Colors.black, FontWeight.w700)),
+                            style: AppTextStyles.terniaryStyle(
+                                22.0, Colors.black, FontWeight.w700)),
                         spotsFillBar(width, spotsLeft, totalSpots),
                         Row(
                           children: [
                             Text("${spotsLeft} spots left",
-                                style: AppTextStyles.primaryStyle(14.0, const Color(0x80191d88), FontWeight.w500)),
+                                style: AppTextStyles.primaryStyle(14.0,
+                                    const Color(0x80191d88), FontWeight.w500)),
                             const Spacer(),
                             Text("$totalSpots spots",
-                                style: AppTextStyles.primaryStyle(14.0, Colors.black54, FontWeight.w500)),
+                                style: AppTextStyles.primaryStyle(
+                                    14.0, Colors.black54, FontWeight.w500)),
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -230,14 +251,16 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                           child: Container(
                             width: width,
                             alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 6, horizontal: 16),
                             decoration: BoxDecoration(
                               color: AppColors.green,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Text(
                               isFree ? "FREE" : "\$${entryFee}",
-                              style: AppTextStyles.terniaryStyle(18, Colors.white, FontWeight.w700),
+                              style: AppTextStyles.terniaryStyle(
+                                  18, Colors.white, FontWeight.w700),
                             ),
                           ),
                         ),
@@ -247,7 +270,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                   ),
                   const SizedBox(height: 8),
                   Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
                     decoration: BoxDecoration(
                       color: Colors.white70,
                       borderRadius: const BorderRadius.only(
@@ -264,28 +288,41 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                           padding: const EdgeInsets.all(1),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.black54, width: 1)),
-                          child: const Icon(Icons.wine_bar_outlined, color: Colors.black54, size: 11),
+                              border:
+                                  Border.all(color: Colors.black54, width: 1)),
+                          child: const Icon(Icons.wine_bar_outlined,
+                              color: Colors.black54, size: 11),
                         ),
-                        Text("  45%", style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
+                        Text("  45%",
+                            style: AppTextStyles.primaryStyle(
+                                12.0, Colors.black54, FontWeight.w500)),
                         const SizedBox(width: 10),
                         Container(
                           padding: const EdgeInsets.all(1),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.black54, width: 1)),
-                          child: Text("M", style: AppTextStyles.primaryStyle(11.0, Colors.black54, FontWeight.w500)),
+                              border:
+                                  Border.all(color: Colors.black54, width: 1)),
+                          child: Text("M",
+                              style: AppTextStyles.primaryStyle(
+                                  11.0, Colors.black54, FontWeight.w500)),
                         ),
-                        Text("  Upto 11", style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
+                        Text("  Upto 11",
+                            style: AppTextStyles.primaryStyle(
+                                12.0, Colors.black54, FontWeight.w500)),
                         const Spacer(),
                         Container(
                           padding: const EdgeInsets.all(1),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              border: Border.all(color: Colors.black54, width: 1)),
-                          child: const Icon(Icons.currency_rupee, color: Colors.black54, size: 11),
+                              border:
+                                  Border.all(color: Colors.black54, width: 1)),
+                          child: const Icon(Icons.currency_rupee,
+                              color: Colors.black54, size: 11),
                         ),
-                        Text("  Flexible", style: AppTextStyles.primaryStyle(12.0, Colors.black54, FontWeight.w500)),
+                        Text("  Flexible",
+                            style: AppTextStyles.primaryStyle(
+                                12.0, Colors.black54, FontWeight.w500)),
                       ],
                     ),
                   ),
@@ -316,7 +353,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                           child: Text(
                             "Winnings",
                             maxLines: 2,
-                            style: AppTextStyles.terniaryStyle(14, AppColors.black, FontWeight.w500),
+                            style: AppTextStyles.terniaryStyle(
+                                14, AppColors.black, FontWeight.w500),
                           ),
                         ),
                         // Tab(
@@ -341,16 +379,21 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                     FutureBuilder<List<Map<String, dynamic>>>(
                       future: _fetchPoints(),
                       builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return const Center(child: CircularProgressIndicator());
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
                         } else if (snapshot.hasError) {
                           return Center(
                               child: Text('Error: ${snapshot.error}',
-                                  style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500)));
-                        } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                                  style: AppTextStyles.primaryStyle(
+                                      16, Colors.black54, FontWeight.w500)));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
                           return Center(
                               child: Text('No points data available',
-                                  style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500)));
+                                  style: AppTextStyles.primaryStyle(
+                                      16, Colors.black54, FontWeight.w500)));
                         }
                         final pointsList = snapshot.data!;
                         final totalPoints = pointsList.fold<int>(
@@ -376,12 +419,17 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                                   ],
                                 ),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text("Total Points",
-                                        style: AppTextStyles.primaryStyle(18, AppColors.black, FontWeight.bold)),
+                                        style: AppTextStyles.primaryStyle(18,
+                                            AppColors.black, FontWeight.bold)),
                                     Text("$totalPoints",
-                                        style: AppTextStyles.terniaryStyle(18, AppColors.primaryColor, FontWeight.bold)),
+                                        style: AppTextStyles.terniaryStyle(
+                                            18,
+                                            AppColors.primaryColor,
+                                            FontWeight.bold)),
                                   ],
                                 ),
                               ),
@@ -390,17 +438,23 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                                 shrinkWrap: true,
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemCount: pointsList.length,
-                                separatorBuilder: (context, index) => const Divider(height: 1, color: Colors.grey),
+                                separatorBuilder: (context, index) =>
+                                    const Divider(
+                                        height: 1, color: Colors.grey),
                                 itemBuilder: (context, index) {
                                   final pointItem = pointsList[index];
                                   return ListTile(
                                     title: Text(
                                       pointItem['type'],
-                                      style: AppTextStyles.primaryStyle(16, AppColors.black, FontWeight.w500),
+                                      style: AppTextStyles.primaryStyle(
+                                          16, AppColors.black, FontWeight.w500),
                                     ),
                                     trailing: Text(
                                       "${pointItem['point']}",
-                                      style: AppTextStyles.terniaryStyle(16, AppColors.primaryColor, FontWeight.bold),
+                                      style: AppTextStyles.terniaryStyle(
+                                          16,
+                                          AppColors.primaryColor,
+                                          FontWeight.bold),
                                     ),
                                   );
                                 },
@@ -417,7 +471,8 @@ class _ContestDetailsScreenState extends State<ContestDetailsScreen> with Single
                           const SizedBox(height: 20),
                           Center(
                               child: Text("Leaderboard content goes here",
-                                  style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500))),
+                                  style: AppTextStyles.primaryStyle(
+                                      16, Colors.black54, FontWeight.w500))),
                         ],
                       ),
                     ),

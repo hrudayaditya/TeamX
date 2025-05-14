@@ -12,6 +12,14 @@ import '../../res/color.dart';
 import '../../widgets/upcoming_matches.dart';
 import '../../res/app_url.dart';
 
+/// Screen for managing fantasy team creation and player selection
+///
+/// This screen provides:
+/// 1. Player selection interface
+/// 2. Team composition rules
+/// 3. Player statistics and information
+/// 4. Team validation and submission
+/// 5. Budget management
 class MatchFantasyPage extends StatefulWidget {
   final String contestId;
   final Map<String, dynamic> contest;

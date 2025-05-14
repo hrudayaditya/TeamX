@@ -21,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _passwordController = TextEditingController();
   bool isTncRead = false;
 
+  /// Handles user authentication through email and password
   Future<void> _login() async {
     final email = _emailController.text.trim();
     final password = _passwordController.text.trim();
@@ -46,9 +47,9 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    // Hardcoded admin check.
+    // Special admin login handling
     if (email == "admin@example.com" && password == "admin") {
-      // Save admin details to secure storage.
+      // Store admin credentials in secure storage
       await Utils().secureStorage.write(key: 'jwt', value: "admin_token");
       await Utils().secureStorage.write(key: 'email', value: email);
       await Utils().secureStorage.write(key: 'username', value: "Admin");
@@ -58,7 +59,7 @@ class _LoginScreenState extends State<LoginScreen> {
         const SnackBar(content: Text('Admin login successful!')),
       );
 
-      // Navigate to ContestScreen
+      // Navigate to main contest screen
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const ContestScreen()),
@@ -66,7 +67,7 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
 
-    // Normal API login if not admin.
+    // Regular user login through API
     final response = await http.post(
       Uri.parse(AppUrl.loginEndPint),
       headers: {'Content-Type': 'application/json'},

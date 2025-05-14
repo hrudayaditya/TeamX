@@ -12,6 +12,14 @@ import 'widgets/my_teams_card.dart';
 import 'contest_details.dart';
 import '../../res/app_url.dart';
 
+/// Main contest screen that displays available contests and user's contests
+///
+/// This screen shows:
+/// 1. List of all available contests
+/// 2. User's joined contests
+/// 3. Contest details including prize pool, entry fee, and spots
+/// 4. Navigation to other features like wallet and points system
+
 class ContestScreen extends StatefulWidget {
   const ContestScreen({Key? key}) : super(key: key);
 
@@ -22,7 +30,7 @@ class ContestScreen extends StatefulWidget {
 class _ContestScreenState extends State<ContestScreen>
     with SingleTickerProviderStateMixin, RouteAware {
   late TabController _tabController;
-  
+
   // For public contests (CONTESTS tab)
   List<dynamic> contests = [];
   bool isLoading = true;
@@ -30,7 +38,7 @@ class _ContestScreenState extends State<ContestScreen>
   // For combined contest & team data for current user (MY CONTESTS and MY TEAMS tabs)
   List<dynamic> myContests = [];
   bool isMyContestsLoading = true;
-  
+
   Timer? _contestTimer;
 
   @override
@@ -117,7 +125,7 @@ class _ContestScreenState extends State<ContestScreen>
         .map((c) => c['data'][0] as Map<String, dynamic>)
         .toList();
   }
-  
+
   Map<String, int> _countRoleStats(List<dynamic> players) {
     final Map<String, int> counts = {"WK": 0, "BAT": 0, "AR": 0, "BOWL": 0};
     for (var player in players) {
@@ -147,9 +155,10 @@ class _ContestScreenState extends State<ContestScreen>
     List<Widget> teamCards = [];
     for (var contestEntry in myContests) {
       final contest = contestEntry['contest'] as Map<String, dynamic>;
-      final contestData = (contest['data'] != null && contest['data'].isNotEmpty)
-          ? contest['data'][0] as Map<String, dynamic>
-          : {};
+      final contestData =
+          (contest['data'] != null && contest['data'].isNotEmpty)
+              ? contest['data'][0] as Map<String, dynamic>
+              : {};
       final contestName = contestData['name'] ?? "Contest";
       // Get teams array.
       final teams = contestEntry['teams'] as List<dynamic>? ?? [];
@@ -179,7 +188,10 @@ class _ContestScreenState extends State<ContestScreen>
       return Column(
         children: [
           const SizedBox(height: 50),
-          Center(child: Text("No teams found", style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.w600))),
+          Center(
+              child: Text("No teams found",
+                  style: AppTextStyles.primaryStyle(
+                      16, Colors.black, FontWeight.w600))),
         ],
       );
     }
@@ -198,7 +210,7 @@ class _ContestScreenState extends State<ContestScreen>
     // Use a fixed email or fetch it from secure storage if needed.
     final utils = Utils();
     final email = await utils.fetchDataSecure('email');
-    final url = AppUrl.wallet+"?email=$email";
+    final url = AppUrl.wallet + "?email=$email";
     final response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
@@ -215,7 +227,8 @@ class _ContestScreenState extends State<ContestScreen>
         context: context,
         builder: (context) {
           return Dialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             backgroundColor: const Color.fromARGB(255, 72, 133, 190),
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -227,25 +240,30 @@ class _ContestScreenState extends State<ContestScreen>
                 children: [
                   Text(
                     "Wallet Balance",
-                    style: AppTextStyles.primaryStyle(18, AppColors.black, FontWeight.bold),
+                    style: AppTextStyles.primaryStyle(
+                        18, AppColors.black, FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
                   Text(
                     "Email: ${walletData['email']}\nBalance: \$${walletData['wallet']}",
-                    style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500),
+                    style: AppTextStyles.primaryStyle(
+                        16, Colors.black54, FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color.fromARGB(255, 72, 133, 190),
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("OK", style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.bold)),
+                    child: Text("OK",
+                        style: AppTextStyles.terniaryStyle(
+                            16, Colors.white, FontWeight.bold)),
                   ),
                 ],
               ),
@@ -259,7 +277,8 @@ class _ContestScreenState extends State<ContestScreen>
         context: context,
         builder: (context) {
           return Dialog(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
             backgroundColor: const Color.fromARGB(255, 72, 133, 190),
             child: Container(
               padding: const EdgeInsets.all(16),
@@ -268,25 +287,30 @@ class _ContestScreenState extends State<ContestScreen>
                 children: [
                   Text(
                     "Error",
-                    style: AppTextStyles.primaryStyle(18, AppColors.black, FontWeight.bold),
+                    style: AppTextStyles.primaryStyle(
+                        18, AppColors.black, FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 12),
                   Text(
                     "Failed to fetch wallet balance: $e",
-                    style: AppTextStyles.primaryStyle(16, Colors.black54, FontWeight.w500),
+                    style: AppTextStyles.primaryStyle(
+                        16, Colors.black54, FontWeight.w500),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primaryColor,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8)),
                     ),
                     onPressed: () {
                       Navigator.of(context).pop();
                     },
-                    child: Text("OK", style: AppTextStyles.terniaryStyle(16, Colors.white, FontWeight.bold)),
+                    child: Text("OK",
+                        style: AppTextStyles.terniaryStyle(
+                            16, Colors.white, FontWeight.bold)),
                   ),
                 ],
               ),
@@ -309,7 +333,8 @@ class _ContestScreenState extends State<ContestScreen>
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, AppBar().preferredSize.height),
         child: AppBar(
-          backgroundColor: const Color.fromARGB(255, 72, 133, 190), // Updated header color
+          backgroundColor:
+              const Color.fromARGB(255, 72, 133, 190), // Updated header color
           iconTheme: const IconThemeData(color: Colors.white, size: 20),
           elevation: 1.0,
           title: Column(
@@ -334,7 +359,8 @@ class _ContestScreenState extends State<ContestScreen>
                           },
                           child: Container(
                             padding: const EdgeInsets.all(6),
-                            child: const Icon(Icons.person, color: Colors.white, size: 32),
+                            child: const Icon(Icons.person,
+                                color: Colors.white, size: 32),
                           ),
                         );
                       } else {
@@ -369,7 +395,8 @@ class _ContestScreenState extends State<ContestScreen>
                       ),
                       child: Text(
                         "PTS",
-                        style: AppTextStyles.terniaryStyle(10.0, Colors.white, FontWeight.w700),
+                        style: AppTextStyles.terniaryStyle(
+                            10.0, Colors.white, FontWeight.w700),
                       ),
                     ),
                   ),
@@ -378,8 +405,12 @@ class _ContestScreenState extends State<ContestScreen>
                     icon: const Icon(Icons.logout, color: Colors.white),
                     onPressed: () async {
                       await Utils().secureStorage.write(key: 'jwt', value: '');
-                      await Utils().secureStorage.write(key: 'email', value: '');
-                      await Utils().secureStorage.write(key: 'username', value: '');
+                      await Utils()
+                          .secureStorage
+                          .write(key: 'email', value: '');
+                      await Utils()
+                          .secureStorage
+                          .write(key: 'username', value: '');
                       Navigator.pushNamedAndRemoveUntil(
                         context,
                         '/login',
@@ -398,7 +429,8 @@ class _ContestScreenState extends State<ContestScreen>
                       padding: const EdgeInsets.only(top: 4),
                       child: Text(
                         "Welcome Admin!",
-                        style: AppTextStyles.primaryStyle(16, Colors.white, FontWeight.bold),
+                        style: AppTextStyles.primaryStyle(
+                            16, Colors.white, FontWeight.bold),
                       ),
                     );
                   } else {
@@ -421,7 +453,8 @@ class _ContestScreenState extends State<ContestScreen>
                   padding: const EdgeInsets.only(top: 12, bottom: 4),
                   child: Text(
                     "Welcome Admin!",
-                    style: AppTextStyles.primaryStyle(18, Colors.blue, FontWeight.bold),
+                    style: AppTextStyles.primaryStyle(
+                        18, Colors.blue, FontWeight.bold),
                   ),
                 );
               } else {
@@ -435,7 +468,8 @@ class _ContestScreenState extends State<ContestScreen>
             alignment: Alignment.center,
             child: Text(
               "Total Contests: ${contests.length}",
-              style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold),
+              style:
+                  AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold),
             ),
           ),
           TabBar(
@@ -447,15 +481,24 @@ class _ContestScreenState extends State<ContestScreen>
             tabs: [
               Tab(
                 height: 30.0,
-                child: Text("CONTESTS", maxLines: 2, style: AppTextStyles.terniaryStyle(12, AppColors.black, FontWeight.w500)),
+                child: Text("CONTESTS",
+                    maxLines: 2,
+                    style: AppTextStyles.terniaryStyle(
+                        12, AppColors.black, FontWeight.w500)),
               ),
               Tab(
                 height: 30.0,
-                child: Text("MY CONTESTS", maxLines: 2, style: AppTextStyles.terniaryStyle(12, AppColors.black, FontWeight.w500)),
+                child: Text("MY CONTESTS",
+                    maxLines: 2,
+                    style: AppTextStyles.terniaryStyle(
+                        12, AppColors.black, FontWeight.w500)),
               ),
               Tab(
                 height: 30.0,
-                child: Text("MY TEAMS", maxLines: 2, style: AppTextStyles.terniaryStyle(12, AppColors.black, FontWeight.w500)),
+                child: Text("MY TEAMS",
+                    maxLines: 2,
+                    style: AppTextStyles.terniaryStyle(
+                        12, AppColors.black, FontWeight.w500)),
               ),
             ],
           ),
@@ -475,19 +518,25 @@ class _ContestScreenState extends State<ContestScreen>
                               if (getFreeContests().isNotEmpty)
                                 ExpansionTile(
                                   initiallyExpanded: true,
-                                  title: Text("Free Contests", style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold)),
+                                  title: Text("Free Contests",
+                                      style: AppTextStyles.primaryStyle(
+                                          16, Colors.black, FontWeight.bold)),
                                   children: getFreeContests().map((match) {
                                     final contestObj = contests.firstWhere(
-                                      (c) => c['data'][0]['name'] == match['name'],
+                                      (c) =>
+                                          c['data'][0]['name'] == match['name'],
                                       orElse: () => null,
                                     );
-                                    final contestId = contestObj != null ? contestObj['id'] : '';
+                                    final contestId = contestObj != null
+                                        ? contestObj['id']
+                                        : '';
                                     return AllContestCrad(
                                       id: contestId,
                                       prize: match['prizePool'] ?? 0,
                                       entry: match['entryFee'] ?? 0,
                                       totalSpots: match['totalSpots'] ?? 0,
-                                      filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
+                                      filledSpots: (match['totalSpots'] ?? 0) -
+                                          (match['spotsLeft'] ?? 0),
                                       isFree: (match['entryFee'] ?? 0) == 0,
                                       matchName: match['name'] ?? '',
                                       venue: match['venue'] ?? '',
@@ -503,19 +552,26 @@ class _ContestScreenState extends State<ContestScreen>
                               if (getMultiplierContests().isNotEmpty)
                                 ExpansionTile(
                                   initiallyExpanded: true,
-                                  title: Text("Multiplier Contests", style: AppTextStyles.primaryStyle(16, Colors.black, FontWeight.bold)),
-                                  children: getMultiplierContests().map((match) {
+                                  title: Text("Multiplier Contests",
+                                      style: AppTextStyles.primaryStyle(
+                                          16, Colors.black, FontWeight.bold)),
+                                  children:
+                                      getMultiplierContests().map((match) {
                                     final contestObj = contests.firstWhere(
-                                      (c) => c['data'][0]['name'] == match['name'],
+                                      (c) =>
+                                          c['data'][0]['name'] == match['name'],
                                       orElse: () => null,
                                     );
-                                    final contestId = contestObj != null ? contestObj['id'] : '';
+                                    final contestId = contestObj != null
+                                        ? contestObj['id']
+                                        : '';
                                     return AllContestCrad(
                                       id: contestId,
                                       prize: match['prizePool'] ?? 0,
                                       entry: match['entryFee'] ?? 0,
                                       totalSpots: match['totalSpots'] ?? 0,
-                                      filledSpots: (match['totalSpots'] ?? 0) - (match['spotsLeft'] ?? 0),
+                                      filledSpots: (match['totalSpots'] ?? 0) -
+                                          (match['spotsLeft'] ?? 0),
                                       isFree: (match['entryFee'] ?? 0) == 0,
                                       matchName: match['name'] ?? '',
                                       venue: match['venue'] ?? '',
@@ -540,18 +596,32 @@ class _ContestScreenState extends State<ContestScreen>
                         child: SingleChildScrollView(
                           child: Column(
                             children: myContests.map((contestEntry) {
-                              final contest = contestEntry['contest'] as Map<String, dynamic>;
-                              final teams = contestEntry['teams'] as List<dynamic>;
-                              final contestData = (contest['data'] != null && contest['data'].isNotEmpty)
+                              // Extract contest and team data from the response
+                              final contest = contestEntry['contest']
+                                  as Map<String, dynamic>;
+                              final teams =
+                                  contestEntry['teams'] as List<dynamic>;
+
+                              // Get contest details with fallback to empty map
+                              final contestData = (contest['data'] != null &&
+                                      contest['data'].isNotEmpty)
                                   ? contest['data'][0] as Map<String, dynamic>
                                   : {};
+
+                              // Extract contest information
                               final id = contest['id'] as String? ?? '';
-                              final prize = contestData['prizePool'] as int? ?? 0;
-                              final entryFee = contestData['entryFee'] as int? ?? 0;
-                              final totalSpots = contestData['totalSpots'] as int? ?? 0;
-                              final spotsLeft = contestData['spotsLeft'] as int? ?? totalSpots;
+                              final prize =
+                                  contestData['prizePool'] as int? ?? 0;
+                              final entryFee =
+                                  contestData['entryFee'] as int? ?? 0;
+                              final totalSpots =
+                                  contestData['totalSpots'] as int? ?? 0;
+                              final spotsLeft =
+                                  contestData['spotsLeft'] as int? ??
+                                      totalSpots;
                               final filledSpots = totalSpots - spotsLeft;
-                              final isFinished = (contestData['matchEnded'] as bool?) ?? false;
+                              final isFinished =
+                                  (contestData['matchEnded'] as bool?) ?? false;
                               return MyContestCard(
                                 id: id,
                                 prize: prize,
@@ -560,8 +630,11 @@ class _ContestScreenState extends State<ContestScreen>
                                 filledSpots: filledSpots,
                                 teams: teams.map<Map<String, String>>((t) {
                                   return {
-                                    "captain": (t['captain']?['name'] ?? 'N/A').toString(),
-                                    "viceCaptain": (t['viceCaptain']?['name'] ?? 'N/A').toString(),
+                                    "captain": (t['captain']?['name'] ?? 'N/A')
+                                        .toString(),
+                                    "viceCaptain":
+                                        (t['viceCaptain']?['name'] ?? 'N/A')
+                                            .toString(),
                                   };
                                 }).toList(),
                                 isFinished: isFinished,
