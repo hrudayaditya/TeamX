@@ -12,36 +12,113 @@ class FantasyPointsSystem extends StatefulWidget {
 
 class _FantasyPointsSystemState extends State<FantasyPointsSystem>
     with SingleTickerProviderStateMixin {
-
   late TabController _tabController;
   bool isExpanded = false;
   int formatIndex = 0;
 
   List t20Points = [
-    [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +2 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+8 PTS'},{'Type':'Century Bonus','Points':'+16 PTS'}],
-    [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'Maiden Over Bonus','Points':'+12 PTS'},{'Type':'3 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+16 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
-    [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
+    [
+      {'Type': 'Run', 'Points': ' +1 PTS'},
+      {'Type': 'Four Bonus', 'Points': ' +2 PTS'},
+      {'Type': 'Six Bonus', 'Points': ' +2 PTS'},
+      {'Type': 'Half Century Bonus', 'Points': '+8 PTS'},
+      {'Type': 'Century Bonus', 'Points': '+16 PTS'}
+    ],
+    [
+      {'Type': 'Wicket(Excluding Run Out)', 'Points': '+25 PTS'},
+      {'Type': 'Maiden Over Bonus', 'Points': '+12 PTS'},
+      {'Type': '3 Wicket Bonus', 'Points': '+4 PTS'},
+      {'Type': '5 Wicket Bonus', 'Points': '+16 PTS'},
+      {'Type': 'Maiden Over', 'Points': '+12 PTS'}
+    ],
+    [
+      {'Type': 'Catch', 'Points': '+8 PTS'},
+      {'Type': '3 Catch', 'Points': '+4 PTS'},
+      {'Type': 'Stumping', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Direct - Hit)', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Not a direct - Hit)', 'Points': '+6 PTS'}
+    ],
+    [
+      {'Type': 'Captain', 'Points': '+20 PTS'},
+      {'Type': 'Vice Captain', 'Points': '+10 PTS'}
+    ]
   ];
   List t10Points = [
-    [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'30 Runs Bonus','Points':'+8 PTS'},{'Type':'Half Century Bonus','Points':'+16 PTS'}],
-    [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'2 Wicket Bonus','Points':'+8 PTS'},{'Type':'3 Wicket Bonus','Points':'+16 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
-    [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
+    [
+      {'Type': 'Run', 'Points': ' +1 PTS'},
+      {'Type': 'Four Bonus', 'Points': ' +1 PTS'},
+      {'Type': 'Six Bonus', 'Points': ' +2 PTS'},
+      {'Type': '30 Runs Bonus', 'Points': '+8 PTS'},
+      {'Type': 'Half Century Bonus', 'Points': '+16 PTS'}
+    ],
+    [
+      {'Type': 'Wicket(Excluding Run Out)', 'Points': '+25 PTS'},
+      {'Type': '2 Wicket Bonus', 'Points': '+8 PTS'},
+      {'Type': '3 Wicket Bonus', 'Points': '+16 PTS'},
+      {'Type': 'Maiden Over', 'Points': '+12 PTS'}
+    ],
+    [
+      {'Type': 'Catch', 'Points': '+8 PTS'},
+      {'Type': '3 Catch', 'Points': '+4 PTS'},
+      {'Type': 'Stumping', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Direct - Hit)', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Not a direct - Hit)', 'Points': '+6 PTS'}
+    ],
+    [
+      {'Type': 'Captain', 'Points': '+20 PTS'},
+      {'Type': 'Vice Captain', 'Points': '+10 PTS'}
+    ]
   ];
   List odiPoints = [
-    [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+4 PTS'},{'Type':'Century Bonus','Points':'+8 PTS'}],
-    [{'Type':'Wicket(Excluding Run Out)','Points':'+25 PTS'},{'Type':'4 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+8 PTS'}, {'Type':'Maiden Over','Points':'+12 PTS'}],
-    [{'Type':'Catch','Points':'+8 PTS'},{'Type':'3 Catch','Points':'+4 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
+    [
+      {'Type': 'Run', 'Points': ' +1 PTS'},
+      {'Type': 'Four Bonus', 'Points': ' +1 PTS'},
+      {'Type': 'Six Bonus', 'Points': ' +2 PTS'},
+      {'Type': 'Half Century Bonus', 'Points': '+4 PTS'},
+      {'Type': 'Century Bonus', 'Points': '+8 PTS'}
+    ],
+    [
+      {'Type': 'Wicket(Excluding Run Out)', 'Points': '+25 PTS'},
+      {'Type': '4 Wicket Bonus', 'Points': '+4 PTS'},
+      {'Type': '5 Wicket Bonus', 'Points': '+8 PTS'},
+      {'Type': 'Maiden Over', 'Points': '+12 PTS'}
+    ],
+    [
+      {'Type': 'Catch', 'Points': '+8 PTS'},
+      {'Type': '3 Catch', 'Points': '+4 PTS'},
+      {'Type': 'Stumping', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Direct - Hit)', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Not a direct - Hit)', 'Points': '+6 PTS'}
+    ],
+    [
+      {'Type': 'Captain', 'Points': '+20 PTS'},
+      {'Type': 'Vice Captain', 'Points': '+10 PTS'}
+    ]
   ];
   List testPoints = [
-    [{'Type':'Run','Points':' +1 PTS'},{'Type':'Four Bonus','Points':' +1 PTS'},{'Type':'Six Bonus','Points':' +2 PTS'},{'Type':'Half Century Bonus','Points':'+4 PTS'},{'Type':'Century Bonus','Points':'+8 PTS'}],
-    [{'Type':'Wicket(Excluding Run Out)','Points':'+16 PTS'},{'Type':'4 Wicket Bonus','Points':'+4 PTS'},{'Type':'5 Wicket Bonus','Points':'+8 PTS'}],
-    [{'Type':'Catch','Points':'+8 PTS'},{'Type':'Stumping','Points':'+12 PTS'},{'Type':'Run Out(Direct - Hit)','Points':'+12 PTS'}, {'Type':'Run Out(Not a direct - Hit)','Points':'+6 PTS'}],
-    [{'Type':'Captain','Points':'+20 PTS'}, {'Type':'Vice Captain','Points':'+10 PTS'}]
+    [
+      {'Type': 'Run', 'Points': ' +1 PTS'},
+      {'Type': 'Four Bonus', 'Points': ' +1 PTS'},
+      {'Type': 'Six Bonus', 'Points': ' +2 PTS'},
+      {'Type': 'Half Century Bonus', 'Points': '+4 PTS'},
+      {'Type': 'Century Bonus', 'Points': '+8 PTS'}
+    ],
+    [
+      {'Type': 'Wicket(Excluding Run Out)', 'Points': '+16 PTS'},
+      {'Type': '4 Wicket Bonus', 'Points': '+4 PTS'},
+      {'Type': '5 Wicket Bonus', 'Points': '+8 PTS'}
+    ],
+    [
+      {'Type': 'Catch', 'Points': '+8 PTS'},
+      {'Type': 'Stumping', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Direct - Hit)', 'Points': '+12 PTS'},
+      {'Type': 'Run Out(Not a direct - Hit)', 'Points': '+6 PTS'}
+    ],
+    [
+      {'Type': 'Captain', 'Points': '+20 PTS'},
+      {'Type': 'Vice Captain', 'Points': '+10 PTS'}
+    ]
   ];
-
 
   @override
   void initState() {
@@ -93,25 +170,30 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
               ),
             ),
           ),
-
-          SizedBox(height: 4,),
-
+          SizedBox(
+            height: 4,
+          ),
           Row(
             children: [
-              SizedBox(width: 10,),
+              SizedBox(
+                width: 10,
+              ),
               Text(
-                formatIndex == 0 ? 'T20 Points System' :
-                formatIndex == 1 ? 'T10 Points System' :
-                formatIndex == 2 ? 'ODI Points System' : 'TEST Points System',
+                formatIndex == 0
+                    ? 'T20 Points System'
+                    : formatIndex == 1
+                        ? 'T10 Points System'
+                        : formatIndex == 2
+                            ? 'ODI Points System'
+                            : 'TEST Points System',
                 style: AppTextStyles.terniaryStyle(
                     16, AppColors.black, FontWeight.w600),
-
               ),
             ],
           ),
-
-          SizedBox(height: 4,),
-
+          SizedBox(
+            height: 4,
+          ),
           Container(
             decoration: BoxDecoration(
                 color: Color(0xfff8f8fe),
@@ -185,9 +267,13 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
                   child: Column(
                     children: [
                       ListOfPointsCard(
-                        pointsList: formatIndex == 0 ? t20Points[0] :
-                        formatIndex == 1 ? t10Points[0] :
-                        formatIndex == 2 ? odiPoints[0] : testPoints[0],
+                        pointsList: formatIndex == 0
+                            ? t20Points[0]
+                            : formatIndex == 1
+                                ? t10Points[0]
+                                : formatIndex == 2
+                                    ? odiPoints[0]
+                                    : testPoints[0],
                       ),
                     ],
                   ),
@@ -196,9 +282,13 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
                   child: Column(
                     children: [
                       ListOfPointsCard(
-                        pointsList: formatIndex == 0 ? t20Points[1] :
-                        formatIndex == 1 ? t10Points[1] :
-                        formatIndex == 2 ? odiPoints[1] : testPoints[1],
+                        pointsList: formatIndex == 0
+                            ? t20Points[1]
+                            : formatIndex == 1
+                                ? t10Points[1]
+                                : formatIndex == 2
+                                    ? odiPoints[1]
+                                    : testPoints[1],
                       ),
                     ],
                   ),
@@ -207,9 +297,13 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
                   child: Column(
                     children: [
                       ListOfPointsCard(
-                        pointsList: formatIndex == 0 ? t20Points[2] :
-                        formatIndex == 1 ? t10Points[2] :
-                        formatIndex == 2 ? odiPoints[2] : testPoints[2],
+                        pointsList: formatIndex == 0
+                            ? t20Points[2]
+                            : formatIndex == 1
+                                ? t10Points[2]
+                                : formatIndex == 2
+                                    ? odiPoints[2]
+                                    : testPoints[2],
                       ),
                     ],
                   ),
@@ -218,9 +312,13 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
                   child: Column(
                     children: [
                       ListOfPointsCard(
-                        pointsList: formatIndex == 0 ? t20Points[3] :
-                        formatIndex == 1 ? t10Points[3] :
-                        formatIndex == 2 ? odiPoints[3] : testPoints[3],
+                        pointsList: formatIndex == 0
+                            ? t20Points[3]
+                            : formatIndex == 1
+                                ? t10Points[3]
+                                : formatIndex == 2
+                                    ? odiPoints[3]
+                                    : testPoints[3],
                       ),
                     ],
                   ),
@@ -230,170 +328,175 @@ class _FantasyPointsSystemState extends State<FantasyPointsSystem>
           ),
         ],
       ),
-
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: !isExpanded ? GestureDetector(
-        onTap: () {
-          setState(() {
-            isExpanded = !isExpanded;
-          });
-        },
-        child: Container(
-          height: 40,
-          width: 150,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              color: Color(0xff191D88),
-              boxShadow: [
-                BoxShadow(
-                    color: Colors.black12,
-                    spreadRadius: 2,
-                    blurRadius: 20,
-                    offset: Offset(0, 5))
-              ]),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                formatIndex == 0 ? "  Format - T20" :
-                formatIndex == 1 ? '  Format - T10' :
-                formatIndex == 2 ? '  Format - ODI' : '  Format - TEST',
-                style: AppTextStyles.primaryStyle(
-                  16.0, AppColors.white, FontWeight.w700,
-                ),
-              ),
-              Icon(Icons.arrow_drop_up_rounded,
-                size: 22,
-                color: Colors.white,)
-            ],
-          ),
-        ),
-      ) :
-      Container(
-        height: 138,
-        width: 165,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            color: Color(0xff191D88),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.black12,
-                  spreadRadius: 2,
-                  blurRadius: 20,
-                  offset: Offset(0, 5))
-            ]),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            GestureDetector(
+      floatingActionButton: !isExpanded
+          ? GestureDetector(
               onTap: () {
                 setState(() {
                   isExpanded = !isExpanded;
-                  formatIndex = 0;
                 });
               },
               child: Container(
-                height: 35,
+                height: 40,
+                width: 150,
                 decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          color: Colors.white,
-                          width: 1,
-                        )
+                    borderRadius: BorderRadius.circular(40),
+                    color: Color(0xff191D88),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black12,
+                          spreadRadius: 2,
+                          blurRadius: 20,
+                          offset: Offset(0, 5))
+                    ]),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      formatIndex == 0
+                          ? "  Format - T20"
+                          : formatIndex == 1
+                              ? '  Format - T10'
+                              : formatIndex == 2
+                                  ? '  Format - ODI'
+                                  : '  Format - TEST',
+                      style: AppTextStyles.primaryStyle(
+                        16.0,
+                        AppColors.white,
+                        FontWeight.w700,
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_up_rounded,
+                      size: 22,
+                      color: Colors.white,
                     )
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("FORMAT       T20",
-                      style: AppTextStyles.primaryStyle(
-                          16.0, AppColors.white, FontWeight.w700),
-                    ),
                   ],
                 ),
               ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                  formatIndex = 1;
-                });
-              },
-              child: Container(
-                height: 35,
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          color: Colors.white,
-                          width: 1,
-                        )
-                    )
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("FORMAT       T10",
-                      style: AppTextStyles.primaryStyle(
-                          16.0, AppColors.white, FontWeight.w700),
+            )
+          : Container(
+              height: 138,
+              width: 165,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: Color(0xff191D88),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black12,
+                        spreadRadius: 2,
+                        blurRadius: 20,
+                        offset: Offset(0, 5))
+                  ]),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                        formatIndex = 0;
+                      });
+                    },
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                      ))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "FORMAT       T20",
+                            style: AppTextStyles.primaryStyle(
+                                16.0, AppColors.white, FontWeight.w700),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                        formatIndex = 1;
+                      });
+                    },
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                      ))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "FORMAT       T10",
+                            style: AppTextStyles.primaryStyle(
+                                16.0, AppColors.white, FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                        formatIndex = 2;
+                      });
+                    },
+                    child: Container(
+                      height: 35,
+                      decoration: BoxDecoration(
+                          border: Border(
+                              bottom: BorderSide(
+                        color: Colors.white,
+                        width: 1,
+                      ))),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "FORMAT       ODI",
+                            style: AppTextStyles.primaryStyle(
+                                16.0, AppColors.white, FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isExpanded = !isExpanded;
+                        formatIndex = 3;
+                      });
+                    },
+                    child: Container(
+                      height: 33,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "FORMAT      TEST",
+                            style: AppTextStyles.primaryStyle(
+                                16.0, AppColors.white, FontWeight.w700),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                  formatIndex = 2;
-                });
-              },
-              child: Container(
-                height: 35,
-                decoration: BoxDecoration(
-                    border: Border(
-                        bottom: BorderSide(
-                          color: Colors.white,
-                          width: 1,
-                        )
-                    )
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("FORMAT       ODI",
-                      style: AppTextStyles.primaryStyle(
-                          16.0, AppColors.white, FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  isExpanded = !isExpanded;
-                  formatIndex = 3;
-                });
-              },
-              child: Container(
-                height: 33,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("FORMAT      TEST",
-                      style: AppTextStyles.primaryStyle(
-                          16.0, AppColors.white, FontWeight.w700),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-
     );
   }
 }
@@ -426,14 +529,18 @@ class ListOfPointsCard extends StatelessWidget {
               Text(
                 pointsList[index]['Type'],
                 style: AppTextStyles.terniaryStyle(
-                  16, AppColors.black, FontWeight.w500,
+                  16,
+                  AppColors.black,
+                  FontWeight.w500,
                 ),
               ),
               Spacer(),
               Text(
                 pointsList[index]['Points'],
                 style: AppTextStyles.terniaryStyle(
-                  14, AppColors.green, FontWeight.w700,
+                  14,
+                  AppColors.green,
+                  FontWeight.w700,
                 ),
               ),
             ],
