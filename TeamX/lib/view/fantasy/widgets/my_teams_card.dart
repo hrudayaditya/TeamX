@@ -87,7 +87,7 @@ class MyTeamsCard extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
           image: const DecorationImage(
-            image: AssetImage('assets/ground.png'),
+            image: AssetImage('assets/ground.jpg'),
             fit: BoxFit.cover,
             opacity: 0.05,
           ),
